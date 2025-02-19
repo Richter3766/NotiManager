@@ -43,6 +43,15 @@ android {
         unitTests.all {
             it.useJUnitPlatform()
         }
+        packaging {
+            resources {
+                excludes += "META-INF/*"
+                excludes += "win32-x86/attach_hotspot_windows.dll"
+                excludes += "META-INF/licenses/ASM"
+                excludes += "win32-x86-64/attach_hotspot_windows.dll"
+            }
+
+        }
     }
 }
 
@@ -81,7 +90,6 @@ dependencies {
 
     // 모킹
     testImplementation(libs.mockk.mockk)
-//    testImplementation(libs.mockk.mockk.android)
 
     // 디버깅
     debugImplementation(libs.androidx.ui.tooling)
