@@ -1,26 +1,29 @@
 [versions]
 agp = "8.8.1"
+byteBuddy = "1.17.1"
+byteBuddyAgent = "1.17.1"
 jacksonModuleKotlin = "2.18.2"
-kotestAssertionsAndroid = "VERSION"
+kotestAssertionsAndroid = "5.9.1"
 kotestAssertionsAndroidVersion = "5.9.1"
-kotestAssertionsCore = "<version>"
+kotestAssertionsCore = "5.9.1"
 kotestAssertionsCoreVersion = "5.9.1"
-kotestRunnerJunit5 = "<version>"
+kotestRunnerJunit5 = "5.9.1"
 kotestRunnerJunit5Version = "5.9.1"
-kotlin = "2.0.0"
-coreKtx = "1.10.1"
+kotlin = "2.0.21"
+coreKtx = "1.15.0"
 junit = "4.13.2"
-junitVersion = "1.1.5"
-espressoCore = "3.5.1"
-kotlinxCoroutinesAndroid = "1.7.1"
-lifecycleRuntimeKtx = "2.6.1"
-activityCompose = "1.8.0"
-composeBom = "2024.04.01"
+junitVersion = "1.2.1"
+espressoCore = "3.6.1"
+kotlinStdlib = "2.0.21"
+kotlinxCoroutinesAndroid = "1.8.0"
+lifecycleRuntimeKtx = "2.8.7"
+activityCompose = "1.10.0"
+composeBom = "2025.02.00"
 mockk = "1.13.16"
 roomCompiler = "2.6.1"
 roomVersion = "2.6.1"
 coreKtxVersion = "1.6.1"
-kotestRunnerJunit5Jvm = "4.6.0"
+kotestRunnerJunit5Jvm = "5.9.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -28,6 +31,8 @@ androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref =
 androidx-room-ktx = { module = "androidx.room:room-ktx" }
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomVersion" }
 androidx-room-testing = { module = "androidx.room:room-testing" }
+byte-buddy = { module = "net.bytebuddy:byte-buddy", version.ref = "byteBuddy" }
+byte-buddy-agent = { module = "net.bytebuddy:byte-buddy-agent", version.ref = "byteBuddyAgent" }
 jackson-module-kotlin = { module = "com.fasterxml.jackson.module:jackson-module-kotlin", version.ref = "jacksonModuleKotlin" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
@@ -48,6 +53,7 @@ kotest-assertions-core = { module = "io.kotest:kotest-assertions-core", version.
 kotest-assertions-core-v591 = { module = "io.kotest:kotest-assertions-core", version.ref = "kotestAssertionsCoreVersion" }
 kotest-runner-junit5 = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotestRunnerJunit5" }
 kotest-runner-junit5-v591 = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotestRunnerJunit5Version" }
+kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlinStdlib" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinxCoroutinesAndroid" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test" }
 core-ktx = { group = "androidx.test", name = "core-ktx", version.ref = "coreKtxVersion" }

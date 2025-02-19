@@ -60,6 +60,7 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
 
+    implementation(libs.kotlin.stdlib)
     // Jackson Json
     implementation (libs.jackson.module.kotlin)
 
@@ -100,4 +101,8 @@ dependencies {
     ksp(libs.androidx.room.compiler)
     implementation(libs.androidx.room.ktx)
     testImplementation(libs.androidx.room.testing)
+
+    // byte buddy
+    implementation(libs.byte.buddy)
+    testImplementation(libs.byte.buddy.agent)
 }
