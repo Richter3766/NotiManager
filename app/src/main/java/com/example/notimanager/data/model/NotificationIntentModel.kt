@@ -12,14 +12,14 @@ import com.example.notimanager.common.objects.JsonMapper.objectMapper
         ForeignKey(
             entity = NotificationModel::class,
             parentColumns = ["id"],
-            childColumns = ["id"],
+            childColumns = ["notificationId"],
             onDelete = ForeignKey.CASCADE
         )
     ]
 )
 data class NotificationIntentModel(
     @PrimaryKey
-    val id: Long,
+    val notificationId: Long,
     val action: String,
     val packageName: String,
     val extras: String?,
@@ -31,7 +31,7 @@ data class NotificationIntentModel(
             val extrasJson = extrasMap?.let { objectMapper.writeValueAsString(it) }
 
             return NotificationIntentModel(
-                id = id,
+                notificationId = id,
                 action = intent.action ?: "",
                 packageName = intent.`package` ?: "",
                 extras = extrasJson,
