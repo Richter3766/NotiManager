@@ -13,11 +13,12 @@ class NotificationRepository(
     private val notificationDao: NotificationDao,
     private val notificationIntentDao: NotificationIntentDao
 ) : NotificationRepositoryInterface {
-    override suspend fun addNotification(notification: Notification) {
+    override suspend fun addNotification(notification: Notification): Long {
         val model = notification.toModel()
         val notificationId = notificationDao.insert(model)
         val intentModel = NotificationIntentModel.fromIntent(notification.intent, notificationId)
-        notificationIntentDao.insert(intentModel)
+
+        return notificationIntentDao.insert(intentModel)
     }
 
     override suspend fun getAllNotifications(): List<Notification> {
