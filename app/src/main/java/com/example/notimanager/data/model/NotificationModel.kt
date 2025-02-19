@@ -1,10 +1,8 @@
 package com.example.notimanager.data.model
 
-import android.content.Intent
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
-import com.example.notimanager.common.objects.JsonMapper.objectMapper
 
 @Entity(
     tableName = "notification",
@@ -17,6 +15,4 @@ data class NotificationModel(
     val title: String,
     val content: String,
     val timestamp: Long,
-){
-
-}
+)

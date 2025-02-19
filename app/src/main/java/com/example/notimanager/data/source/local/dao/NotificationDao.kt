@@ -9,7 +9,7 @@ import com.example.notimanager.data.model.NotificationModel
 @Dao
 interface NotificationDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(notification: NotificationModel)
+    suspend fun insert(notification: NotificationModel): Long
 
     @Query("SELECT * FROM notification")
     suspend fun getAll(): List<NotificationModel>
