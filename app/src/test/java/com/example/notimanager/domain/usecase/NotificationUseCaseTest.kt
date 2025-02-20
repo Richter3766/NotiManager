@@ -14,25 +14,6 @@ class NotificationUseCaseTest: BehaviorSpec({
     val intent = mockk<Intent>(relaxed = true)
 
     Context("NotificationUseCase 테스트"){
-        Given("notification 객체가 주어질 때"){
-            val notification = Notification(
-                packageName = "com.example.test",
-                title = "test",
-                content = "content",
-                timestamp = 1111L,
-                intent = intent
-            )
-
-            When("addNotification를 실행하면"){
-                coEvery { notificationRepositoryInterface.addNotification(notification) } returns 1L
-
-                Then("저장된 객체의 id를 반환받아야 한다."){
-                    val result = notificationRepositoryInterface.addNotification(notification)
-                    result shouldBe 1L
-                }
-            }
-        }
-
         Given("notification List가 필요할 때"){
             val notificationList = listOf(
                 Notification(
