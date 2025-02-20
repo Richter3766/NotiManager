@@ -4,15 +4,15 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.notimanager.data.model.NotificationIntentModel
+import com.example.notimanager.data.model.NotificationMetaModel
 import com.example.notimanager.data.model.NotificationModel
 import com.example.notimanager.data.source.local.dao.NotificationDao
-import com.example.notimanager.data.source.local.dao.NotificationIntentDao
+import com.example.notimanager.data.source.local.dao.NotificationMetaDao
 
-@Database(entities = [NotificationModel::class, NotificationIntentModel::class], version = 1)
+@Database(entities = [NotificationModel::class, NotificationMetaModel::class], version = 1)
 abstract class NotiManagerDatabase : RoomDatabase() {
     abstract fun notificationDao(): NotificationDao
-    abstract fun notificationIntentDao(): NotificationIntentDao
+    abstract fun notificationIntentDao(): NotificationMetaDao
 
     companion object {
         @Volatile

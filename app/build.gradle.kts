@@ -91,6 +91,7 @@ dependencies {
 
     // 모킹
     testImplementation(libs.mockk.mockk)
+    androidTestImplementation(libs.io.mockk.mockk.android)
 
     // 디버깅
     debugImplementation(libs.androidx.ui.tooling)
