@@ -20,6 +20,7 @@ lifecycleRuntimeKtx = "2.8.7"
 activityCompose = "1.10.0"
 composeBom = "2025.02.00"
 mockk = "1.13.16"
+mockkAndroid = "1.13.16"
 roomCompiler = "2.6.1"
 roomVersion = "2.6.1"
 coreKtxVersion = "1.6.1"
@@ -33,6 +34,7 @@ androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "
 androidx-room-testing = { module = "androidx.room:room-testing" }
 byte-buddy = { module = "net.bytebuddy:byte-buddy", version.ref = "byteBuddy" }
 byte-buddy-agent = { module = "net.bytebuddy:byte-buddy-agent", version.ref = "byteBuddyAgent" }
+io-mockk-mockk-android = { module = "io.mockk:mockk-android", version.ref = "mockkAndroid" }
 jackson-module-kotlin = { module = "com.fasterxml.jackson.module:jackson-module-kotlin", version.ref = "jacksonModuleKotlin" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
@@ -47,11 +49,7 @@ androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-toolin
 androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
-kotest-assertions-android = { module = "io.kotest:kotest-assertions-android", version.ref = "kotestAssertionsAndroid" }
-kotest-assertions-android-v591 = { module = "io.kotest:kotest-assertions-android", version.ref = "kotestAssertionsAndroidVersion" }
-kotest-assertions-core = { module = "io.kotest:kotest-assertions-core", version.ref = "kotestAssertionsCore" }
 kotest-assertions-core-v591 = { module = "io.kotest:kotest-assertions-core", version.ref = "kotestAssertionsCoreVersion" }
-kotest-runner-junit5 = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotestRunnerJunit5" }
 kotest-runner-junit5-v591 = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotestRunnerJunit5Version" }
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlinStdlib" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinxCoroutinesAndroid" }
