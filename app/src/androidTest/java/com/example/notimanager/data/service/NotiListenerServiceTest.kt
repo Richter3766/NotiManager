@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.service.notification.StatusBarNotification
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import com.example.notimanager.MainActivity
+import com.example.notimanager.presentation.ui.activity.MainActivity
 import com.example.notimanager.data.model.NotificationModel
 import com.example.notimanager.data.repository.NotificationRepository
 import com.example.notimanager.data.service.NotiListenerService
