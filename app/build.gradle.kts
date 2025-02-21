@@ -3,7 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     id("com.google.devtools.ksp")
-//    id("androidx.room")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -55,6 +55,11 @@ android {
     }
 }
 
+//composeCompiler {
+//    reportsDestination = layout.buildDirectory.dir("compose_compiler")
+//    stabilityConfigurationFile = rootProject.layout.projectDirectory.file("stability_config.conf")
+//}
+
 dependencies {
     // AndroidX Core 및 Lifecycle
     implementation(libs.androidx.core.ktx)
@@ -75,6 +80,8 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.core.ktx)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.runtime.livedata)
 
     // 테스트
     testImplementation(libs.junit)
@@ -106,4 +113,8 @@ dependencies {
     // byte buddy
     implementation(libs.byte.buddy)
     testImplementation(libs.byte.buddy.agent)
+
+    // hilt
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.android.compiler)
 }
