@@ -6,6 +6,7 @@ import com.example.notimanager.data.model.NotificationModel
 import com.example.notimanager.data.source.local.dao.NotificationDao
 import com.example.notimanager.data.source.local.dao.NotificationMetaDao
 import com.example.notimanager.data.utils.ModelConverter.toDomain
+import com.example.notimanager.data.utils.PendingIntentHelper.retrievePendingIntent
 import com.example.notimanager.domain.model.Notification
 import com.example.notimanager.domain.repository.NotificationRepositoryInterface
 
@@ -16,7 +17,7 @@ class NotificationRepository(
     override suspend fun getAllNotifications(): List<Notification> {
         return notificationDao.getAll()
             .asSequence()
-            .map { it.toDomain(Intent()) }
+            .map { it.toDomain(retrievePendingIntent(it.intentArray)!!) }
             .toList()
     }
 
@@ -26,5 +27,13 @@ class NotificationRepository(
 
     suspend fun insertNotificationMeta(metaModel: NotificationMetaModel): Long{
         return notificationMetaDao.insert(metaModel)
+    }
+
+    suspend fun getAppList(): List<Notification>{
+        return notificationDao.getAppList()
+            .asSequence()
+            .map { it.toDomain(retrievePendingIntent(it.intentArray)!!) }
+            .toList()
+
     }
 }
