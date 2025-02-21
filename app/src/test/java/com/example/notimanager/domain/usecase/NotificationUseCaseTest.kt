@@ -1,7 +1,8 @@
 package com.example.notimanager.domain.usecase
 
-import android.content.Intent
 import com.example.notimanager.domain.model.Notification
+import com.example.notimanager.domain.model.NotificationApp
+import com.example.notimanager.domain.model.NotificationTitle
 import com.example.notimanager.domain.repository.NotificationRepositoryInterface
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
@@ -9,37 +10,86 @@ import io.mockk.coEvery
 import io.mockk.mockk
 
 class NotificationUseCaseTest: BehaviorSpec({
-    val notificationRepositoryInterface = mockk<NotificationRepositoryInterface>()
+    val repository = mockk<NotificationRepositoryInterface>()
+    val useCase = NotificationUseCase(repository)
 
-    val intent = mockk<Intent>(relaxed = true)
-
+    val appName = "app name"
+    val title = "title"
     Context("NotificationUseCase 테스트"){
-        Given("notification List가 필요할 때"){
-            val notificationList = listOf(
-                Notification(
-                    packageName = "com.example",
-                    title = "Test Notification 1",
+        Given("getNotificationAppList 경우 "){
+            val notificationAppList = listOf(
+                NotificationApp(
+                    appName = appName,
+                    title = title,
                     content = "Content 1",
                     timestamp = System.currentTimeMillis(),
-                    intent = intent
                 ),
-                Notification(
-                    packageName = "com.example",
-                    title = "Test Notification 2",
+                NotificationApp(
+                    appName = appName,
+                    title = title,
                     content = "Content 2",
                     timestamp = System.currentTimeMillis(),
-                    intent = intent
                 )
             )
 
-            When("getAllNotifications를 실행하면"){
-                coEvery { notificationRepositoryInterface.getAllNotifications() } returns notificationList
+            When("호출 시"){
+                coEvery { repository.getNotificationAppList()  } returns notificationAppList
 
-                Then("해당 리스트를 반환받아야 한다."){
-                    val result = notificationRepositoryInterface.getAllNotifications()
-                    result.size shouldBe 2
-                    result[0].title shouldBe "Test Notification 1"
-                    result[1].title shouldBe "Test Notification 2"
+                Then("notificationAppList를 반환해야 한다."){
+                    val result = useCase.getNotificationAppList()
+                    result shouldBe notificationAppList
+                }
+            }
+        }
+
+        Given("getNotificationTitleList 경우 "){
+            val notificationTitleList = listOf(
+                NotificationTitle(
+                    title = title,
+                    content = "Content 1",
+                    timestamp = System.currentTimeMillis(),
+                ),
+                NotificationTitle(
+                    title = title,
+                    content = "Content 2",
+                    timestamp = System.currentTimeMillis(),
+                )
+            )
+
+            When("호출 시"){
+                coEvery { repository.getNotificationTitleList(appName, title)  } returns notificationTitleList
+
+                Then("notificationAppList를 반환해야 한다."){
+                    val result = useCase.getNotificationTitleList(appName, title)
+                    result shouldBe notificationTitleList
+                }
+            }
+        }
+
+        Given("getNotificationList 경우 "){
+            val notificationList = listOf(
+                Notification(
+                    title = title,
+                    content = "Content 1",
+                    timestamp = System.currentTimeMillis(),
+                    intent = null,
+                    intentActive = true,
+                ),
+                Notification(
+                    title = title,
+                    content = "Content 1",
+                    timestamp = System.currentTimeMillis(),
+                    intent = null,
+                    intentActive = true,
+                )
+            )
+
+            When("호출 시"){
+                coEvery { repository.getNotificationList(appName, title)  } returns notificationList
+
+                Then("notificationAppList를 반환해야 한다."){
+                    val result = useCase.getNotificationList(appName, title)
+                    result shouldBe notificationList
                 }
             }
         }
