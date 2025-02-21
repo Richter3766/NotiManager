@@ -27,13 +27,16 @@ class NotiListenerService: NotificationListenerService() {
                 appName = NameGetter.getAppName(this, it),
                 title = title,
                 content = content,
-                timestamp = postTime,
-                intentArray = intentArray ?: "".toByteArray()
+                timestamp = postTime
             )
 
             CoroutineScope(Dispatchers.IO).launch {
                 val id = notificationRepository.insertNotification(notificationModel)
-                val notificationMetaModel = NotificationMetaModel(notificationId = id)
+                val notificationMetaModel = NotificationMetaModel(
+                    notificationId = id,
+                    intentActive = true,
+                    intentArray = intentArray ?: "".toByteArray()
+                )
                 notificationRepository.insertNotificationMeta(notificationMetaModel)
             }
         }
