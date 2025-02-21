@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 
 @Entity(
     tableName = "notification",
-    indices = [Index(value = ["appName", "timestamp"], unique = false)]
+    indices = [Index(value = ["appName", "title", "timestamp"], unique = false)]
 )
 data class NotificationModel(
     @PrimaryKey(autoGenerate = true)
