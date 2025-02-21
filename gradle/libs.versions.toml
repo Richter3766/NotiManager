@@ -2,6 +2,8 @@
 agp = "8.8.1"
 byteBuddy = "1.17.1"
 byteBuddyAgent = "1.17.1"
+hiltAndroid = "2.51.1"
+hiltAndroidCompiler = "2.51.1"
 jacksonModuleKotlin = "2.18.2"
 kotestAssertionsAndroid = "5.9.1"
 kotestAssertionsAndroidVersion = "5.9.1"
@@ -25,6 +27,8 @@ roomCompiler = "2.6.1"
 roomVersion = "2.6.1"
 coreKtxVersion = "1.6.1"
 kotestRunnerJunit5Jvm = "5.9.1"
+appcompat = "1.7.0"
+runtimeLivedata = "1.7.8"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -34,6 +38,8 @@ androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "
 androidx-room-testing = { module = "androidx.room:room-testing" }
 byte-buddy = { module = "net.bytebuddy:byte-buddy", version.ref = "byteBuddy" }
 byte-buddy-agent = { module = "net.bytebuddy:byte-buddy-agent", version.ref = "byteBuddyAgent" }
+hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }
+hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hiltAndroidCompiler" }
 io-mockk-mockk-android = { module = "io.mockk:mockk-android", version.ref = "mockkAndroid" }
 jackson-module-kotlin = { module = "com.fasterxml.jackson.module:jackson-module-kotlin", version.ref = "jacksonModuleKotlin" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -60,6 +66,8 @@ mockk = { module = "io.mockk:mockk" }
 mockk-android = { module = "io.mockk:mockk-android" }
 mockk-mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 mockk-mockk-android = { module = "io.mockk:mockk-android" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+androidx-runtime-livedata = { group = "androidx.compose.runtime", name = "runtime-livedata", version.ref = "runtimeLivedata" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
