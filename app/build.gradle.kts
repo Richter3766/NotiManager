@@ -88,6 +88,8 @@ dependencies {
     implementation(libs.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.runtime.livedata)
+    implementation(libs.androidx.datastore)
+    implementation(libs.protolite.well.known.types)
 
     // 테스트
     testImplementation(libs.junit)
