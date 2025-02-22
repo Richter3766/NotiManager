@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    id("androidx.room")
+    id("org.jetbrains.kotlinx.kover")
     id("com.google.devtools.ksp")
     id("com.google.dagger.hilt.android")
 }
@@ -12,7 +14,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.notimanager"
-        minSdk = 26
+        minSdk = 28
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
@@ -53,6 +55,10 @@ android {
 
         }
     }
+
+    room {
+        schemaDirectory("$projectDir/schemas")
+    }
 }
 
 //composeCompiler {
@@ -82,6 +88,8 @@ dependencies {
     implementation(libs.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.runtime.livedata)
+    implementation(libs.androidx.datastore)
+    implementation(libs.protolite.well.known.types)
 
     // 테스트
     testImplementation(libs.junit)
@@ -116,5 +124,6 @@ dependencies {
 
     // hilt
     implementation(libs.hilt.android)
+    implementation(libs.androidx.hilt.navigation.compose)
     ksp(libs.hilt.android.compiler)
 }

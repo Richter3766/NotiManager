@@ -5,4 +5,5 @@ data class NotificationApp(
     val title: String,
     val content: String,
     val timestamp: Long,
+    val appIconResId: String
 )

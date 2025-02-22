@@ -4,7 +4,7 @@ import com.example.notimanager.domain.model.Notification
 import com.example.notimanager.domain.model.NotificationApp
 import com.example.notimanager.domain.model.NotificationTitle
 
-interface NotificationRepositoryInterface {
+interface NotificationRepositoryDomainInterface {
     suspend fun getNotificationAppList(): List<NotificationApp>
     suspend fun getNotificationTitleList(appName: String, title: String): List<NotificationTitle>
     suspend fun getNotificationList(appName: String, title: String): List<Notification>

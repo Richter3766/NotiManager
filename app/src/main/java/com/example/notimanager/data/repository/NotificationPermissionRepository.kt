@@ -15,8 +15,9 @@ class NotificationPermissionRepository @Inject constructor(
         return flat != null && flat.contains(pkgName)
     }
 
-    override fun requestPermission(context: Context) {
+    override fun requestPermission() {
         val intent = Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS")
-        context.startActivity(intent)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        appContext.startActivity(intent)
     }
 }

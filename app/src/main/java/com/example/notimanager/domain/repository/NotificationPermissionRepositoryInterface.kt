@@ -4,5 +4,5 @@ import android.content.Context
 
 interface NotificationPermissionRepositoryInterface {
     fun isNotificationServiceEnabled(): Boolean
-    fun requestPermission(context: Context)
+    fun requestPermission()
 }

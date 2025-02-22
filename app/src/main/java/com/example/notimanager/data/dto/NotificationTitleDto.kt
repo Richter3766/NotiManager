@@ -6,12 +6,14 @@ data class NotificationTitleDto(
     val title: String,
     val content: String,
     val timestamp: Long,
+    val notificationIconResId: String
 ) {
     fun toDomain(): NotificationTitle {
         return NotificationTitle(
             title = this.title,
             content = this.content,
             timestamp = this.timestamp,
+            notificationIconResId = this.notificationIconResId
         )
     }
 }
