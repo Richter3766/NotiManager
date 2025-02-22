@@ -1,13 +1,19 @@
 import android.app.Notification
 import android.app.PendingIntent
 import android.content.Intent
+import android.graphics.drawable.Icon
+import android.net.Uri
 import android.os.Bundle
 import android.service.notification.StatusBarNotification
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
+import com.example.notimanager.data.model.AppIconModel
+import com.example.notimanager.data.model.NotificationIconModel
+import com.example.notimanager.data.model.NotificationMetaModel
 import com.example.notimanager.presentation.ui.activity.MainActivity
 import com.example.notimanager.data.model.NotificationModel
 import com.example.notimanager.data.repository.NotificationRepository
+import com.example.notimanager.data.repository.NotificationRepositoryDomain
 import com.example.notimanager.data.service.NotiListenerService
 import com.example.notimanager.data.utils.NameGetter
 import com.example.notimanager.data.utils.PendingIntentHelper
@@ -49,12 +55,17 @@ class NotiListenerServiceTest {
     fun testOnNotificationPosted() = runBlocking {
         // Mocking the StatusBarNotification
         val mockNotification = mockk<Notification>(relaxed = true)
-
         val extras = Bundle().apply {
             putString("android.title", "Test Title")
             putString("android.text", "Test Content")
         }
         mockNotification.extras = extras
+
+        val mockIcon = mockk<Icon>(relaxed = true)
+        val uri = "content://path/to/icon"
+        every { mockIcon.uri } returns Uri.parse(uri)
+        every { mockIcon.toString() } returns uri
+        every { mockNotification.smallIcon } returns mockIcon
 
         val mockSbn = mockk<StatusBarNotification>(relaxed = true).apply {
             every { notification } returns mockNotification
@@ -85,11 +96,32 @@ class NotiListenerServiceTest {
         )
         coEvery { notificationRepository.insertNotification(expectedNotificationModel) } returns 1L
 
+        val notificationMetaModel = NotificationMetaModel(
+            notificationId = 1L,
+            intentActive = true,
+            intentArray = intentArray
+        )
+        coEvery { notificationRepository.insertNotificationMeta(notificationMetaModel) } returns 1L
+        val notificationIconModel = NotificationIconModel(
+            notificationId = 1L,
+            notificationIconResId = uri
+        )
+        coEvery { notificationRepository.insertNotificationIcon(notificationIconModel) } returns 1L
+
+        val appIconModel = AppIconModel(
+            appIconResId = "com.example.test",
+            notiAppName = "Test App"
+        )
+        coEvery { notificationRepository.insertAppIcon(appIconModel) } returns 1L
+
         // Call the method under test
         notiListenerService.onNotificationPosted(mockSbn)
 
         // Verify that the repository's insertNotification method was called
         coVerify { notificationRepository.insertNotification(expectedNotificationModel) }
+        coVerify { notificationRepository.insertNotificationMeta(notificationMetaModel) }
+        coVerify { notificationRepository.insertNotificationIcon(notificationIconModel) }
+        coVerify { notificationRepository.insertAppIcon(appIconModel) }
 
         // Verify that PendingIntentHelper was called
         verify { PendingIntentHelper.savePendingIntent(mockPendingIntent) }
