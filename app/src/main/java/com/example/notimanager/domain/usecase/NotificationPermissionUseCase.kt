@@ -1,6 +1,5 @@
 package com.example.notimanager.domain.usecase
 
-import android.content.Context
 import com.example.notimanager.domain.repository.NotificationPermissionRepositoryInterface
 
 class NotificationPermissionUseCase(
@@ -10,9 +9,9 @@ class NotificationPermissionUseCase(
         return repository.isNotificationServiceEnabled()
     }
 
-    fun requestPermission(context: Context) {
+    fun requestPermission() {
         if (!isNotificationServiceEnabled()) {
-            repository.requestPermission(context)
+            repository.requestPermission()
         }
     }
 }

@@ -16,12 +16,16 @@ class NotificationPermissionViewModel @Inject constructor(
     private val _isPermissionGranted = MutableLiveData<Boolean>()
     val isPermissionGranted: LiveData<Boolean> get() = _isPermissionGranted
 
+    init {
+        checkNotificationPermission()
+    }
+
     fun checkNotificationPermission() {
         _isPermissionGranted.value = notificationPermissionUseCase.isNotificationServiceEnabled()
     }
 
-    fun requestPermission(context: Context) {
-        notificationPermissionUseCase.requestPermission(context)
+    fun requestPermission() {
+        notificationPermissionUseCase.requestPermission()
         checkNotificationPermission()
     }
 }
