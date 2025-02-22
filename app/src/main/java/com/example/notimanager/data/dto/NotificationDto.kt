@@ -8,7 +8,8 @@ data class NotificationDto(
     val content: String,
     val timestamp: Long,
     val intentActive: Boolean,
-    val intentArray: ByteArray
+    val intentArray: ByteArray,
+    val notificationIconResId: Int
 ){
     fun toDomain(): Notification {
         return Notification(
@@ -17,6 +18,7 @@ data class NotificationDto(
             timestamp = this.timestamp,
             intent = retrievePendingIntent(intentArray)!!,
             intentActive = this.intentActive,
+            notificationIconResId = this.notificationIconResId
         )
     }
 
