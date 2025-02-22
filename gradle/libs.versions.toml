@@ -4,6 +4,7 @@ byteBuddy = "1.17.1"
 byteBuddyAgent = "1.17.1"
 hiltAndroid = "2.51.1"
 hiltAndroidCompiler = "2.51.1"
+hiltNavigationCompose = "1.2.0"
 jacksonModuleKotlin = "2.18.2"
 kotestAssertionsAndroid = "5.9.1"
 kotestAssertionsAndroidVersion = "5.9.1"
@@ -32,6 +33,7 @@ runtimeLivedata = "1.7.8"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomCompiler" }
 androidx-room-ktx = { module = "androidx.room:room-ktx" }
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomVersion" }
