@@ -5,8 +5,6 @@ import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import androidx.room.migration.AutoMigrationSpec
-import androidx.room.migration.Migration
 import com.example.notimanager.data.model.AppIconModel
 import com.example.notimanager.data.model.NotificationIconModel
 import com.example.notimanager.data.model.NotificationMetaModel
@@ -17,7 +15,7 @@ import com.example.notimanager.data.source.local.dao.NotificationIconDao
 import com.example.notimanager.data.source.local.dao.NotificationMetaDao
 
 @Database(
-    version = 2,
+    version = 3,
     entities =
     [
         NotificationModel::class,
@@ -25,9 +23,9 @@ import com.example.notimanager.data.source.local.dao.NotificationMetaDao
         NotificationIconModel::class,
         AppIconModel::class
     ],
-//    autoMigrations = [
-//        AutoMigration (from = 1, to = 2)
-//    ]
+    autoMigrations = [
+        AutoMigration (from = 2, to = 3)
+    ]
 )
 abstract class NotiManagerDatabase : RoomDatabase() {
     abstract fun notificationDao(): NotificationDao
@@ -45,7 +43,7 @@ abstract class NotiManagerDatabase : RoomDatabase() {
                     context.applicationContext,
                     NotiManagerDatabase::class.java,
                     "notimanager_database"
-                ).build()
+                ).fallbackToDestructiveMigration().build()
                 INSTANCE = instance
                 instance
             }

@@ -8,5 +8,5 @@ data class Notification(
     val timestamp: Long,
     val intent: PendingIntent?,
     val intentActive: Boolean,
-    val notificationIconResId: Int
+    val notificationIconResId: String
 )

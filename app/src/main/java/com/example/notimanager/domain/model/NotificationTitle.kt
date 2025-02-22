@@ -4,5 +4,5 @@ data class NotificationTitle(
     val title: String,
     val content: String,
     val timestamp: Long,
-    val notificationIconResId: Int
+    val notificationIconResId: String
 )

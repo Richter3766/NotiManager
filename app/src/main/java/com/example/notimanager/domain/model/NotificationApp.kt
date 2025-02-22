@@ -5,5 +5,5 @@ data class NotificationApp(
     val title: String,
     val content: String,
     val timestamp: Long,
-    val appIconResId: Int
+    val appIconResId: String
 )

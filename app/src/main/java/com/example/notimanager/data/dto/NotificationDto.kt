@@ -9,7 +9,7 @@ data class NotificationDto(
     val timestamp: Long,
     val intentActive: Boolean,
     val intentArray: ByteArray,
-    val notificationIconResId: Int
+    val notificationIconResId: String
 ){
     fun toDomain(): Notification {
         return Notification(

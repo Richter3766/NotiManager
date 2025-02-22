@@ -1,5 +1,6 @@
 package com.example.notimanager.data.service
 
+import android.net.Uri
 import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
 import com.example.notimanager.data.model.AppIconModel
@@ -7,7 +8,6 @@ import com.example.notimanager.data.model.NotificationIconModel
 import com.example.notimanager.data.model.NotificationMetaModel
 import com.example.notimanager.data.model.NotificationModel
 import com.example.notimanager.data.repository.NotificationRepositoryInterface
-import com.example.notimanager.data.utils.AppIconGetter.getAppIconResId
 import com.example.notimanager.data.utils.NameGetter
 import com.example.notimanager.data.utils.PendingIntentHelper
 import dagger.hilt.android.AndroidEntryPoint
@@ -37,10 +37,6 @@ class NotiListenerService: NotificationListenerService() {
                 content = content,
                 timestamp = postTime
             )
-
-            val notificationIconResId = notification.smallIcon.resId
-            val appIconResId = getAppIconResId(this, it.packageName)
-
             CoroutineScope(Dispatchers.IO).launch {
                 val id = notificationRepository.insertNotification(notificationModel)
 
@@ -52,16 +48,23 @@ class NotiListenerService: NotificationListenerService() {
                     )
                     notificationRepository.insertNotificationMeta(notificationMetaModel)
                 }
+
                 launch {
+                    val notificationIconUri: String = try{
+                        notification.smallIcon.uri.toString()
+                    }catch (ex: Exception){
+                        Uri.parse("android.resource://${it.packageName}/drawable/ic_launcher_foreground").toString()
+                    }
                     val notificationIconModel = NotificationIconModel(
                         notificationId = id,
-                        notificationIconResId = notificationIconResId
+                        notificationIconResId = notificationIconUri
                     )
                     notificationRepository.insertNotificationIcon(notificationIconModel)
                 }
+
                 launch {
                     val appIconModel = AppIconModel(
-                        appIconResId = appIconResId,
+                        appIconResId = it.packageName,
                         notiAppName = appName
                     )
                     notificationRepository.insertAppIcon(appIconModel)

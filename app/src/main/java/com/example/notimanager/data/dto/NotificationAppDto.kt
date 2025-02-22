@@ -7,7 +7,7 @@ data class NotificationAppDto(
     val title: String,
     val content: String,
     val timestamp: Long,
-    val appIconResId: Int
+    val appIconResId: String
 ){
     fun toDomain(): NotificationApp {
         return NotificationApp(

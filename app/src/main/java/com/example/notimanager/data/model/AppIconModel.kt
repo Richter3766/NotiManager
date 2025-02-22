@@ -9,5 +9,5 @@ import androidx.room.PrimaryKey
 data class AppIconModel(
     @PrimaryKey
     val notiAppName: String,
-    val appIconResId: Int
+    val appIconResId: String
 )
