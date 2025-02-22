@@ -1,7 +1,7 @@
 package com.example.notimanager.di
 
 import com.example.notimanager.domain.repository.NotificationPermissionRepositoryInterface
-import com.example.notimanager.domain.repository.NotificationRepositoryInterface
+import com.example.notimanager.domain.repository.NotificationRepositoryDomainInterface
 import com.example.notimanager.domain.usecase.NotificationAppUseCase
 import com.example.notimanager.domain.usecase.NotificationPermissionUseCase
 import com.example.notimanager.domain.usecase.NotificationTitleUseCase
@@ -26,7 +26,7 @@ class UseCaseModule {
     @Provides
     @Singleton
     fun provideNotificationUseCase(
-        notificationRepository: NotificationRepositoryInterface
+        notificationRepository: NotificationRepositoryDomainInterface
     ): NotificationUseCase {
         return NotificationUseCase(notificationRepository)
     }
@@ -34,7 +34,7 @@ class UseCaseModule {
     @Provides
     @Singleton
     fun provideNotificationAppUseCase(
-        notificationRepository: NotificationRepositoryInterface
+        notificationRepository: NotificationRepositoryDomainInterface
     ): NotificationAppUseCase {
         return NotificationAppUseCase(notificationRepository)
     }
@@ -42,7 +42,7 @@ class UseCaseModule {
     @Provides
     @Singleton
     fun provideNotificationTitleUseCase(
-        notificationRepository: NotificationRepositoryInterface
+        notificationRepository: NotificationRepositoryDomainInterface
     ): NotificationTitleUseCase {
         return NotificationTitleUseCase(notificationRepository)
     }
