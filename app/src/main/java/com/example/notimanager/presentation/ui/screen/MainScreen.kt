@@ -1,12 +1,12 @@
 package com.example.notimanager.presentation.ui.screen
 
 import androidx.compose.runtime.Composable
-import com.example.notimanager.presentation.ui.component.NotificationListView
+import androidx.navigation.NavController
+import com.example.notimanager.presentation.ui.component.NotificationAppListView
 import com.example.notimanager.presentation.ui.component.PermissionCheck
 
 @Composable
-fun MainScreen(){
+fun MainScreen(navController: NavController){
     PermissionCheck()
-    NotificationListView()
-
+    NotificationAppListView(navController)
 }

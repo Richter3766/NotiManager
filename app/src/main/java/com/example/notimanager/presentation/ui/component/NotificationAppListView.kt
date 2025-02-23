@@ -1,5 +1,6 @@
 package com.example.notimanager.presentation.ui.component
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -16,13 +17,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.example.notimanager.common.objects.DateFormatter.formatTimestamp
 import com.example.notimanager.domain.model.NotificationApp
 import com.example.notimanager.presentation.stateholder.state.NotificationAppState
 import com.example.notimanager.presentation.stateholder.viewmodel.NotificationAppViewModel
 
 @Composable
-fun NotificationListView(viewModel: NotificationAppViewModel = hiltViewModel()) {
+fun NotificationAppListView(navController: NavController, viewModel: NotificationAppViewModel = hiltViewModel()) {
     val notificationAppState by viewModel.notificationAppState.observeAsState(NotificationAppState())
 
     Column {
@@ -35,7 +37,11 @@ fun NotificationListView(viewModel: NotificationAppViewModel = hiltViewModel()) 
             // 리스트 표시
             LazyColumn {
                 items(notificationAppState.notificationAppList) { notification ->
-                    NotificationItemView(notification = notification)
+                    NotificationAppItemView(notification = notification, onClick = {
+                        navController.navigate(
+                            "titleScreen/${notification.appName}/${notification.title}"
+                        )
+                    })
                 }
             }
         }
@@ -43,11 +49,13 @@ fun NotificationListView(viewModel: NotificationAppViewModel = hiltViewModel()) 
 }
 
 @Composable
-fun NotificationItemView(notification: NotificationApp) {
+fun NotificationAppItemView(notification: NotificationApp, onClick: () -> Unit) {
     Row(
         modifier = Modifier
             .padding(16.dp)
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .clickable(onClick = onClick)
+        ,
         verticalAlignment = Alignment.CenterVertically
     ) {
         AppIconView(notification.appIconResId)

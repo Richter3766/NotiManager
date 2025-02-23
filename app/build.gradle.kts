@@ -114,6 +114,8 @@ dependencies {
     implementation(libs.androidx.runtime.livedata)
     implementation(libs.androidx.datastore)
     implementation(libs.protolite.well.known.types)
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.coil.compose)
 
     // 테스트
     testImplementation(libs.junit)
