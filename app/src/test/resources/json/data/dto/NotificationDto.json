@@ -1,0 +1,42 @@
+[
+  {
+    "title": "New Message",
+    "content": "You have received a new message from John.",
+    "timestamp": 1672531199000,
+    "intentActive": true,
+    "intentArray": [1, 2, 3, 4, 5],
+    "notificationIconResId": "icon_messenger"
+  },
+  {
+    "title": "Weather Update",
+    "content": "Rain is expected in your area today.",
+    "timestamp": 1672531299000,
+    "intentActive": false,
+    "intentArray": [6, 7, 8, 9, 10],
+    "notificationIconResId": "icon_weather"
+  },
+  {
+    "title": "New Email",
+    "content": "You've got a new email from support@example.com.",
+    "timestamp": 1672531399000,
+    "intentActive": true,
+    "intentArray": [11, 12, 13],
+    "notificationIconResId": "icon_email"
+  },
+  {
+    "title": "Event Reminder",
+    "content": "Don't forget your meeting at 3 PM today.",
+    "timestamp": 1672531499000,
+    "intentActive": true,
+    "intentArray": [14, 15],
+    "notificationIconResId": "icon_calendar"
+  },
+  {
+    "title": "Breaking News",
+    "content": "New developments in the tech industry.",
+    "timestamp": 1672531599000,
+    "intentActive": false,
+    "intentArray": [16, 17, 18],
+    "notificationIconResId": "icon_news"
+  }
+]

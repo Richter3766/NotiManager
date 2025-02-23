@@ -5,6 +5,7 @@ byteBuddyAgent = "1.17.1"
 datastore = "1.1.2"
 hiltAndroid = "2.51.1"
 hiltAndroidCompiler = "2.51.1"
+hiltAndroidTesting = "2.51.1"
 hiltNavigationCompose = "1.2.0"
 jacksonModuleKotlin = "2.18.2"
 kotestAssertionsAndroid = "5.9.1"
@@ -45,6 +46,7 @@ byte-buddy = { module = "net.bytebuddy:byte-buddy", version.ref = "byteBuddy" }
 byte-buddy-agent = { module = "net.bytebuddy:byte-buddy-agent", version.ref = "byteBuddyAgent" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }
 hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hiltAndroidCompiler" }
+hilt-android-testing = { module = "com.google.dagger:hilt-android-testing", version.ref = "hiltAndroidTesting" }
 io-mockk-mockk-android = { module = "io.mockk:mockk-android", version.ref = "mockkAndroid" }
 jackson-module-kotlin = { module = "com.fasterxml.jackson.module:jackson-module-kotlin", version.ref = "jacksonModuleKotlin" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }

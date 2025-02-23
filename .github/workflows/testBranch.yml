@@ -15,6 +15,7 @@ on:
 jobs:
   unit_tests:
     runs-on: ubuntu-latest
+    permissions: write-all
 
     steps:
     - uses: actions/checkout@v4
@@ -24,15 +25,24 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
+        cache: gradle
 
     - name: Setup Android SDK
       uses: android-actions/setup-android@v3
 
-    - name: Unit Test
+    - name: Generate kover coverage report
       run: |
         chmod +x ./gradlew
-        ./gradlew testDebugUnitTest
+        ./gradlew koverXmlReport
 
-    - name: Android Test Report
-      uses: asadmansr/android-test-report-action@v1.2.0
-      if: ${{ always() }} # IMPORTANT: run Android Test Report regardless
+    - name: Add coverage report to PR
+      id: kover
+      uses: mi-kas/kover-report@v1.9
+      with:
+        path: |
+          ${{ github.workspace }}/app/build/reports/kover/report.xml
+        title: Code Coverage
+        update-comment: true
+        min-coverage-overall: 10
+        min-coverage-changed-files: 10
+        coverage-counter-type: LINE

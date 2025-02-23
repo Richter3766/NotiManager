@@ -45,6 +45,8 @@ android {
         unitTests.all {
             it.useJUnitPlatform()
         }
+
+        unitTests.isReturnDefaultValues = true
         packaging {
             resources {
                 excludes += "META-INF/*"
@@ -65,6 +67,28 @@ android {
 //    reportsDestination = layout.buildDirectory.dir("compose_compiler")
 //    stabilityConfigurationFile = rootProject.layout.projectDirectory.file("stability_config.conf")
 //}
+
+kover {
+    reports{
+        filters{
+            excludes.packages(listOf(
+                "*.source",
+                "dagger",
+                "hilt_aggregated_deps",
+                "*.di",
+                    ))
+            excludes.classes(listOf(
+                "*_*Factory*",
+                "*_Factory*",
+                "Hilt_*",
+                "*_Hilt*",
+                "*_MembersInjector"
+            ))
+        }
+    }
+
+}
+
 
 dependencies {
     // AndroidX Core 및 Lifecycle
@@ -126,4 +150,10 @@ dependencies {
     implementation(libs.hilt.android)
     implementation(libs.androidx.hilt.navigation.compose)
     ksp(libs.hilt.android.compiler)
+
+    // hilt test
+    testImplementation(libs.hilt.android.testing)
+    kspTest(libs.hilt.android.compiler)
+    androidTestImplementation(libs.hilt.android.testing)
+    kspAndroidTest(libs.hilt.android.compiler)
 }

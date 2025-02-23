@@ -1,0 +1,5 @@
+{
+  "notificationId" : 1,
+  "intentActive" : true,
+  "intentArray": [6, 7, 8, 9, 10]
+}

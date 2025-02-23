@@ -1,0 +1,37 @@
+[
+  {
+    "appName": "Messenger",
+    "title": "New Message",
+    "content": "You have received a new message from John.",
+    "timestamp": 1672531199000,
+    "appIconResId": "icon_messenger"
+  },
+  {
+    "appName": "Weather",
+    "title": "Weather Update",
+    "content": "Rain is expected in your area today.",
+    "timestamp": 1672531299000,
+    "appIconResId": "icon_weather"
+  },
+  {
+    "appName": "Email",
+    "title": "New Email",
+    "content": "You've got a new email from support@example.com.",
+    "timestamp": 1672531399000,
+    "appIconResId": "icon_email"
+  },
+  {
+    "appName": "Calendar",
+    "title": "Event Reminder",
+    "content": "Don't forget your meeting at 3 PM today.",
+    "timestamp": 1672531499000,
+    "appIconResId": "icon_calendar"
+  },
+  {
+    "appName": "News",
+    "title": "Breaking News",
+    "content": "New developments in the tech industry.",
+    "timestamp": 1672531599000,
+    "appIconResId": "icon_news"
+  }
+]
