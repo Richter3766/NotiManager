@@ -39,7 +39,7 @@ jobs:
       if: ${{ always() }} # IMPORTANT: run Android Test Report regardless
 
     - name: Kover Coverage Report
-      uses: stevenleadbeater/kotlin-kover-action@v1.0.0
+      uses: stevenleadbeater/kotlin-kover-action@v1.0.3
       id: kover-tests
       with:
 #          coverage-threshold: 90
