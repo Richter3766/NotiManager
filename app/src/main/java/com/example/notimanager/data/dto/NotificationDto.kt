@@ -16,33 +16,9 @@ data class NotificationDto(
             title = this.title,
             content = this.content,
             timestamp = this.timestamp,
-            intent = retrievePendingIntent(intentArray)!!,
+            intent = retrievePendingIntent(intentArray),
             intentActive = this.intentActive,
             notificationIconResId = this.notificationIconResId
         )
-    }
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as NotificationDto
-
-        if (title != other.title) return false
-        if (content != other.content) return false
-        if (timestamp != other.timestamp) return false
-        if (intentActive != other.intentActive) return false
-        if (!intentArray.contentEquals(other.intentArray)) return false
-
-        return true
-    }
-
-    override fun hashCode(): Int {
-        var result = title.hashCode()
-        result = 31 * result + content.hashCode()
-        result = 31 * result + timestamp.hashCode()
-        result = 31 * result + intentActive.hashCode()
-        result = 31 * result + intentArray.contentHashCode()
-        return result
     }
 }

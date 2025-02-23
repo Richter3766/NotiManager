@@ -29,7 +29,6 @@ object PendingIntentHelper {
             parcel.recycle()
             pendingIntent
         } catch (e: Exception) {
-            Log.e(TAG, "Error retrieving PendingIntent", e)
             null // TODO: 해당 앱으로 이동하는 기본 PendingIntent로 교체
         }
     }
