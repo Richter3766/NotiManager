@@ -29,23 +29,20 @@ jobs:
     - name: Setup Android SDK
       uses: android-actions/setup-android@v3
 
-    - name: Unit Test
+    - name: Generate kover coverage report
       run: |
         chmod +x ./gradlew
-        ./gradlew testDebugUnitTest
+        ./gradlew koverXmlReport
 
-    - name: Android Test Report
-      uses: asadmansr/android-test-report-action@v1.2.0
-      if: ${{ always() }} # IMPORTANT: run Android Test Report regardless
-
-    - name: Kover Coverage Report
-      uses: stevenleadbeater/kotlin-kover-action@v1.0.3
-      id: kover-tests
+    - name: Add coverage report to PR
+      id: kover
+      uses: mi-kas/kover-report@v1.9
       with:
-#          coverage-threshold: 90
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-
-#    - name: Check coverage
-#      if: ${{(steps.kover-tests.outputs.line-coverage) < 90}}
-#      shell: bash
-#      run: exit "Line coverage expected to be > 80 but was ${{steps.kover-tests.outputs.line-coverage}}"
+         path: |
+          ${{ github.workspace }}/project1/build/reports/kover/report.xml
+          ${{ github.workspace }}/project2/build/reports/kover/report.xml
+          title: Code Coverage
+          update-comment: true
+          min-coverage-overall: 10
+          min-coverage-changed-files: 10
+          coverage-counter-type: LINE
