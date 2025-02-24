@@ -5,7 +5,7 @@
     "timestamp": 1672531199000,
     "intentActive": true,
     "intentArray": [1, 2, 3, 4, 5],
-    "notificationIconResId": "icon_messenger"
+    "iconBytes": [6, 7, 8, 9, 10]
   },
   {
     "title": "Weather Update",
@@ -13,7 +13,7 @@
     "timestamp": 1672531299000,
     "intentActive": false,
     "intentArray": [6, 7, 8, 9, 10],
-    "notificationIconResId": "icon_weather"
+    "iconBytes": [6, 7, 8, 9, 10]
   },
   {
     "title": "New Email",
@@ -21,7 +21,7 @@
     "timestamp": 1672531399000,
     "intentActive": true,
     "intentArray": [11, 12, 13],
-    "notificationIconResId": "icon_email"
+    "iconBytes": [6, 7, 8, 9, 10]
   },
   {
     "title": "Event Reminder",
@@ -29,7 +29,7 @@
     "timestamp": 1672531499000,
     "intentActive": true,
     "intentArray": [14, 15],
-    "notificationIconResId": "icon_calendar"
+    "iconBytes": [6, 7, 8, 9, 10]
   },
   {
     "title": "Breaking News",
@@ -37,6 +37,6 @@
     "timestamp": 1672531599000,
     "intentActive": false,
     "intentArray": [16, 17, 18],
-    "notificationIconResId": "icon_news"
+    "iconBytes": [6, 7, 8, 9, 10]
   }
 ]

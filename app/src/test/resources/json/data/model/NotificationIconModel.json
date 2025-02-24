@@ -1,4 +1,4 @@
 {
   "notificationId" : 1,
-  "notificationIconResId": "icon_weather"
+  "iconBytes": [6, 7, 8, 9, 10]
 }

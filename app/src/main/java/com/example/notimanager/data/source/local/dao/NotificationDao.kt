@@ -14,8 +14,9 @@ interface NotificationDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(notification: NotificationModel): Long
 
-    @Query("""
-        SELECT n1.appName, n1.title, n1.content, n1.timestamp, ai.appIconResId 
+    @Query(
+        """
+        SELECT n1.appName, n1.title, n1.content, n1.timestamp, ai.iconBytes 
         FROM notification AS n1
         INNER JOIN app_icon AS ai ON n1.appName = ai.notiAppName
         WHERE timestamp = (
@@ -24,11 +25,13 @@ interface NotificationDao {
             WHERE n1.appName = n2.appName
         )
         ORDER BY timestamp DESC
-    """)
+    """
+    )
     suspend fun getNotificationAppList(): List<NotificationAppDto>
 
-    @Query("""
-        SELECT n1.title, n1.content, n1.timestamp, ni.notificationIconResId
+    @Query(
+        """
+        SELECT n1.title, n1.content, n1.timestamp, ni.iconBytes
         FROM notification AS n1
         INNER JOIN notification_icon AS ni ON n1.id = ni.notificationId
         WHERE n1.appName = :appName AND n1.title = :title AND timestamp = (
@@ -37,16 +40,19 @@ interface NotificationDao {
             WHERE n1.appName = n2.appName AND n1.title = n2.title
         )
         ORDER BY timestamp DESC
-    """)
+    """
+    )
     suspend fun getNotificationTitleList(appName: String, title: String): List<NotificationTitleDto>
 
-    @Query("""
-        SELECT n.title, n.content, n.timestamp, nm.intentActive, nm.intentArray, ni.notificationIconResId
+    @Query(
+        """
+        SELECT n.title, n.content, n.timestamp, nm.intentActive, nm.intentArray, ni.iconBytes
         FROM notification AS n
         INNER JOIN notification_meta AS nm ON n.id = nm.notificationId
         INNER JOIN notification_icon AS ni ON n.id = ni.notificationId
         WHERE n.appName = :appName AND n.title = :title
         ORDER BY timestamp DESC
-    """)
+    """
+    )
     suspend fun getNotificationList(appName: String, title: String): List<NotificationDto>
 }

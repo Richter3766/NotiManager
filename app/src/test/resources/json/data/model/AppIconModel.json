@@ -1,4 +1,4 @@
 {
   "notiAppName" : "Weather App",
-  "appIconResId": "icon_weather"
+  "iconBytes": [6, 7, 8, 9, 10]
 }

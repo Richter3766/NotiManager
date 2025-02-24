@@ -3,30 +3,30 @@
     "title": "New Message",
     "content": "You have received a new message from John.",
     "timestamp": 1672531199000,
-    "notificationIconResId": "icon_messenger"
+    "notificationIcon": null
   },
   {
     "title": "Weather Update",
     "content": "Rain is expected in your area today.",
     "timestamp": 1672531299000,
-    "notificationIconResId": "icon_weather"
+    "notificationIcon": null
   },
   {
     "title": "New Email",
     "content": "You've got a new email from support@example.com.",
     "timestamp": 1672531399000,
-    "notificationIconResId": "icon_email"
+    "notificationIcon": null
   },
   {
     "title": "Event Reminder",
     "content": "Don't forget your meeting at 3 PM today.",
     "timestamp": 1672531499000,
-    "notificationIconResId": "icon_calendar"
+    "notificationIcon": null
   },
   {
     "title": "Breaking News",
     "content": "New developments in the tech industry.",
     "timestamp": 1672531599000,
-    "notificationIconResId": "icon_news"
+    "notificationIcon": null
   }
 ]

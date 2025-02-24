@@ -13,7 +13,6 @@ import com.example.notimanager.data.model.NotificationMetaModel
 import com.example.notimanager.presentation.ui.activity.MainActivity
 import com.example.notimanager.data.model.NotificationModel
 import com.example.notimanager.data.repository.NotificationRepository
-import com.example.notimanager.data.repository.NotificationRepositoryDomain
 import com.example.notimanager.data.service.NotiListenerService
 import com.example.notimanager.data.utils.NameGetter
 import com.example.notimanager.data.utils.PendingIntentHelper
@@ -104,12 +103,12 @@ class NotiListenerServiceTest {
         coEvery { notificationRepository.insertNotificationMeta(notificationMetaModel) } returns 1L
         val notificationIconModel = NotificationIconModel(
             notificationId = 1L,
-            notificationIconResId = uri
+            iconBytes = uri
         )
         coEvery { notificationRepository.insertNotificationIcon(notificationIconModel) } returns 1L
 
         val appIconModel = AppIconModel(
-            appIconResId = "com.example.test",
+            iconBytes = "com.example.test",
             notiAppName = "Test App"
         )
         coEvery { notificationRepository.insertAppIcon(appIconModel) } returns 1L
