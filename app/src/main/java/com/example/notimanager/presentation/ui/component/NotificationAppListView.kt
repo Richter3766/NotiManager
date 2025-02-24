@@ -31,10 +31,8 @@ fun NotificationAppListView(navController: NavController, viewModel: Notificatio
         if (notificationAppState.isLoading) {
             CircularProgressIndicator(modifier = Modifier.padding(16.dp))
         } else if (notificationAppState.error != null) {
-            // 오류 메시지 표시
 
         } else {
-            // 리스트 표시
             LazyColumn {
                 items(notificationAppState.notificationAppList) { notification ->
                     NotificationAppItemView(notification = notification, onClick = {
@@ -58,7 +56,7 @@ fun NotificationAppItemView(notification: NotificationApp, onClick: () -> Unit) 
         ,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        AppIconView(notification.appIconResId)
+        AppIconView(notification.appIcon)
         Column {
             BasicText(text = notification.appName, style = MaterialTheme.typography.headlineMedium)
             BasicText(text = notification.title, style = MaterialTheme.typography.bodyLarge)
