@@ -2,11 +2,8 @@ package com.example.notimanager.data.utils
 
 import android.app.PendingIntent
 import android.os.Parcel
-import android.util.Log
 
 object PendingIntentHelper {
-    private const val TAG = "PendingIntentHelper"
-
     fun savePendingIntent(pendingIntent: PendingIntent): ByteArray? {
         return try {
             val parcel = Parcel.obtain()
@@ -15,7 +12,6 @@ object PendingIntentHelper {
             parcel.recycle()
             bytes
         } catch (e: Exception) {
-            Log.e(TAG, "Error saving PendingIntent", e)
             null
         }
     }
