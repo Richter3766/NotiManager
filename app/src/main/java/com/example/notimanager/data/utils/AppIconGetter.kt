@@ -1,16 +1,16 @@
 package com.example.notimanager.data.utils
 
 import android.content.Context
-import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.drawable.Icon
+import com.example.notimanager.common.objects.DateFormatter.toBitmap
+import java.io.ByteArrayOutputStream
 
 object AppIconGetter {
-    fun getAppIconResId(context: Context, packageName: String): Int {
-        return try {
-            val packageManager = context.packageManager
-            val applicationInfo = packageManager.getApplicationInfo(packageName, 0)
-            applicationInfo.icon
-        } catch (e: PackageManager.NameNotFoundException) {
-            0
-        }
+    fun convertByteArray(context: Context, icon: Icon?): ByteArray{
+        val bitmap = icon?.loadDrawable(context)?.toBitmap()
+        val stream = ByteArrayOutputStream()
+        bitmap?.compress(Bitmap.CompressFormat.PNG, 100, stream)
+        return stream.toByteArray()
     }
 }
