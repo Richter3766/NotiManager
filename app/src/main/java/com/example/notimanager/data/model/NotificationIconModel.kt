@@ -18,5 +18,5 @@ import androidx.room.PrimaryKey
 data class NotificationIconModel(
     @PrimaryKey
     val notificationId: Long,
-    val notificationIconResId: String
+    val iconBytes: ByteArray
 )

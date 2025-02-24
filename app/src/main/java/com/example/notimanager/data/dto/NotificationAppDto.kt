@@ -1,5 +1,6 @@
 package com.example.notimanager.data.dto
 
+import android.graphics.BitmapFactory
 import com.example.notimanager.domain.model.NotificationApp
 
 data class NotificationAppDto(
@@ -7,7 +8,7 @@ data class NotificationAppDto(
     val title: String,
     val content: String,
     val timestamp: Long,
-    val appIconResId: String
+    val iconBytes: ByteArray
 ){
     fun toDomain(): NotificationApp {
         return NotificationApp(
@@ -15,7 +16,7 @@ data class NotificationAppDto(
             title = this.title,
             content = this.content,
             timestamp = this.timestamp,
-            appIconResId = this.appIconResId,
+            appIcon = BitmapFactory.decodeByteArray(iconBytes, 0, iconBytes.size),
         )
     }
 }

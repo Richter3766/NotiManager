@@ -1,5 +1,6 @@
 package com.example.notimanager.data.dto
 
+import android.graphics.BitmapFactory
 import com.example.notimanager.data.utils.PendingIntentHelper.retrievePendingIntent
 import com.example.notimanager.domain.model.Notification
 
@@ -9,7 +10,7 @@ data class NotificationDto(
     val timestamp: Long,
     val intentActive: Boolean,
     val intentArray: ByteArray,
-    val notificationIconResId: String
+    val iconBytes: ByteArray
 ){
     fun toDomain(): Notification {
         return Notification(
@@ -18,7 +19,7 @@ data class NotificationDto(
             timestamp = this.timestamp,
             intent = retrievePendingIntent(intentArray),
             intentActive = this.intentActive,
-            notificationIconResId = this.notificationIconResId
+            notificationIcon = BitmapFactory.decodeByteArray(iconBytes, 0, iconBytes.size)
         )
     }
 }
