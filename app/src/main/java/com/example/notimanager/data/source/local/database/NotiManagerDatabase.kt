@@ -3,10 +3,8 @@ package com.example.notimanager.data.source.local.database
 import android.content.Context
 import androidx.room.AutoMigration
 import androidx.room.Database
-import androidx.room.RenameColumn
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import androidx.room.migration.AutoMigrationSpec
 import com.example.notimanager.data.model.AppIconModel
 import com.example.notimanager.data.model.NotificationIconModel
 import com.example.notimanager.data.model.NotificationMetaModel
@@ -16,10 +14,9 @@ import com.example.notimanager.data.source.local.dao.NotificationDao
 import com.example.notimanager.data.source.local.dao.NotificationIconDao
 import com.example.notimanager.data.source.local.dao.NotificationMetaDao
 import com.example.notimanager.data.source.local.database.MigrationObject.MIGRATION_3_4
-import com.example.notimanager.data.source.local.database.MigrationObject.MIGRATION_4_5
 
 @Database(
-    version = 4,
+    version = 5,
     entities =
     [
         NotificationModel::class,
@@ -27,9 +24,9 @@ import com.example.notimanager.data.source.local.database.MigrationObject.MIGRAT
         NotificationIconModel::class,
         AppIconModel::class
     ],
-//    autoMigrations = [
-//        AutoMigration (from = 3, to = 4)
-//    ]
+    autoMigrations = [
+        AutoMigration (from = 4, to = 5)
+    ]
 )
 abstract class NotiManagerDatabase : RoomDatabase() {
     abstract fun notificationDao(): NotificationDao
@@ -50,7 +47,6 @@ abstract class NotiManagerDatabase : RoomDatabase() {
                 )
                     .addMigrations(
                         MIGRATION_3_4,
-                        MIGRATION_4_5,
                         )
                     .build()
                 INSTANCE = instance

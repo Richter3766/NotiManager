@@ -15,29 +15,29 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import com.example.notimanager.common.objects.DateFormatter.formatTimestamp
-import com.example.notimanager.domain.model.NotificationTitle
-import com.example.notimanager.presentation.stateholder.state.NotificationTitleState
-import com.example.notimanager.presentation.stateholder.viewmodel.NotificationTitleViewModel
+import com.example.notimanager.domain.model.Notification
+import com.example.notimanager.presentation.stateholder.state.NotificationState
+import com.example.notimanager.presentation.stateholder.viewmodel.NotificationViewModel
 
 @Composable
-fun NotificationTitleListView(navController: NavController, viewModel: NotificationTitleViewModel) {
-    val notificationTitleState by viewModel.notificationTitleState.observeAsState(NotificationTitleState())
-
+fun NotificationListView(viewModel: NotificationViewModel) {
+    val notificationState by viewModel.notificationState.observeAsState(NotificationState())
+    val context = LocalContext.current
     Column {
-        if (notificationTitleState.isLoading) {
+        if (notificationState.isLoading) {
             CircularProgressIndicator(modifier = Modifier.padding(16.dp))
-        } else if (notificationTitleState.error != null) {
+        } else if (notificationState.error != null) {
 
         } else {
             LazyColumn {
-                items(notificationTitleState.notificationTitleList) { notification ->
-                    NotificationTitleItemView (notification = notification, onClick = {
-                        navController.navigate(
-                            "notificationScreen/${viewModel.getAppName()}/${notification.title}"
-                        )
+                items(notificationState.notificationList) { notification ->
+                    NotificationItemView (notification = notification, onClick = {
+                        if (notification.intent?.action != null) {
+                            context.startActivity(notification.intent);
+                        }
                     })
                 }
             }
@@ -46,7 +46,7 @@ fun NotificationTitleListView(navController: NavController, viewModel: Notificat
 }
 
 @Composable
-fun NotificationTitleItemView(notification: NotificationTitle, onClick: () -> Unit) {
+fun NotificationItemView(notification: Notification, onClick: () -> Unit) {
     Row(
         modifier = Modifier
             .padding(16.dp)
