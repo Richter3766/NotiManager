@@ -1,31 +1,34 @@
 package com.example.notimanager.data.utils
 
-import android.app.PendingIntent
+import android.content.Intent
 import android.os.Parcel
+import android.util.Log
 
 object PendingIntentHelper {
-    fun savePendingIntent(pendingIntent: PendingIntent): ByteArray? {
+    fun savePendingIntent(pendingIntent: Intent): ByteArray? {
         return try {
             val parcel = Parcel.obtain()
-            PendingIntent.writePendingIntentOrNullToParcel(pendingIntent, parcel)
+
+            pendingIntent.writeToParcel(parcel, 0)
             val bytes = parcel.marshall()
             parcel.recycle()
             bytes
         } catch (e: Exception) {
+            Log.e(e.message, e.stackTraceToString())
             null
         }
     }
 
-    fun retrievePendingIntent(byteArray: ByteArray): PendingIntent? {
+    fun retrievePendingIntent(byteArray: ByteArray): Intent? {
         return try {
             val parcel = Parcel.obtain()
             parcel.unmarshall(byteArray, 0, byteArray.size)
             parcel.setDataPosition(0)
-            val pendingIntent = PendingIntent.readPendingIntentOrNullFromParcel(parcel)
+            val intent = Intent.CREATOR.createFromParcel(parcel)
             parcel.recycle()
-            pendingIntent
+            intent
         } catch (e: Exception) {
-            null // TODO: 해당 앱으로 이동하는 기본 PendingIntent로 교체
+            null
         }
     }
 }
