@@ -50,6 +50,29 @@ fun TitleTopAppBar(title: String, onBackClick: () -> Unit){
         })
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun NotificationTopAppBar(title: String, onBackClick: () -> Unit){
+    TopAppBar(
+        title = {
+            Text(
+                text = title,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
+        },
+        navigationIcon = {
+            IconButton(onClick = onBackClick) {
+                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "뒤로 가기")
+            }
+        },
+        actions = {
+            IconButton(onClick = { /* TODO: 클릭 이벤트 처리 */ }) {
+                Icon(Icons.Filled.MoreVert, contentDescription = "더 보기")
+            }
+        })
+}
+
 @Preview(backgroundColor = 1)
 @Composable
 fun PreviewMainTopAppBar(){

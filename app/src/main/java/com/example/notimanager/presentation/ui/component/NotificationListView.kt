@@ -2,6 +2,7 @@ package com.example.notimanager.presentation.ui.component
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -23,10 +24,12 @@ import com.example.notimanager.presentation.stateholder.state.NotificationState
 import com.example.notimanager.presentation.stateholder.viewmodel.NotificationViewModel
 
 @Composable
-fun NotificationListView(viewModel: NotificationViewModel) {
+fun NotificationListView(innerPadding: PaddingValues, viewModel: NotificationViewModel) {
     val notificationState by viewModel.notificationState.observeAsState(NotificationState())
     val context = LocalContext.current
-    Column {
+    Column(
+        Modifier.padding(innerPadding)
+    ) {
         if (notificationState.isLoading) {
             CircularProgressIndicator(modifier = Modifier.padding(16.dp))
         } else if (notificationState.error != null) {
