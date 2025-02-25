@@ -15,7 +15,7 @@ import com.example.notimanager.data.model.NotificationModel
 import com.example.notimanager.data.repository.NotificationRepository
 import com.example.notimanager.data.service.NotiListenerService
 import com.example.notimanager.data.utils.NameGetter
-import com.example.notimanager.data.utils.PendingIntentHelper
+import com.example.notimanager.data.utils.IntentHelper
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
@@ -41,13 +41,13 @@ class NotiListenerServiceTest {
         notiListenerService = NotiListenerService()
         notiListenerService.notificationRepository = notificationRepository
         mockkObject(NameGetter)
-        mockkObject(PendingIntentHelper)
+        mockkObject(IntentHelper)
     }
 
     @After
     fun tearDown() {
         unmockkObject(NameGetter)
-        unmockkObject(PendingIntentHelper)
+        unmockkObject(IntentHelper)
     }
 
     @Test
@@ -85,7 +85,7 @@ class NotiListenerServiceTest {
 
         // Mock the PendingIntentHelper
         val intentArray = "MockedByteArray".toByteArray()
-        every { PendingIntentHelper.savePendingIntent(mockPendingIntent) } returns intentArray
+        every { IntentHelper.saveIntent(mockPendingIntent) } returns intentArray
 
         val expectedNotificationModel = NotificationModel(
             appName = "Test App",
@@ -123,6 +123,6 @@ class NotiListenerServiceTest {
         coVerify { notificationRepository.insertAppIcon(appIconModel) }
 
         // Verify that PendingIntentHelper was called
-        verify { PendingIntentHelper.savePendingIntent(mockPendingIntent) }
+        verify { IntentHelper.saveIntent(mockPendingIntent) }
     }
 }

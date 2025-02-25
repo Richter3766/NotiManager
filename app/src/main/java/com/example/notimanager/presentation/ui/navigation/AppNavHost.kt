@@ -25,7 +25,7 @@ fun AppNavHost(navController: NavHostController) {
         composable("notificationScreen/{appName}/{title}") { backStackEntry ->
             val appName = backStackEntry.arguments?.getString("appName")
             val title = backStackEntry.arguments?.getString("title")
-            NotificationScreen(appName!!, title!!)
+            NotificationScreen(navController, appName!!, title!!)
         }
     }
 }

@@ -10,7 +10,7 @@ import com.example.notimanager.data.model.NotificationModel
 import com.example.notimanager.data.repository.NotificationRepositoryInterface
 import com.example.notimanager.data.utils.AppIconGetter.convertByteArray
 import com.example.notimanager.data.utils.NameGetter
-import com.example.notimanager.data.utils.PendingIntentHelper
+import com.example.notimanager.data.utils.IntentHelper
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -68,7 +68,7 @@ class NotiListenerService: NotificationListenerService() {
         notificationPackage: String?,
     ){
         val intent = packageManager.getLaunchIntentForPackage(notificationPackage ?: "")
-        val intentArray = intent.let { pi -> PendingIntentHelper.savePendingIntent(pi!!) }
+        val intentArray = intent?.let { IntentHelper.saveIntent(it) }
 
         val notificationMetaModel = NotificationMetaModel(
             notificationId = id,

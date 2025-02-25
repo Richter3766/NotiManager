@@ -5,13 +5,27 @@ import android.graphics.drawable.Drawable
 import android.icu.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import java.util.concurrent.TimeUnit
 
 object DateFormatter {
-    fun formatTimestamp(timestamp: Long): String {
-        val date = Date(timestamp)
+    fun formatTimestamp(timestamp: Long, format: String = "relative"): String {
+        return if (format == "relative") {
+            val currentTime = System.currentTimeMillis()
+            val timeDifference = currentTime - timestamp
 
-        val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
-        return formatter.format(date)
+            return when {
+                timeDifference < TimeUnit.SECONDS.toMillis(1) -> "방금"
+                timeDifference < TimeUnit.MINUTES.toMillis(1) -> "${timeDifference / 1000}초 전"
+                timeDifference < TimeUnit.HOURS.toMillis(1) -> "${timeDifference / TimeUnit.MINUTES.toMillis(1)}분 전"
+                timeDifference < TimeUnit.DAYS.toMillis(1) -> "${timeDifference / TimeUnit.HOURS.toMillis(1)}시간 전"
+                timeDifference < TimeUnit.DAYS.toMillis(7) -> "${timeDifference / TimeUnit.DAYS.toMillis(1)}일 전"
+                timeDifference < TimeUnit.DAYS.toMillis(30) -> "${timeDifference / TimeUnit.DAYS.toMillis(7)}주 전"
+                timeDifference < TimeUnit.DAYS.toMillis(365) -> "${timeDifference / TimeUnit.DAYS.toMillis(30)}달 전"
+                else -> "${timeDifference / TimeUnit.DAYS.toMillis(365)}년 전"
+            }
+        } else {
+            SimpleDateFormat("HH:mm dd.MM.yyyy", Locale.getDefault()).format(Date(timestamp))
+        }
     }
 
     fun Drawable.toBitmap(): Bitmap {

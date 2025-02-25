@@ -14,14 +14,14 @@ fun AppIconView(appIcon: Bitmap?) {
         Image(
             bitmap = appIcon.asImageBitmap(),
             contentDescription = null,
-            modifier = Modifier.size(100.dp)
+            modifier = Modifier.size(50.dp)
         )
     }
     else{
         Image(
-            bitmap = Bitmap.createBitmap(100, 100, Bitmap.Config.ARGB_8888).asImageBitmap(),
+            bitmap = Bitmap.createBitmap(100, 10, Bitmap.Config.ARGB_8888).asImageBitmap(),
             contentDescription = null,
-            modifier = Modifier.size(100.dp)
+            modifier = Modifier.size(50.dp)
         )
     }
 }

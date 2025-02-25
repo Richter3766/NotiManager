@@ -2,10 +2,9 @@ package com.example.notimanager.data.utils
 
 import android.content.Intent
 import android.os.Parcel
-import android.util.Log
 
-object PendingIntentHelper {
-    fun savePendingIntent(pendingIntent: Intent): ByteArray? {
+object IntentHelper {
+    fun saveIntent(pendingIntent: Intent): ByteArray? {
         return try {
             val parcel = Parcel.obtain()
 
@@ -14,12 +13,11 @@ object PendingIntentHelper {
             parcel.recycle()
             bytes
         } catch (e: Exception) {
-            Log.e(e.message, e.stackTraceToString())
             null
         }
     }
 
-    fun retrievePendingIntent(byteArray: ByteArray): Intent? {
+    fun retrieveIntent(byteArray: ByteArray): Intent? {
         return try {
             val parcel = Parcel.obtain()
             parcel.unmarshall(byteArray, 0, byteArray.size)
