@@ -1,7 +1,7 @@
 package com.example.notimanager.data.dto
 
 import android.graphics.BitmapFactory
-import com.example.notimanager.data.utils.PendingIntentHelper.retrievePendingIntent
+import com.example.notimanager.data.utils.IntentHelper.retrieveIntent
 import com.example.notimanager.domain.model.Notification
 
 data class NotificationDto(
@@ -17,7 +17,7 @@ data class NotificationDto(
             title = this.title,
             content = this.content,
             timestamp = this.timestamp,
-            intent = retrievePendingIntent(intentArray),
+            intent = retrieveIntent(intentArray),
             intentActive = this.intentActive,
             notificationIcon = BitmapFactory.decodeByteArray(iconBytes, 0, iconBytes.size)
         )
