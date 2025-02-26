@@ -7,5 +7,7 @@ data class NotificationApp(
     val title: String,
     val content: String,
     val timestamp: Long,
-    val appIcon: Bitmap?
+    val appIcon: Bitmap?,
+    val priorityActive: Boolean,
+    val priority: Int
 )

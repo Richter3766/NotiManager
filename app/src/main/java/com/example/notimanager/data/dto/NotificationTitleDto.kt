@@ -7,14 +7,18 @@ data class NotificationTitleDto(
     val title: String,
     val content: String,
     val timestamp: Long,
-    val iconBytes: ByteArray
+    val iconBytes: ByteArray,
+    val priorityActive: Boolean,
+    val priority: Int
 ) {
     fun toDomain(): NotificationTitle {
         return NotificationTitle(
             title = this.title,
             content = this.content,
             timestamp = this.timestamp,
-            notificationIcon = BitmapFactory.decodeByteArray(iconBytes, 0, iconBytes.size)
+            notificationIcon = BitmapFactory.decodeByteArray(iconBytes, 0, iconBytes.size),
+            priorityActive = this.priorityActive,
+            priority = this.priority
         )
     }
 }
