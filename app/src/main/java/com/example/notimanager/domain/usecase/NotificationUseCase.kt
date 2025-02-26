@@ -1,10 +1,10 @@
 package com.example.notimanager.domain.usecase
 
 import com.example.notimanager.domain.model.Notification
-import com.example.notimanager.domain.repository.NotificationRepositoryDomainInterface
+import com.example.notimanager.domain.repository.NotificationDomainRepositoryInterface
 
 class NotificationUseCase(
-    private val repository: NotificationRepositoryDomainInterface
+    private val repository: NotificationDomainRepositoryInterface
 ){
     suspend fun getNotificationList(appName: String, title: String): List<Notification>{
         return repository.getNotificationList(appName, title)
