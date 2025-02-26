@@ -1,16 +1,20 @@
 package com.example.notimanager.di
 
 import android.content.Context
+import com.example.notimanager.data.repository.NotificationAppRepository
 import com.example.notimanager.data.repository.NotificationPermissionRepository
 import com.example.notimanager.data.repository.NotificationRepository
-import com.example.notimanager.data.repository.NotificationRepositoryDomain
+import com.example.notimanager.data.repository.NotificationDomainRepository
 import com.example.notimanager.data.repository.NotificationRepositoryInterface
+import com.example.notimanager.data.repository.NotificationTitleRepository
 import com.example.notimanager.data.source.local.dao.AppIconDao
 import com.example.notimanager.data.source.local.dao.NotificationDao
 import com.example.notimanager.data.source.local.dao.NotificationIconDao
 import com.example.notimanager.data.source.local.dao.NotificationMetaDao
+import com.example.notimanager.domain.repository.NotificationAppRepositoryInterface
 import com.example.notimanager.domain.repository.NotificationPermissionRepositoryInterface
-import com.example.notimanager.domain.repository.NotificationRepositoryDomainInterface
+import com.example.notimanager.domain.repository.NotificationDomainRepositoryInterface
+import com.example.notimanager.domain.repository.NotificationTitleRepositoryInterface
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -31,10 +35,10 @@ class RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideNotificationRepositoryDomain(
+    fun provideNotificationDomainRepository(
         notificationDao: NotificationDao
-    ): NotificationRepositoryDomainInterface {
-        return NotificationRepositoryDomain(notificationDao)
+    ): NotificationDomainRepositoryInterface {
+        return NotificationDomainRepository(notificationDao)
     }
 
     @Provides
@@ -46,5 +50,23 @@ class RepositoryModule {
         appIconDao: AppIconDao,
     ): NotificationRepositoryInterface {
         return NotificationRepository(notificationDao, notificationMetaDao, notificationIconDao, appIconDao)
+    }
+
+    @Provides
+    @Singleton
+    fun provideNotificationAppRepository(
+        notificationDao: NotificationDao,
+        appIconDao: AppIconDao
+    ): NotificationAppRepositoryInterface {
+        return NotificationAppRepository(notificationDao, appIconDao)
+    }
+
+    @Provides
+    @Singleton
+    fun provideNotificationTitleRepository(
+        notificationDao: NotificationDao,
+        notificationIconDao: NotificationIconDao
+    ): NotificationTitleRepositoryInterface {
+        return NotificationTitleRepository(notificationDao, notificationIconDao)
     }
 }
