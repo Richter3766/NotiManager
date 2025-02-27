@@ -33,4 +33,12 @@ class NotificationAppViewModel @Inject constructor(
             }
         }
     }
+
+    fun setAppPriority(appName: String, newPriority: Int = 0, onComplete: () -> Unit) {
+        viewModelScope.launch {
+            notificationAppUseCase.setAppPriority(appName, newPriority)
+            loadNotificationApps()
+            onComplete()
+        }
+    }
 }
