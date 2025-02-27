@@ -13,7 +13,7 @@ import com.example.notimanager.data.model.NotificationMetaModel
 import com.example.notimanager.presentation.ui.activity.MainActivity
 import com.example.notimanager.data.model.NotificationModel
 import com.example.notimanager.data.repository.NotificationRepository
-import com.example.notimanager.data.service.NotiListenerService
+import com.example.notimanager.domain.service.NotiListenerService
 import com.example.notimanager.data.utils.NameGetter
 import com.example.notimanager.data.utils.IntentHelper
 import io.mockk.coEvery
@@ -85,7 +85,7 @@ class NotiListenerServiceTest {
 
         // Mock the PendingIntentHelper
         val intentArray = "MockedByteArray".toByteArray()
-        every { IntentHelper.saveIntent(mockPendingIntent) } returns intentArray
+        every { IntentHelper.saveIntent(realIntent) } returns intentArray
 
         val expectedNotificationModel = NotificationModel(
             appName = "Test App",
@@ -103,12 +103,12 @@ class NotiListenerServiceTest {
         coEvery { notificationRepository.insertNotificationMeta(notificationMetaModel) } returns 1L
         val notificationIconModel = NotificationIconModel(
             notificationId = 1L,
-            iconBytes = uri
+            iconBytes = "".toByteArray()
         )
         coEvery { notificationRepository.insertNotificationIcon(notificationIconModel) } returns 1L
 
         val appIconModel = AppIconModel(
-            iconBytes = "com.example.test",
+            iconBytes = "".toByteArray(),
             notiAppName = "Test App"
         )
         coEvery { notificationRepository.insertAppIcon(appIconModel) } returns 1L
@@ -123,6 +123,6 @@ class NotiListenerServiceTest {
         coVerify { notificationRepository.insertAppIcon(appIconModel) }
 
         // Verify that PendingIntentHelper was called
-        verify { IntentHelper.saveIntent(mockPendingIntent) }
+        verify { IntentHelper.saveIntent(realIntent) }
     }
 }

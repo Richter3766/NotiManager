@@ -8,6 +8,7 @@ import com.example.notimanager.data.source.local.dao.AppIconDao
 import com.example.notimanager.data.source.local.dao.NotificationDao
 import com.example.notimanager.data.source.local.dao.NotificationIconDao
 import com.example.notimanager.data.source.local.dao.NotificationMetaDao
+import com.example.notimanager.domain.repository.NotificationRepositoryInterface
 
 class NotificationRepository(
     private val notificationDao: NotificationDao,

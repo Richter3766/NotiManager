@@ -5,7 +5,7 @@ import com.example.notimanager.data.repository.NotificationAppRepository
 import com.example.notimanager.data.repository.NotificationPermissionRepository
 import com.example.notimanager.data.repository.NotificationRepository
 import com.example.notimanager.data.repository.NotificationDomainRepository
-import com.example.notimanager.data.repository.NotificationRepositoryInterface
+import com.example.notimanager.domain.repository.NotificationRepositoryInterface
 import com.example.notimanager.data.repository.NotificationTitleRepository
 import com.example.notimanager.data.source.local.dao.AppIconDao
 import com.example.notimanager.data.source.local.dao.NotificationDao

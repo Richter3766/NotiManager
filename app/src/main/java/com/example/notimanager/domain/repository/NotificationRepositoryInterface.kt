@@ -1,4 +1,4 @@
-package com.example.notimanager.data.repository
+package com.example.notimanager.domain.repository
 
 import com.example.notimanager.data.model.AppIconModel
 import com.example.notimanager.data.model.NotificationIconModel
