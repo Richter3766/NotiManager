@@ -31,13 +31,13 @@ class NotificationTitleRepository(
     override suspend fun setTitlePriority(
         notificationId: Long,
         newPriority: Int
-    ): Long{
+    ): Int{
         return notificationIconDao.setPriority(notificationId, newPriority)
     }
 
     override suspend fun removeTitlePriority(
         notificationId: Long
-    ):Long{
+    ):Int{
         return notificationIconDao.removePriority(notificationId)
     }
 

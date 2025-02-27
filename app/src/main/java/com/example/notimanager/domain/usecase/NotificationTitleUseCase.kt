@@ -23,13 +23,13 @@ class NotificationTitleUseCase(
     suspend fun setTitlePriority(
         notificationId: Long,
         newPriority: Int
-    ): Long {
+    ): Int {
         return repository.setTitlePriority(notificationId, newPriority)
     }
 
     suspend fun removeTitlePriority(
         notificationId: Long,
-    ): Long {
+    ): Int {
         return repository.removeTitlePriority(notificationId)
     }
 }

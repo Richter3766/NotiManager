@@ -12,9 +12,9 @@ interface AppIconDao {
     suspend fun insert(appIconModel: AppIconModel): Long
 
     @Query("UPDATE app_icon SET priorityActive = 1, priority = :newPriority WHERE notiAppName = :appName")
-    suspend fun setPriority(appName: String, newPriority: Int): Long
+    suspend fun setPriority(appName: String, newPriority: Int): Int
 
     @Query("UPDATE app_icon SET priorityActive = 0, priority = 0 WHERE notiAppName = :appName")
-    suspend fun removePriority(appName: String): Long
+    suspend fun removePriority(appName: String): Int
 
 }

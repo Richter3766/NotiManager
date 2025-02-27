@@ -32,7 +32,7 @@ interface NotificationDao {
 
     @Query(
         """
-        SELECT n1.title, n1.content, n1.timestamp, ni.iconBytes, ni.priorityActive, ni.priority
+        SELECT n1.id, n1.title, n1.content, n1.timestamp, ni.iconBytes, ni.priorityActive, ni.priority
         FROM notification AS n1
         INNER JOIN notification_icon AS ni ON n1.id = ni.notificationId
         WHERE ni.priorityActive = 1
@@ -66,7 +66,7 @@ interface NotificationDao {
 
     @Query(
         """
-        SELECT n1.title, n1.content, n1.timestamp, ni.iconBytes, ni.priorityActive, ni.priority
+        SELECT n1.id, n1.title, n1.content, n1.timestamp, ni.iconBytes, ni.priorityActive, ni.priority
         FROM notification AS n1
         INNER JOIN notification_icon AS ni ON n1.id = ni.notificationId
         WHERE ni.priorityActive = 0 

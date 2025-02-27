@@ -13,17 +13,17 @@ class NotificationAppUseCase(
     suspend fun getNotificationAppPriorityList(): List<NotificationApp>{
         return repository.getNotificationAppPriorityList()
     }
-    
+
     suspend fun setAppPriority(
         appName: String,
         newPriority: Int
-    ): Long {
+    ): Int {
         return repository.setAppPriority(appName, newPriority)
     }
 
-    suspend fun removeTitlePriority(
+    suspend fun removeAppPriority(
         appName: String,
-    ): Long {
+    ): Int {
         return repository.removeAppPriority(appName)
     }
 }

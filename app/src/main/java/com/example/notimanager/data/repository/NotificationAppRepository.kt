@@ -26,13 +26,13 @@ class NotificationAppRepository(
     override suspend fun setAppPriority(
         appName: String,
         newPriority: Int
-    ): Long {
+    ): Int {
         return appIconDao.setPriority(appName, newPriority)
     }
 
     override suspend fun removeAppPriority(
         appName: String,
-    ): Long {
+    ): Int {
         return appIconDao.removePriority(appName)
     }
 }
