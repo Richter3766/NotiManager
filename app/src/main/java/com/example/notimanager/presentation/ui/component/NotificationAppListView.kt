@@ -13,6 +13,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -57,18 +58,31 @@ fun NotificationAppListView(
         } else if (notificationAppState.error != null) {
 
         } else {
-            val combinedList = mutableListOf<NotificationApp>()
-            combinedList.addAll(priorityState.notificationAppList)
-            combinedList.addAll(notificationAppState.notificationAppList)
-            // TODO: 드래그로 우선순위 변경 가능하게 수정
             LazyColumn {
-                items(combinedList) { notification ->
+                items(priorityState.notificationAppList) { notification ->
                     NotificationAppItemView(
                         notification = notification,
                         onClick = {
                             navController
                             .navigate("titleScreen/${notification.appName}/${notification.title}"
                             )
+                        },
+                        viewModel = viewModel,
+                        priorityViewModel = priorityViewModel
+                    )
+                }
+
+                item {
+                    HorizontalDivider()
+                }
+
+                items(notificationAppState.notificationAppList) { notification ->
+                    NotificationAppItemView(
+                        notification = notification,
+                        onClick = {
+                            navController
+                                .navigate("titleScreen/${notification.appName}/${notification.title}"
+                                )
                         },
                         viewModel = viewModel,
                         priorityViewModel = priorityViewModel

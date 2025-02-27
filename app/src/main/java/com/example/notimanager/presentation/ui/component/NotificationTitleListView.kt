@@ -13,6 +13,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -58,19 +59,25 @@ fun NotificationTitleListView(
         } else if (notificationTitleState.error != null) {
 
         } else {
-            val combinedList = mutableListOf<NotificationTitle>()
-            combinedList.addAll(priorityState.notificationTitleList)
-            combinedList.addAll(notificationTitleState.notificationTitleList)
-            // TODO: 드래그로 우선순위 변경 가능하게 수정
             LazyColumn {
-                items(combinedList) { notification ->
-                    NotificationTitleItemView (notification = notification, onClick = {
+                items(priorityState.notificationTitleList) { notification ->
+                    NotificationTitleItemView(notification = notification, onClick = {
                         navController.navigate(
                             "notificationScreen/${viewModel.getAppName()}/${notification.title}"
-                        )},
-                        viewModel = viewModel,
-                        priorityViewModel = priorityViewModel
-                    )
+                        )
+                    }, viewModel = viewModel, priorityViewModel = priorityViewModel)
+                }
+
+                item {
+                    HorizontalDivider()
+                }
+
+                items(notificationTitleState.notificationTitleList) { notification ->
+                    NotificationTitleItemView(notification = notification, onClick = {
+                        navController.navigate(
+                            "notificationScreen/${viewModel.getAppName()}/${notification.title}"
+                        )
+                    }, viewModel = viewModel, priorityViewModel = priorityViewModel)
                 }
             }
         }
