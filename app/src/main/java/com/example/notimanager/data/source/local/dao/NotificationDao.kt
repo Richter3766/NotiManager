@@ -25,7 +25,7 @@ interface NotificationDao {
             FROM notification AS n2
             WHERE n1.appName = n2.appName
         )
-        ORDER BY ai.priority ASC
+        ORDER BY timestamp DESC
     """
     )
     suspend fun getNotificationAppPriorityList(): List<NotificationAppDto>
@@ -43,7 +43,7 @@ interface NotificationDao {
             FROM notification AS n2
             WHERE n1.appName = n2.appName AND n1.title = n2.title
         )
-        ORDER BY ni.priority ASC
+        ORDER BY timestamp DESC
     """
     )
     suspend fun getNotificationTitlePriorityList(appName: String, title: String): List<NotificationTitleDto>

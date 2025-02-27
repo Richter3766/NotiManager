@@ -40,7 +40,7 @@ class NotiListenerService: NotificationListenerService() {
                 CoroutineScope(Dispatchers.IO).launch {
                     mutex.withLock {
                         val id = insertNotification(appName, title, content, postTime)
-                        insertNotificationMeta(id, notification.contentIntent.creatorPackage)
+                        insertNotificationMeta(id, it.packageName)
                         insertNotificationIcon(id, notification.getLargeIcon())
                         insertAppIcon(appName, notification.smallIcon, notification.color)
                     }
