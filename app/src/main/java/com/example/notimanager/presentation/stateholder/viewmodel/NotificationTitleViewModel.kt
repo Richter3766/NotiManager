@@ -42,4 +42,12 @@ class NotificationTitleViewModel @Inject constructor(
             }
         }
     }
+
+    fun setTitlePriority(notificationId: Long, newPriority: Int = 0, onComplete: () -> Unit) {
+        viewModelScope.launch {
+            notificationTitleUseCase.setTitlePriority(notificationId, newPriority)
+            loadNotificationTitles()
+            onComplete()
+        }
+    }
 }

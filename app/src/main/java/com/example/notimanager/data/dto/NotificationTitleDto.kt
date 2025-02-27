@@ -4,6 +4,7 @@ import android.graphics.BitmapFactory
 import com.example.notimanager.domain.model.NotificationTitle
 
 data class NotificationTitleDto(
+    val id: Long,
     val title: String,
     val content: String,
     val timestamp: Long,
@@ -13,6 +14,7 @@ data class NotificationTitleDto(
 ) {
     fun toDomain(): NotificationTitle {
         return NotificationTitle(
+            id = this.id,
             title = this.title,
             content = this.content,
             timestamp = this.timestamp,
