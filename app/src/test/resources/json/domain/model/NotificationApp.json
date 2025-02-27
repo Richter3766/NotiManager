@@ -4,34 +4,44 @@
     "title": "New Message",
     "content": "You have received a new message from John.",
     "timestamp": 1672531199000,
-    "appIcon": null
+    "appIcon": null,
+    "priorityActive": true,
+    "priority": 1
   },
   {
     "appName": "Weather",
     "title": "Weather Update",
     "content": "Rain is expected in your area today.",
     "timestamp": 1672531299000,
-    "appIcon": null
+    "appIcon": null,
+    "priorityActive": true,
+    "priority": 1
   },
   {
     "appName": "Email",
     "title": "New Email",
     "content": "You've got a new email from support@example.com.",
     "timestamp": 1672531399000,
-    "appIcon": null
+    "appIcon": null,
+    "priorityActive": true,
+    "priority": 1
   },
   {
     "appName": "Calendar",
     "title": "Event Reminder",
     "content": "Don't forget your meeting at 3 PM today.",
     "timestamp": 1672531499000,
-    "appIcon": null
+    "appIcon": null,
+    "priorityActive": true,
+    "priority": 1
   },
   {
     "appName": "News",
     "title": "Breaking News",
     "content": "New developments in the tech industry.",
     "timestamp": 1672531599000,
-    "appIcon": null
+    "appIcon": null,
+    "priorityActive": true,
+    "priority": 1
   }
 ]
