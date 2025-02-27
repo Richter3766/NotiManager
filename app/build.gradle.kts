@@ -76,6 +76,7 @@ kover {
                 "dagger",
                 "hilt_aggregated_deps",
                 "*.di",
+                "*.presentation"
                     ))
             excludes.classes(listOf(
                 "*_*Factory*",

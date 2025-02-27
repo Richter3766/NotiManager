@@ -15,4 +15,10 @@ object MigrationObject {
             db.execSQL("ALTER TABLE app_icon RENAME COLUMN appIconResId iconBytes")
         }
     }
+    val MIGRATION_6_7 = object : Migration(6, 7) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            db.execSQL("CREATE INDEX index_notification_icon_priorityActive_priority ON notification_icon (priorityActive, priority);")
+            db.execSQL("CREATE INDEX index_app_icon_priorityActive_priority ON app_icon (priorityActive, priority);")
+        }
+    }
 }

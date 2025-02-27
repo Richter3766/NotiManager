@@ -16,10 +16,45 @@ interface NotificationDao {
 
     @Query(
         """
-        SELECT n1.appName, n1.title, n1.content, n1.timestamp, ai.iconBytes 
+        SELECT n1.appName, n1.title, n1.content, n1.timestamp, ai.iconBytes , ai.priorityActive, ai.priority
         FROM notification AS n1
         INNER JOIN app_icon AS ai ON n1.appName = ai.notiAppName
-        WHERE timestamp = (
+        WHERE ai.priorityActive = 1
+        AND timestamp = (
+            SELECT MAX(timestamp)
+            FROM notification AS n2
+            WHERE n1.appName = n2.appName
+        )
+        ORDER BY ai.priority ASC
+    """
+    )
+    suspend fun getNotificationAppPriorityList(): List<NotificationAppDto>
+
+    @Query(
+        """
+        SELECT n1.id, n1.title, n1.content, n1.timestamp, ni.iconBytes, ni.priorityActive, ni.priority
+        FROM notification AS n1
+        INNER JOIN notification_icon AS ni ON n1.id = ni.notificationId
+        WHERE ni.priorityActive = 1
+        AND n1.appName = :appName 
+        AND n1.title = :title 
+        AND timestamp = (
+            SELECT MAX(timestamp)
+            FROM notification AS n2
+            WHERE n1.appName = n2.appName AND n1.title = n2.title
+        )
+        ORDER BY ni.priority ASC
+    """
+    )
+    suspend fun getNotificationTitlePriorityList(appName: String, title: String): List<NotificationTitleDto>
+
+    @Query(
+        """
+        SELECT n1.appName, n1.title, n1.content, n1.timestamp, ai.iconBytes, ai.priorityActive, ai.priority
+        FROM notification AS n1
+        INNER JOIN app_icon AS ai ON n1.appName = ai.notiAppName
+        WHERE ai.priorityActive = 0 
+        AND timestamp = (
             SELECT MAX(timestamp)
             FROM notification AS n2
             WHERE n1.appName = n2.appName
@@ -31,10 +66,13 @@ interface NotificationDao {
 
     @Query(
         """
-        SELECT n1.title, n1.content, n1.timestamp, ni.iconBytes
+        SELECT n1.id, n1.title, n1.content, n1.timestamp, ni.iconBytes, ni.priorityActive, ni.priority
         FROM notification AS n1
         INNER JOIN notification_icon AS ni ON n1.id = ni.notificationId
-        WHERE n1.appName = :appName AND n1.title = :title AND timestamp = (
+        WHERE ni.priorityActive = 0 
+        AND n1.appName = :appName 
+        AND n1.title = :title 
+        AND timestamp = (
             SELECT MAX(timestamp)
             FROM notification AS n2
             WHERE n1.appName = n2.appName AND n1.title = n2.title

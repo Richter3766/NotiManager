@@ -10,12 +10,19 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -25,28 +32,45 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.notimanager.common.objects.DateFormatter.formatTimestamp
 import com.example.notimanager.domain.model.NotificationTitle
+import com.example.notimanager.presentation.stateholder.state.NotificationTitlePriorityState
 import com.example.notimanager.presentation.stateholder.state.NotificationTitleState
+import com.example.notimanager.presentation.stateholder.viewmodel.NotificationTitlePriorityViewModel
 import com.example.notimanager.presentation.stateholder.viewmodel.NotificationTitleViewModel
 
 @Composable
-fun NotificationTitleListView(navController: NavController, innerPadding: PaddingValues,viewModel: NotificationTitleViewModel) {
-    val notificationTitleState by viewModel.notificationTitleState.observeAsState(NotificationTitleState())
-
+fun NotificationTitleListView(
+    navController: NavController,
+    innerPadding: PaddingValues,
+    viewModel: NotificationTitleViewModel,
+    priorityViewModel: NotificationTitlePriorityViewModel
+) {
+    val notificationTitleState by viewModel.notificationTitleState.observeAsState(
+        NotificationTitleState()
+    )
+    val priorityState by priorityViewModel.notificationTitlePriorityState.observeAsState(
+        NotificationTitlePriorityState()
+    )
     Column (
         Modifier.padding(innerPadding)
     ){
-        if (notificationTitleState.isLoading) {
+        if (notificationTitleState.isLoading || priorityState.isLoading) {
             CircularProgressIndicator(modifier = Modifier.padding(16.dp))
         } else if (notificationTitleState.error != null) {
 
         } else {
+            val combinedList = mutableListOf<NotificationTitle>()
+            combinedList.addAll(priorityState.notificationTitleList)
+            combinedList.addAll(notificationTitleState.notificationTitleList)
+            // TODO: 드래그로 우선순위 변경 가능하게 수정
             LazyColumn {
-                items(notificationTitleState.notificationTitleList) { notification ->
+                items(combinedList) { notification ->
                     NotificationTitleItemView (notification = notification, onClick = {
                         navController.navigate(
                             "notificationScreen/${viewModel.getAppName()}/${notification.title}"
-                        )
-                    })
+                        )},
+                        viewModel = viewModel,
+                        priorityViewModel = priorityViewModel
+                    )
                 }
             }
         }
@@ -54,7 +78,13 @@ fun NotificationTitleListView(navController: NavController, innerPadding: Paddin
 }
 
 @Composable
-fun NotificationTitleItemView(notification: NotificationTitle, onClick: () -> Unit) {
+fun NotificationTitleItemView(
+    notification: NotificationTitle,
+    onClick: () -> Unit,
+    viewModel: NotificationTitleViewModel,
+    priorityViewModel: NotificationTitlePriorityViewModel
+) {
+    var showModal by remember { mutableStateOf(false) }
     Row(
         modifier = Modifier
             .padding(16.dp)
@@ -64,7 +94,9 @@ fun NotificationTitleItemView(notification: NotificationTitle, onClick: () -> Un
     ) {
         AppIconView(notification.notificationIcon)
         Spacer(modifier = Modifier.width(8.dp))
-        Column {
+        Column (
+            modifier = Modifier.weight(1f)
+        ){
             Text(
                 text = notification.title,
                 style = MaterialTheme.typography.bodySmall.copy(fontWeight = FontWeight.Bold)
@@ -81,6 +113,41 @@ fun NotificationTitleItemView(notification: NotificationTitle, onClick: () -> Un
                 style = MaterialTheme.typography.labelSmall,
                 color = Color.LightGray
             )
+        }
+        IconButton(onClick = { showModal = true }) {
+            Icon(Icons.Filled.MoreVert, contentDescription = "중요 표시 또는 삭제")
+        }
+    }
+
+    if (showModal) {
+        BottomSheet(showModal, onDismiss = { showModal = false }){
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
+            ) {
+                Text(
+                    text = notification.title,
+                    style = MaterialTheme.typography.labelLarge,
+                    color = Color.Gray
+                )
+                if (notification.priorityActive) {
+                    ClickableTextView(text = "중요 알림 취소", onClick = {
+                        priorityViewModel.removeTitlePriority(notificationId = notification.id){
+                            viewModel.loadNotificationTitles()
+                        }
+
+                    })
+                }
+                else{
+                    ClickableTextView(text = "중요 알림 설정", onClick = {
+                        viewModel.setTitlePriority(notification.id, priorityViewModel.getLength()){
+                            priorityViewModel.loadNotificationTitles()
+                        }
+                    })
+                }
+                ClickableTextView(text = "삭제", onClick = {})
+            }
         }
     }
 }

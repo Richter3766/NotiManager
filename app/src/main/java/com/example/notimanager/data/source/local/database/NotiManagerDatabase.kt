@@ -14,9 +14,10 @@ import com.example.notimanager.data.source.local.dao.NotificationDao
 import com.example.notimanager.data.source.local.dao.NotificationIconDao
 import com.example.notimanager.data.source.local.dao.NotificationMetaDao
 import com.example.notimanager.data.source.local.database.MigrationObject.MIGRATION_3_4
+import com.example.notimanager.data.source.local.database.MigrationObject.MIGRATION_6_7
 
 @Database(
-    version = 5,
+    version = 7,
     entities =
     [
         NotificationModel::class,
@@ -24,9 +25,9 @@ import com.example.notimanager.data.source.local.database.MigrationObject.MIGRAT
         NotificationIconModel::class,
         AppIconModel::class
     ],
-    autoMigrations = [
-        AutoMigration (from = 4, to = 5)
-    ]
+//    autoMigrations = [
+//        AutoMigration (from = 6, to = 7)
+//    ]
 )
 abstract class NotiManagerDatabase : RoomDatabase() {
     abstract fun notificationDao(): NotificationDao
@@ -47,7 +48,9 @@ abstract class NotiManagerDatabase : RoomDatabase() {
                 )
                     .addMigrations(
                         MIGRATION_3_4,
+                        MIGRATION_6_7
                         )
+                    .fallbackToDestructiveMigration()
                     .build()
                 INSTANCE = instance
                 instance

@@ -10,13 +10,19 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.text.BasicText
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -24,34 +30,49 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.max
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.notimanager.common.objects.DateFormatter.formatTimestamp
 import com.example.notimanager.domain.model.NotificationApp
+import com.example.notimanager.presentation.stateholder.state.NotificationAppPriorityState
 import com.example.notimanager.presentation.stateholder.state.NotificationAppState
+import com.example.notimanager.presentation.stateholder.viewmodel.NotificationAppPriorityViewModel
 import com.example.notimanager.presentation.stateholder.viewmodel.NotificationAppViewModel
 
 @Composable
-fun NotificationAppListView(navController: NavController, innerPadding: PaddingValues,viewModel: NotificationAppViewModel = hiltViewModel()) {
+fun NotificationAppListView(
+    navController: NavController,
+    innerPadding: PaddingValues,
+    viewModel: NotificationAppViewModel = hiltViewModel(),
+    priorityViewModel: NotificationAppPriorityViewModel = hiltViewModel()
+) {
     val notificationAppState by viewModel.notificationAppState.observeAsState(NotificationAppState())
+    val priorityState by priorityViewModel.notificationAppPriorityState.observeAsState((NotificationAppPriorityState()))
 
     Column(
         Modifier.padding(innerPadding)
-
     ) {
-        if (notificationAppState.isLoading) {
+        if (notificationAppState.isLoading || priorityState.isLoading) {
             CircularProgressIndicator(modifier = Modifier.padding(16.dp))
         } else if (notificationAppState.error != null) {
 
         } else {
+            val combinedList = mutableListOf<NotificationApp>()
+            combinedList.addAll(priorityState.notificationAppList)
+            combinedList.addAll(notificationAppState.notificationAppList)
+            // TODO: 드래그로 우선순위 변경 가능하게 수정
             LazyColumn {
-                items(notificationAppState.notificationAppList) { notification ->
-                    NotificationAppItemView(notification = notification, onClick = {
-                        navController.navigate(
-                            "titleScreen/${notification.appName}/${notification.title}"
-                        )
-                    })
+                items(combinedList) { notification ->
+                    NotificationAppItemView(
+                        notification = notification,
+                        onClick = {
+                            navController
+                            .navigate("titleScreen/${notification.appName}/${notification.title}"
+                            )
+                        },
+                        viewModel = viewModel,
+                        priorityViewModel = priorityViewModel
+                    )
                 }
             }
         }
@@ -59,7 +80,15 @@ fun NotificationAppListView(navController: NavController, innerPadding: PaddingV
 }
 
 @Composable
-fun NotificationAppItemView(notification: NotificationApp, onClick: () -> Unit) {
+fun NotificationAppItemView(
+    notification: NotificationApp,
+    onClick: () -> Unit,
+    viewModel: NotificationAppViewModel,
+    priorityViewModel: NotificationAppPriorityViewModel
+
+) {
+    var showModal by remember { mutableStateOf(false) }
+
     Row(
         modifier = Modifier
             .padding(16.dp)
@@ -70,14 +99,15 @@ fun NotificationAppItemView(notification: NotificationApp, onClick: () -> Unit) 
     ) {
         AppIconView(notification.appIcon)
         Spacer(modifier = Modifier.width(8.dp))
-        Column {
+        Column(
+            modifier = Modifier.weight(1f)
+        ) {
             Text(
                 text = notification.appName,
                 style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold))
             Text(
                 text = notification.title,
                 style = MaterialTheme.typography.bodySmall.copy(fontWeight = FontWeight.Bold)
-
             )
             Text(
                 text = notification.content,
@@ -90,6 +120,41 @@ fun NotificationAppItemView(notification: NotificationApp, onClick: () -> Unit) 
                 style = MaterialTheme.typography.labelSmall,
                 color = Color.LightGray
             )
+        }
+
+        IconButton(onClick = { showModal = true }) {
+            Icon(Icons.Filled.MoreVert, contentDescription = "중요 표시 또는 삭제")
+        }
+    }
+    if (showModal) {
+        BottomSheet(showModal, onDismiss = { showModal = false }){
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
+            ) {
+                Text(
+                    text = notification.appName,
+                    style = MaterialTheme.typography.labelLarge,
+                    color = Color.Gray
+                )
+                if (notification.priorityActive) {
+                    ClickableTextView(text = "중요 알림 취소", onClick = {
+                        priorityViewModel.removeAppPriority(notification.appName){
+                            viewModel.loadNotificationApps()
+                        }
+
+                    })
+                }
+                else{
+                    ClickableTextView(text = "중요 알림 설정", onClick = {
+                        viewModel.setAppPriority(notification.appName, priorityViewModel.getLength()){
+                            priorityViewModel.loadNotificationAppPriority()
+                        }
+                    })
+                }
+                ClickableTextView(text = "삭제", onClick = {})
+            }
         }
     }
 }
@@ -104,7 +169,12 @@ fun PreviewNotificationAppItemView(){
                 title = "title",
                 content = "content",
                 timestamp = 1234567890,
-                appIcon = null
-                ), onClick = {})
+                appIcon = null,
+                priorityActive = false,
+                priority = 0
+            ), onClick = {},
+            viewModel = hiltViewModel(),
+            priorityViewModel = hiltViewModel()
+        )
     }
 }
