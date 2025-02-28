@@ -1,14 +1,13 @@
-package com.example.notimanager.data.service
+package com.example.notimanager.domain.service
 
 import android.graphics.drawable.Icon
 import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
-import android.util.Log
 import com.example.notimanager.data.model.AppIconModel
 import com.example.notimanager.data.model.NotificationIconModel
 import com.example.notimanager.data.model.NotificationMetaModel
 import com.example.notimanager.data.model.NotificationModel
-import com.example.notimanager.data.repository.NotificationRepositoryInterface
+import com.example.notimanager.domain.repository.NotificationRepositoryInterface
 import com.example.notimanager.data.utils.AppIconGetter.convertByteArray
 import com.example.notimanager.data.utils.AppIconGetter.convertByteArrayWithColor
 import com.example.notimanager.data.utils.NameGetter

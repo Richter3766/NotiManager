@@ -117,6 +117,7 @@ dependencies {
     implementation(libs.protolite.well.known.types)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.coil.compose)
+    implementation(libs.androidx.lifecycle.runtime.compose)
 
     // 테스트
     testImplementation(libs.junit)
