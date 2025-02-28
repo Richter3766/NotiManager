@@ -15,6 +15,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LifecycleEventEffect
+import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.navigation.NavController
 import com.example.notimanager.presentation.stateholder.viewmodel.NotificationAppPriorityViewModel
 import com.example.notimanager.presentation.stateholder.viewmodel.NotificationAppViewModel
@@ -29,11 +32,26 @@ import kotlinx.coroutines.launch
 fun MainScreen(
     navController: NavController,
 ) {
-    // TODO: Shared Prefernence로 알림 들어오는 지 체크하는 로직 추가하기
     val viewModel: NotificationAppViewModel = hiltViewModel()
     val priorityViewModel: NotificationAppPriorityViewModel = hiltViewModel()
+
     var isRefreshing by remember { mutableStateOf(false) }
     val coroutineScope = rememberCoroutineScope()
+
+    val onRefresh: () -> Unit = {
+        isRefreshing = true
+        viewModel.loadNotificationApps()
+        priorityViewModel.loadNotificationAppPriority()
+        coroutineScope.launch {
+            delay(500)
+            isRefreshing = false
+        }
+    }
+
+    LifecycleEventEffect(Lifecycle.Event.ON_RESUME) {
+        viewModel.loadNotificationApps()
+        priorityViewModel.loadNotificationAppPriority()
+    }
 
     Scaffold(
         topBar = {
@@ -46,15 +64,7 @@ fun MainScreen(
         )
         PullToRefreshBox(
             isRefreshing = isRefreshing,
-            onRefresh = {
-                isRefreshing = true
-                viewModel.loadNotificationApps()
-                priorityViewModel.loadNotificationAppPriority()
-                coroutineScope.launch {
-                    delay(2000)
-                    isRefreshing = false
-                }
-            },
+            onRefresh = onRefresh,
             modifier = Modifier
                 .padding(innerPadding)
                 .fillMaxSize()
@@ -63,5 +73,4 @@ fun MainScreen(
         }
     }
     PermissionCheck()
-
 }

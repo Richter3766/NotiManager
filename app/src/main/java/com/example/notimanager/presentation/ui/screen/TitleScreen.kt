@@ -15,9 +15,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.navigation.NavController
 import com.example.notimanager.presentation.stateholder.viewmodel.NotificationTitlePriorityViewModel
 import com.example.notimanager.presentation.stateholder.viewmodel.NotificationTitleViewModel
+import com.example.notimanager.presentation.ui.component.NotificationAppListView
 import com.example.notimanager.presentation.ui.component.NotificationTitleListView
 import com.example.notimanager.presentation.ui.component.TitleTopAppBar
 import kotlinx.coroutines.delay
@@ -36,6 +39,12 @@ fun TitleScreen(navController: NavController, appName: String = "", title:String
         viewModel.setArgs(appName, title)
         priorityViewModel.setArgs(appName, title)
     }
+
+    LifecycleEventEffect(Lifecycle.Event.ON_RESUME) {
+        viewModel.loadNotificationTitles()
+        priorityViewModel.loadNotificationTitles()
+    }
+
     Scaffold(
         topBar = {
             TitleTopAppBar(title = title, onBackClick = { navController.popBackStack() })
@@ -45,6 +54,7 @@ fun TitleScreen(navController: NavController, appName: String = "", title:String
             modifier = Modifier.padding(innerPadding),
             thickness = 0.2.dp
         )
+
         PullToRefreshBox(
             isRefreshing = isRefreshing,
             onRefresh = {
@@ -52,12 +62,11 @@ fun TitleScreen(navController: NavController, appName: String = "", title:String
                 viewModel.loadNotificationTitles()
                 priorityViewModel.loadNotificationTitles()
                 coroutineScope.launch {
-                    delay(2000)
+                    delay(500)
                     isRefreshing = false
                 }
             },
-            modifier = Modifier
-                .padding(innerPadding)
+            modifier = Modifier.padding(innerPadding)
         ) {
             NotificationTitleListView(navController, viewModel, priorityViewModel)
         }
