@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -19,6 +20,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
@@ -43,52 +45,59 @@ import com.example.notimanager.presentation.stateholder.viewmodel.NotificationAp
 @Composable
 fun NotificationAppListView(
     navController: NavController,
-    innerPadding: PaddingValues,
-    viewModel: NotificationAppViewModel = hiltViewModel(),
-    priorityViewModel: NotificationAppPriorityViewModel = hiltViewModel()
+    viewModel: NotificationAppViewModel,
+    priorityViewModel: NotificationAppPriorityViewModel
 ) {
     val notificationAppState by viewModel.notificationAppState.observeAsState(NotificationAppState())
     val priorityState by priorityViewModel.notificationAppPriorityState.observeAsState((NotificationAppPriorityState()))
+    var currentNotiPriority by remember { mutableStateOf(priorityState.notificationAppList) }
+    var currentNoti by remember { mutableStateOf(notificationAppState.notificationAppList) }
 
-    Column(
-        Modifier.padding(innerPadding)
+    LaunchedEffect(priorityState.notificationAppList) {
+        if (!priorityState.isLoading) {
+            currentNotiPriority = priorityState.notificationAppList
+        }
+    }
+
+    LaunchedEffect(notificationAppState.notificationAppList) {
+        if (!notificationAppState.isLoading) {
+            currentNoti = notificationAppState.notificationAppList
+        }
+    }
+
+    LazyColumn(
+        Modifier.fillMaxSize()
     ) {
-        if (notificationAppState.isLoading || priorityState.isLoading) {
-            CircularProgressIndicator(modifier = Modifier.padding(16.dp))
-        } else if (notificationAppState.error != null) {
+        items(currentNotiPriority) { notification ->
+            NotificationAppItemView(
+                notification = notification,
+                onClick = {
+                    navController
+                        .navigate(
+                            "titleScreen/${notification.appName}/${notification.title}"
+                        )
+                },
+                viewModel = viewModel,
+                priorityViewModel = priorityViewModel
+            )
+        }
 
-        } else {
-            LazyColumn {
-                items(priorityState.notificationAppList) { notification ->
-                    NotificationAppItemView(
-                        notification = notification,
-                        onClick = {
-                            navController
-                            .navigate("titleScreen/${notification.appName}/${notification.title}"
-                            )
-                        },
-                        viewModel = viewModel,
-                        priorityViewModel = priorityViewModel
-                    )
-                }
+        item {
+            HorizontalDivider()
+        }
 
-                item {
-                    HorizontalDivider()
-                }
-
-                items(notificationAppState.notificationAppList) { notification ->
-                    NotificationAppItemView(
-                        notification = notification,
-                        onClick = {
-                            navController
-                                .navigate("titleScreen/${notification.appName}/${notification.title}"
-                                )
-                        },
-                        viewModel = viewModel,
-                        priorityViewModel = priorityViewModel
-                    )
-                }
-            }
+        items(currentNoti) { notification ->
+            NotificationAppItemView(
+                notification = notification,
+                onClick = {
+                    navController
+                        .navigate(
+                            "titleScreen/${notification.appName}/${notification.title}"
+                        )
+                },
+                viewModel = viewModel,
+                priorityViewModel = priorityViewModel
+            )
         }
     }
 }
@@ -157,7 +166,7 @@ fun NotificationAppItemView(
                         priorityViewModel.removeAppPriority(notification.appName){
                             viewModel.loadNotificationApps()
                         }
-
+                        showModal = false
                     })
                 }
                 else{
@@ -165,6 +174,7 @@ fun NotificationAppItemView(
                         viewModel.setAppPriority(notification.appName, priorityViewModel.getLength()){
                             priorityViewModel.loadNotificationAppPriority()
                         }
+                        showModal = false
                     })
                 }
                 ClickableTextView(text = "삭제", onClick = {})
