@@ -36,6 +36,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.notimanager.common.objects.DateFormatter.formatTimestamp
+import com.example.notimanager.common.objects.Encoder.getEncodedString
 import com.example.notimanager.domain.model.NotificationApp
 import com.example.notimanager.presentation.stateholder.state.NotificationAppPriorityState
 import com.example.notimanager.presentation.stateholder.state.NotificationAppState
@@ -74,7 +75,7 @@ fun NotificationAppListView(
                 onClick = {
                     navController
                         .navigate(
-                            "titleScreen/${notification.appName}/${notification.title}"
+                            "titleScreen/${notification.appName}/${getEncodedString(notification.title)}"
                         )
                 },
                 viewModel = viewModel,
@@ -92,7 +93,7 @@ fun NotificationAppListView(
                 onClick = {
                     navController
                         .navigate(
-                            "titleScreen/${notification.appName}/${notification.title}"
+                            "titleScreen/${notification.appName}/${getEncodedString(notification.title)}"
                         )
                 },
                 viewModel = viewModel,
