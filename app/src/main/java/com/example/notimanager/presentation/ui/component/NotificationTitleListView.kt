@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -19,6 +20,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
@@ -41,7 +43,6 @@ import com.example.notimanager.presentation.stateholder.viewmodel.NotificationTi
 @Composable
 fun NotificationTitleListView(
     navController: NavController,
-    innerPadding: PaddingValues,
     viewModel: NotificationTitleViewModel,
     priorityViewModel: NotificationTitlePriorityViewModel
 ) {
@@ -51,35 +52,42 @@ fun NotificationTitleListView(
     val priorityState by priorityViewModel.notificationTitlePriorityState.observeAsState(
         NotificationTitlePriorityState()
     )
-    Column (
-        Modifier.padding(innerPadding)
-    ){
-        if (notificationTitleState.isLoading || priorityState.isLoading) {
-            CircularProgressIndicator(modifier = Modifier.padding(16.dp))
-        } else if (notificationTitleState.error != null) {
+    var currentNotiPriority by remember { mutableStateOf(priorityState.notificationTitleList) }
+    var currentNoti by remember { mutableStateOf(notificationTitleState.notificationTitleList) }
 
-        } else {
-            LazyColumn {
-                items(priorityState.notificationTitleList) { notification ->
-                    NotificationTitleItemView(notification = notification, onClick = {
-                        navController.navigate(
-                            "notificationScreen/${viewModel.getAppName()}/${notification.title}"
-                        )
-                    }, viewModel = viewModel, priorityViewModel = priorityViewModel)
-                }
+    LaunchedEffect(priorityState.notificationTitleList) {
+        if (!priorityState.isLoading) {
+            currentNotiPriority = priorityState.notificationTitleList
+        }
+    }
 
-                item {
-                    HorizontalDivider()
-                }
+    LaunchedEffect(notificationTitleState.notificationTitleList) {
+        if (!notificationTitleState.isLoading) {
+            currentNoti = notificationTitleState.notificationTitleList
+        }
+    }
 
-                items(notificationTitleState.notificationTitleList) { notification ->
-                    NotificationTitleItemView(notification = notification, onClick = {
-                        navController.navigate(
-                            "notificationScreen/${viewModel.getAppName()}/${notification.title}"
-                        )
-                    }, viewModel = viewModel, priorityViewModel = priorityViewModel)
-                }
-            }
+    LazyColumn(
+        modifier = Modifier.fillMaxSize()
+    ) {
+        items(currentNotiPriority) { notification ->
+            NotificationTitleItemView(notification = notification, onClick = {
+                navController.navigate(
+                    "notificationScreen/${viewModel.getAppName()}/${notification.title}"
+                )
+            }, viewModel = viewModel, priorityViewModel = priorityViewModel)
+        }
+
+        item {
+            HorizontalDivider()
+        }
+
+        items(currentNoti) { notification ->
+            NotificationTitleItemView(notification = notification, onClick = {
+                navController.navigate(
+                    "notificationScreen/${viewModel.getAppName()}/${notification.title}"
+                )
+            }, viewModel = viewModel, priorityViewModel = priorityViewModel)
         }
     }
 }
