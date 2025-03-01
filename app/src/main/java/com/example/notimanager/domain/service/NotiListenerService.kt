@@ -8,10 +8,11 @@ import com.example.notimanager.data.model.NotificationIconModel
 import com.example.notimanager.data.model.NotificationMetaModel
 import com.example.notimanager.data.model.NotificationModel
 import com.example.notimanager.domain.repository.NotificationRepositoryInterface
-import com.example.notimanager.data.utils.AppIconGetter.convertByteArray
-import com.example.notimanager.data.utils.AppIconGetter.convertByteArrayWithColor
-import com.example.notimanager.data.utils.NameGetter
-import com.example.notimanager.data.utils.IntentHelper
+import com.example.notimanager.domain.utils.AppIconGetter.convertByteArray
+import com.example.notimanager.domain.utils.AppIconGetter.convertByteArrayWithColor
+import com.example.notimanager.domain.utils.AppIconGetter.getAppIcon
+import com.example.notimanager.domain.utils.NameGetter
+import com.example.notimanager.domain.utils.IntentHelper
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -34,14 +35,15 @@ class NotiListenerService: NotificationListenerService() {
 
             val title = notification.extras.getString("android.title")
             val content = notification.extras.getString("android.text")
+            val subText = notification.extras.getString("android.subText") ?: ""
 
             if (title != null && content != null){
                 CoroutineScope(Dispatchers.IO).launch {
                     mutex.withLock {
-                        val id = insertNotification(appName, title, content, postTime)
+                        val id = insertNotification(appName, title, content, postTime, subText)
                         insertNotificationMeta(id, it.packageName)
-                        insertNotificationIcon(id, notification.getLargeIcon())
-                        insertAppIcon(appName, notification.smallIcon, notification.color)
+                        insertNotificationIcon(id, notification.getLargeIcon(), notification.smallIcon, notification.color)
+                        insertAppIcon(appName, it.packageName)
                     }
                 }
 
@@ -52,13 +54,15 @@ class NotiListenerService: NotificationListenerService() {
         appName: String,
         title: String,
         content: String,
-        postTime: Long
+        postTime: Long,
+        subText: String
     ): Long{
         val notificationModel = NotificationModel(
             appName = appName,
             title = title,
             content = content,
-            timestamp = postTime
+            timestamp = postTime,
+            subText = subText
         )
         return notificationRepository.insertNotification(notificationModel)
     }
@@ -78,8 +82,18 @@ class NotiListenerService: NotificationListenerService() {
         notificationRepository.insertNotificationMeta(notificationMetaModel)
     }
 
-    private suspend fun insertNotificationIcon(id: Long, icon: Icon?){
-        val byteArray = convertByteArray(this@NotiListenerService, icon)
+    private suspend fun insertNotificationIcon(
+        id: Long,
+        iconLarge: Icon?,
+        iconSmall: Icon?,
+        color: Int
+    ){
+        val byteArray = if (iconLarge != null) {
+            convertByteArray(iconLarge.loadDrawable(this@NotiListenerService))
+        } else {
+            convertByteArrayWithColor(iconSmall?.loadDrawable(this@NotiListenerService), color)
+                ?: ByteArray(0)
+        }
 
         val notificationIconModel = NotificationIconModel(
             notificationId = id,
@@ -90,10 +104,10 @@ class NotiListenerService: NotificationListenerService() {
 
     private suspend fun insertAppIcon(
         appName: String,
-        icon: Icon?,
-        color: Int
+        packageName: String
     ){
-        val byteArray = convertByteArrayWithColor(this@NotiListenerService, icon, color)
+        val byteArray = convertByteArray(getAppIcon(this@NotiListenerService, packageName))
+
         val appIconModel = AppIconModel(
             notiAppName = appName,
             iconBytes = byteArray
