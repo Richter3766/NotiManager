@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import android.os.UserHandle
 import android.service.notification.StatusBarNotification
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.example.notimanager.domain.utils.NameGetter
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.unmockkAll

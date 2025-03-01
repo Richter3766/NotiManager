@@ -1,7 +1,7 @@
 package com.example.notimanager.data.dto
 
 import android.graphics.BitmapFactory
-import com.example.notimanager.data.utils.IntentHelper.retrieveIntent
+import com.example.notimanager.domain.utils.IntentHelper.retrieveIntent
 import com.example.notimanager.domain.model.Notification
 
 data class NotificationDto(
