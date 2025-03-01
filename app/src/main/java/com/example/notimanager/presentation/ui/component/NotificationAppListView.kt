@@ -2,7 +2,6 @@ package com.example.notimanager.presentation.ui.component
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,7 +12,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -36,7 +34,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.notimanager.common.objects.DateFormatter.formatTimestamp
-import com.example.notimanager.common.objects.Encoder.getEncodedString
 import com.example.notimanager.domain.model.NotificationApp
 import com.example.notimanager.presentation.stateholder.state.NotificationAppPriorityState
 import com.example.notimanager.presentation.stateholder.state.NotificationAppState
@@ -75,7 +72,7 @@ fun NotificationAppListView(
                 onClick = {
                     navController
                         .navigate(
-                            "titleScreen/${notification.appName}/${getEncodedString(notification.title)}"
+                            "titleScreen/${notification.appName}"
                         )
                 },
                 viewModel = viewModel,
@@ -93,7 +90,7 @@ fun NotificationAppListView(
                 onClick = {
                     navController
                         .navigate(
-                            "titleScreen/${notification.appName}/${getEncodedString(notification.title)}"
+                            "titleScreen/${notification.appName}"
                         )
                 },
                 viewModel = viewModel,

@@ -16,4 +16,14 @@ class NotificationDomainRepository(
             .map { it.toDomain() }
             .toList()
     }
+
+    override suspend fun getNotificationSubTextList(
+        appName: String,
+        subText: String
+    ): List<Notification>{
+        return notificationDao.getNotificationSubTextList(appName, subText)
+            .asSequence()
+            .map { it.toDomain() }
+            .toList()
+    }
 }

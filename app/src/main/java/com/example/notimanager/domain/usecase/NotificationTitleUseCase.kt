@@ -8,16 +8,14 @@ class NotificationTitleUseCase(
 ){
     suspend fun getNotificationTitleList(
         appName: String,
-        title: String
     ): List<NotificationTitle>{
-        return repository.getNotificationTitleList(appName, title)
+        return repository.getNotificationTitleList(appName)
     }
 
     suspend fun getNotificationTitlePriorityList(
         appName: String,
-        title: String
     ): List<NotificationTitle> {
-        return repository.getNotificationTitlePriorityList(appName, title)
+        return repository.getNotificationTitlePriorityList(appName)
     }
 
     suspend fun setTitlePriority(

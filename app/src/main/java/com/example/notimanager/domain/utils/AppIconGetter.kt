@@ -9,7 +9,6 @@ import android.graphics.Paint
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.graphics.drawable.Drawable
-import android.graphics.drawable.Icon
 import com.example.notimanager.common.objects.DateFormatter.toBitmap
 import java.io.ByteArrayOutputStream
 

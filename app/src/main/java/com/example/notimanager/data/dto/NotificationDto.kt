@@ -6,6 +6,7 @@ import com.example.notimanager.domain.model.Notification
 
 data class NotificationDto(
     val title: String,
+    val subText: String,
     val content: String,
     val timestamp: Long,
     val intentActive: Boolean,
@@ -15,6 +16,7 @@ data class NotificationDto(
     fun toDomain(): Notification {
         return Notification(
             title = this.title,
+            subText = this.subText,
             content = this.content,
             timestamp = this.timestamp,
             intent = retrieveIntent(intentArray),

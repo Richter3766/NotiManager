@@ -10,11 +10,6 @@ object MigrationObject {
         }
     }
 
-    val MIGRATION_4_5 = object : Migration(4, 5) {
-        override fun migrate(db: SupportSQLiteDatabase) {
-            db.execSQL("ALTER TABLE app_icon RENAME COLUMN appIconResId iconBytes")
-        }
-    }
     val MIGRATION_6_7 = object : Migration(6, 7) {
         override fun migrate(db: SupportSQLiteDatabase) {
             db.execSQL("CREATE INDEX index_notification_icon_priorityActive_priority ON notification_icon (priorityActive, priority);")
@@ -26,6 +21,12 @@ object MigrationObject {
         override fun migrate(db: SupportSQLiteDatabase) {
             db.execSQL("ALTER TABLE notification ADD COLUMN subText TEXT NOT NULL DEFAULT '';")
             db.execSQL("ALTER TABLE notification_meta ADD COLUMN isRead INTEGER NOT NULL DEFAULT '0';")
+        }
+    }
+
+    val MIGRATION_8_9 = object : Migration(8, 9) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            db.execSQL("CREATE INDEX index_notification_appName_subText_timestamp ON notification(appName, subText, timestamp);\n")
         }
     }
 }

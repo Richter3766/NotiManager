@@ -28,10 +28,10 @@ class NotificationTitleRepositoryTest: BehaviorSpec({
             val expectedNotificationTitleList = readJsonFile(expectedLayer, expected) toDtoList NotificationTitle::class.java
 
             When("getNotificationTitlePriorityList를 호출하면"){
-                coEvery { dao.getNotificationTitlePriorityList("", "")  } returns notificationTitleDtoList
+                coEvery { dao.getNotificationTitleList("", true)  } returns notificationTitleDtoList
 
                 Then("notificationTitleList를 반환해야 한다."){
-                    val result = repository.getNotificationTitlePriorityList("", "")
+                    val result = repository.getNotificationTitlePriorityList("")
                     result shouldBe expectedNotificationTitleList
                 }
             }
@@ -45,10 +45,10 @@ class NotificationTitleRepositoryTest: BehaviorSpec({
             val expectedNotificationTitleList = readJsonFile(expectedLayer, expected) toDtoList NotificationTitle::class.java
 
             When("getNotificationTitleList를 호출하면"){
-                coEvery { dao.getNotificationTitleList("", "")  } returns notificationTitleDtoList
+                coEvery { dao.getNotificationTitleList("", false)  } returns notificationTitleDtoList
 
                 Then("notificationTitleList를 반환해야 한다."){
-                    val result = repository.getNotificationTitleList("", "")
+                    val result = repository.getNotificationTitleList("")
                     result shouldBe expectedNotificationTitleList
                 }
             }

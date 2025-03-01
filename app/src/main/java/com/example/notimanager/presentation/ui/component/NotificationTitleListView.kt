@@ -2,7 +2,6 @@ package com.example.notimanager.presentation.ui.component
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,7 +12,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -73,9 +71,10 @@ fun NotificationTitleListView(
     ) {
         items(currentNotiPriority) { notification ->
             NotificationTitleItemView(notification = notification, onClick = {
-                navController.navigate(
-                    "notificationScreen/${viewModel.getAppName()}/${getEncodedString(notification.title)}"
-                )
+                if (notification.subText == "") navController.navigate("notificationScreen/${viewModel.getAppName()}/${getEncodedString(notification.title)}/False")
+                else navController.navigate("notificationScreen/${viewModel.getAppName()}/${getEncodedString(notification.subText)}/True")
+
+
             }, viewModel = viewModel, priorityViewModel = priorityViewModel)
         }
 
@@ -85,9 +84,8 @@ fun NotificationTitleListView(
 
         items(currentNoti) { notification ->
             NotificationTitleItemView(notification = notification, onClick = {
-                navController.navigate(
-                    "notificationScreen/${viewModel.getAppName()}/${getEncodedString(notification.title)}"
-                )
+                if (notification.subText == "") navController.navigate("notificationScreen/${viewModel.getAppName()}/${getEncodedString(notification.title)}/False")
+                else navController.navigate("notificationScreen/${viewModel.getAppName()}/${getEncodedString(notification.subText)}/True")
             }, viewModel = viewModel, priorityViewModel = priorityViewModel)
         }
     }
@@ -113,11 +111,17 @@ fun NotificationTitleItemView(
         Column (
             modifier = Modifier.weight(1f)
         ){
-            Text(
-                text = notification.title,
-                style = MaterialTheme.typography.bodySmall.copy(fontWeight = FontWeight.Bold)
-
-            )
+            if (notification.subText == "") {
+                Text(
+                    text = notification.title,
+                    style = MaterialTheme.typography.bodySmall.copy(fontWeight = FontWeight.Bold)
+                )
+            }else{
+                Text(
+                    text = notification.subText,
+                    style = MaterialTheme.typography.bodySmall.copy(fontWeight = FontWeight.Bold)
+                )
+            }
             Text(
                 text = notification.content,
                 style = MaterialTheme.typography.bodySmall,
@@ -152,7 +156,7 @@ fun NotificationTitleItemView(
                         priorityViewModel.removeTitlePriority(notificationId = notification.id){
                             viewModel.loadNotificationTitles()
                         }
-
+                        showModal = false
                     })
                 }
                 else{
@@ -160,6 +164,7 @@ fun NotificationTitleItemView(
                         viewModel.setTitlePriority(notification.id, priorityViewModel.getLength()){
                             priorityViewModel.loadNotificationTitles()
                         }
+                        showModal = false
                     })
                 }
                 ClickableTextView(text = "삭제", onClick = {})

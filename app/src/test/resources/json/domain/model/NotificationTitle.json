@@ -2,30 +2,35 @@
   {
     "title": "New Message",
     "content": "You have received a new message from John.",
+    "subText": "",
     "timestamp": 1672531199000,
     "notificationIcon": null
   },
   {
     "title": "Weather Update",
     "content": "Rain is expected in your area today.",
+    "subText": "",
     "timestamp": 1672531299000,
     "notificationIcon": null
   },
   {
     "title": "New Email",
     "content": "You've got a new email from support@example.com.",
+    "subText": "",
     "timestamp": 1672531399000,
     "notificationIcon": null
   },
   {
     "title": "Event Reminder",
     "content": "Don't forget your meeting at 3 PM today.",
+    "subText": "",
     "timestamp": 1672531499000,
     "notificationIcon": null
   },
   {
     "title": "Breaking News",
     "content": "New developments in the tech industry.",
+    "subText": "",
     "timestamp": 1672531599000,
     "notificationIcon": null
   }

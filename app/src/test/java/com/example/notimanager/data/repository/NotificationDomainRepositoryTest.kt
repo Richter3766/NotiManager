@@ -10,7 +10,7 @@ import io.kotest.matchers.shouldBe
 import io.mockk.coEvery
 import io.mockk.mockk
 
-class NotificationRepositoryDomainTest: BehaviorSpec({
+class NotificationDomainRepositoryTest: BehaviorSpec({
     val dao = mockk<NotificationDao>()
     val repository = NotificationDomainRepository(dao)
 

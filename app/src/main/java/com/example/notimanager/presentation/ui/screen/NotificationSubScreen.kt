@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.notimanager.presentation.stateholder.state.NotificationState
-import com.example.notimanager.presentation.stateholder.viewmodel.NotificationViewModel
+import com.example.notimanager.presentation.stateholder.viewmodel.NotificationSubTextViewModel
 import com.example.notimanager.presentation.ui.component.NotificationListView
 import com.example.notimanager.presentation.ui.component.NotificationTopAppBar
 import kotlinx.coroutines.delay
@@ -26,8 +26,8 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NotificationScreen(navController: NavController, appName: String = "", title:String = ""){
-    val viewModel: NotificationViewModel = hiltViewModel()
+fun NotificationSubScreen(navController: NavController, appName: String = "", subText:String){
+    val viewModel: NotificationSubTextViewModel = hiltViewModel()
 
     var isRefreshing by remember { mutableStateOf(false) }
     val coroutineScope = rememberCoroutineScope()
@@ -41,12 +41,12 @@ fun NotificationScreen(navController: NavController, appName: String = "", title
         }
     }
 
-    LaunchedEffect(appName, title) {
-        viewModel.setArgs(appName, title)
+    LaunchedEffect(appName, subText) {
+        viewModel.setArgs(appName, subText)
     }
     Scaffold(
         topBar = {
-            NotificationTopAppBar(title = title, onBackClick = { navController.popBackStack() })
+            NotificationTopAppBar(title = subText, onBackClick = { navController.popBackStack() })
         }
     ) { innerPadding ->
         HorizontalDivider(
@@ -61,6 +61,5 @@ fun NotificationScreen(navController: NavController, appName: String = "", title
             val notificationState by viewModel.notificationState.observeAsState(NotificationState())
             NotificationListView(notificationState)
         }
-
     }
 }
