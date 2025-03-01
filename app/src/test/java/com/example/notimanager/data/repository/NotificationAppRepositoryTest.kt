@@ -28,7 +28,7 @@ class NotificationAppRepositoryTest: BehaviorSpec({
             val expectedNotificationAppList = readJsonFile(expectedLayer, expected) toDtoList NotificationApp::class.java
 
             When("getNotificationAppList를 호출하면"){
-                coEvery { dao.getNotificationAppPriorityList()  } returns notificationAppDtoList
+                coEvery { dao.getNotificationAppList(true)  } returns notificationAppDtoList
 
                 Then("notificationAppList를 반환해야 한다."){
                     val result = repository.getNotificationAppPriorityList()
@@ -45,7 +45,7 @@ class NotificationAppRepositoryTest: BehaviorSpec({
             val expectedNotificationAppList = readJsonFile(expectedLayer, expected) toDtoList NotificationApp::class.java
 
             When("getNotificationAppList를 호출하면"){
-                coEvery { dao.getNotificationAppList()  } returns notificationAppDtoList
+                coEvery { dao.getNotificationAppList(false)  } returns notificationAppDtoList
 
                 Then("notificationAppList를 반환해야 한다."){
                     val result = repository.getNotificationAppList()

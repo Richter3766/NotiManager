@@ -16,68 +16,10 @@ interface NotificationDao {
 
     @Query(
         """
-        SELECT n1.appName, n1.title, n1.content, n1.timestamp, ai.iconBytes , ai.priorityActive, ai.priority
-        FROM notification AS n1
-        INNER JOIN app_icon AS ai ON n1.appName = ai.notiAppName
-        WHERE ai.priorityActive = 1
-        AND timestamp = (
-            SELECT MAX(timestamp)
-            FROM notification AS n2
-            WHERE n1.appName = n2.appName
-        )
-        ORDER BY timestamp DESC
-    """
-    )
-    suspend fun getNotificationAppPriorityList(): List<NotificationAppDto>
-
-    @Query(
-        """
-            SELECT n1.id, n1.title, n1.subText, n1.content, n1.timestamp, ni.iconBytes, ni.priorityActive, ni.priority
-            FROM notification AS n1
-            INNER JOIN notification_icon AS ni ON n1.id = ni.notificationId
-            WHERE ni.priorityActive = 1
-            AND n1.appName = :appName 
-            AND n1.subText = ""
-            AND n1.timestamp = (
-                SELECT MAX(timestamp)
-                FROM notification AS n2
-                WHERE n1.appName = n2.appName AND n1.title = n2.title
-            )
-            AND n1.title IN (
-                SELECT title
-                FROM notification
-                WHERE appName = :appName
-                GROUP BY title
-            )
-            UNION ALL
-            SELECT n1.id, n1.title, n1.subText, n1.content, n1.timestamp, ni.iconBytes, ni.priorityActive, ni.priority
-            FROM notification AS n1
-            INNER JOIN notification_icon AS ni ON n1.id = ni.notificationId
-            WHERE ni.priorityActive = 1
-            AND n1.appName = :appName 
-            AND n1.subText != ""
-            AND n1.timestamp = (
-                SELECT MAX(timestamp)
-                FROM notification AS n2
-                WHERE n1.appName = n2.appName AND n1.title = n2.title
-            )
-            AND n1.subText IN (
-                SELECT title
-                FROM notification
-                WHERE appName = :appName
-                GROUP BY subText
-            )
-            ORDER BY n1.timestamp DESC
-    """
-    )
-    suspend fun getNotificationTitlePriorityList(appName: String): List<NotificationTitleDto>
-
-    @Query(
-        """
         SELECT n1.appName, n1.title, n1.content, n1.timestamp, ai.iconBytes, ai.priorityActive, ai.priority
         FROM notification AS n1
         INNER JOIN app_icon AS ai ON n1.appName = ai.notiAppName
-        WHERE ai.priorityActive = 0 
+        WHERE ai.priorityActive = :priorityActive
         AND timestamp = (
             SELECT MAX(timestamp)
             FROM notification AS n2
@@ -86,14 +28,14 @@ interface NotificationDao {
         ORDER BY timestamp DESC
     """
     )
-    suspend fun getNotificationAppList(): List<NotificationAppDto>
+    suspend fun getNotificationAppList(priorityActive: Boolean): List<NotificationAppDto>
 
     @Query(
         """
         SELECT n1.id, n1.title, n1.subText, n1.content, n1.timestamp, ni.iconBytes, ni.priorityActive, ni.priority
         FROM notification AS n1
         INNER JOIN notification_icon AS ni ON n1.id = ni.notificationId
-        WHERE ni.priorityActive = 0 
+        WHERE ni.priorityActive = :priorityActive
         AND n1.appName = :appName 
         AND n1.subText = ""
         AND n1.timestamp = (
@@ -113,16 +55,16 @@ interface NotificationDao {
         SELECT n1.id, n1.title, n1.subText, n1.content, n1.timestamp, ni.iconBytes, ni.priorityActive, ni.priority
         FROM notification AS n1
         INNER JOIN notification_icon AS ni ON n1.id = ni.notificationId
-        WHERE ni.priorityActive = 0 
+        WHERE ni.priorityActive = :priorityActive
         AND n1.appName = :appName 
         AND n1.subText != ""
         AND n1.timestamp = (
             SELECT MAX(timestamp)
             FROM notification AS n2
-            WHERE n1.appName = n2.appName AND n1.title = n2.title
+            WHERE n1.appName = n2.appName AND n1.subText = n2.subText
         )
         AND n1.subText IN (
-            SELECT title
+            SELECT subText
             FROM notification
             WHERE appName = :appName
             GROUP BY subText
@@ -131,7 +73,7 @@ interface NotificationDao {
         ORDER BY n1.timestamp DESC
     """
     )
-    suspend fun getNotificationTitleList(appName: String): List<NotificationTitleDto>
+    suspend fun getNotificationTitleList(appName: String, priorityActive: Boolean): List<NotificationTitleDto>
 
     @Query(
         """

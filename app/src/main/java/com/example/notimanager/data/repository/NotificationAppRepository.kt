@@ -10,14 +10,14 @@ class NotificationAppRepository(
     private val appIconDao: AppIconDao
 ) : NotificationAppRepositoryInterface {
     override suspend fun getNotificationAppList(): List<NotificationApp>{
-        return notificationDao.getNotificationAppList()
+        return notificationDao.getNotificationAppList(false)
             .asSequence()
             .map { it.toDomain() }
             .toList()
     }
 
     override suspend fun getNotificationAppPriorityList(): List<NotificationApp> {
-        return notificationDao.getNotificationAppPriorityList()
+        return notificationDao.getNotificationAppList(true)
             .asSequence()
             .map { it.toDomain() }
             .toList()

@@ -12,7 +12,7 @@ class NotificationTitleRepository(
     override suspend fun getNotificationTitleList(
         appName: String,
     ): List<NotificationTitle>{
-        return notificationDao.getNotificationTitleList(appName)
+        return notificationDao.getNotificationTitleList(appName, false)
             .asSequence()
             .map { it.toDomain() }
             .toList()
@@ -21,7 +21,7 @@ class NotificationTitleRepository(
     override suspend fun getNotificationTitlePriorityList(
         appName: String,
     ): List<NotificationTitle> {
-        return notificationDao.getNotificationTitlePriorityList(appName)
+        return notificationDao.getNotificationTitleList(appName, true)
             .asSequence()
             .map { it.toDomain() }
             .toList()
