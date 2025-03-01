@@ -59,12 +59,7 @@ fun NotificationItemView(notification: Notification, onClick: () -> Unit) {
     ) {
         AppIconView(notification.notificationIcon)
         Column {
-            if (notification.subText == ""){
-                BasicText(text = notification.title, style = MaterialTheme.typography.bodyLarge)
-            }
-            else{
-                BasicText(text = notification.subText, style = MaterialTheme.typography.bodyLarge)
-            }
+            BasicText(text = notification.title, style = MaterialTheme.typography.bodyLarge)
             BasicText(text = notification.content, style = MaterialTheme.typography.bodyMedium)
             BasicText(text = formatTimestamp(notification.timestamp), style = MaterialTheme.typography.bodyMedium)
         }
