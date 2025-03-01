@@ -21,10 +21,10 @@ class NotificationTitleUseCaseTest: BehaviorSpec({
             val notificationTitleList = readJsonFile(layer, target) toDtoList NotificationTitle::class.java
 
             When("getNotificationTitleList를 호출하면"){
-                coEvery { repository.getNotificationTitleList(any(), any())  } returns notificationTitleList
+                coEvery { repository.getNotificationTitleList(any())  } returns notificationTitleList
 
                 Then("notificationTitleList를 반환해야 한다."){
-                    val result = useCase.getNotificationTitleList("", "")
+                    val result = useCase.getNotificationTitleList("")
                     result shouldBe notificationTitleList
                 }
             }
