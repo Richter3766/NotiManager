@@ -16,10 +16,10 @@ import io.mockk.coEvery
 import io.mockk.mockk
 
 class NotificationRepositoryTest: BehaviorSpec({
-    val notificationDao: NotificationDao = mockk()
-    val notificationMetaDao: NotificationMetaDao = mockk()
-    val notificationIconDao: NotificationIconDao = mockk()
-    val appIconDao: AppIconDao = mockk()
+    val notificationDao = mockk<NotificationDao>()
+    val notificationMetaDao = mockk<NotificationMetaDao>()
+    val notificationIconDao = mockk<NotificationIconDao>()
+    val appIconDao = mockk<AppIconDao>()
     val repository = NotificationRepository(
         notificationDao,
         notificationMetaDao,
