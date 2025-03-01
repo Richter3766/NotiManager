@@ -34,6 +34,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.notimanager.common.objects.DateFormatter.formatTimestamp
+import com.example.notimanager.common.objects.Encoder.getEncodedString
 import com.example.notimanager.domain.model.NotificationTitle
 import com.example.notimanager.presentation.stateholder.state.NotificationTitlePriorityState
 import com.example.notimanager.presentation.stateholder.state.NotificationTitleState
@@ -73,7 +74,7 @@ fun NotificationTitleListView(
         items(currentNotiPriority) { notification ->
             NotificationTitleItemView(notification = notification, onClick = {
                 navController.navigate(
-                    "notificationScreen/${viewModel.getAppName()}/${notification.title}"
+                    "notificationScreen/${viewModel.getAppName()}/${getEncodedString(notification.title)}"
                 )
             }, viewModel = viewModel, priorityViewModel = priorityViewModel)
         }
@@ -85,7 +86,7 @@ fun NotificationTitleListView(
         items(currentNoti) { notification ->
             NotificationTitleItemView(notification = notification, onClick = {
                 navController.navigate(
-                    "notificationScreen/${viewModel.getAppName()}/${notification.title}"
+                    "notificationScreen/${viewModel.getAppName()}/${getEncodedString(notification.title)}"
                 )
             }, viewModel = viewModel, priorityViewModel = priorityViewModel)
         }

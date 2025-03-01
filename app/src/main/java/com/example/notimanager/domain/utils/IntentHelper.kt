@@ -1,4 +1,4 @@
-package com.example.notimanager.data.utils
+package com.example.notimanager.domain.utils
 
 import android.content.Intent
 import android.os.Parcel

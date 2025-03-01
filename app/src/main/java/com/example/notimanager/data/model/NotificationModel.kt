@@ -15,4 +15,5 @@ data class NotificationModel(
     val title: String,
     val content: String,
     val timestamp: Long,
+    val subText: String,
 )

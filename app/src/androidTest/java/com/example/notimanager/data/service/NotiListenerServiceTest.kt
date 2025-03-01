@@ -14,8 +14,8 @@ import com.example.notimanager.presentation.ui.activity.MainActivity
 import com.example.notimanager.data.model.NotificationModel
 import com.example.notimanager.data.repository.NotificationRepository
 import com.example.notimanager.domain.service.NotiListenerService
-import com.example.notimanager.data.utils.NameGetter
-import com.example.notimanager.data.utils.IntentHelper
+import com.example.notimanager.domain.utils.NameGetter
+import com.example.notimanager.domain.utils.IntentHelper
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every

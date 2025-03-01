@@ -21,4 +21,11 @@ object MigrationObject {
             db.execSQL("CREATE INDEX index_app_icon_priorityActive_priority ON app_icon (priorityActive, priority);")
         }
     }
+
+    val MIGRATION_7_8 = object : Migration(7, 8) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            db.execSQL("ALTER TABLE notification ADD COLUMN subText TEXT NOT NULL DEFAULT '';")
+            db.execSQL("ALTER TABLE notification_meta ADD COLUMN isRead INTEGER NOT NULL DEFAULT '0';")
+        }
+    }
 }
