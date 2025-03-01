@@ -20,7 +20,6 @@ import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.navigation.NavController
 import com.example.notimanager.presentation.stateholder.viewmodel.NotificationTitlePriorityViewModel
 import com.example.notimanager.presentation.stateholder.viewmodel.NotificationTitleViewModel
-import com.example.notimanager.presentation.ui.component.NotificationAppListView
 import com.example.notimanager.presentation.ui.component.NotificationTitleListView
 import com.example.notimanager.presentation.ui.component.TitleTopAppBar
 import kotlinx.coroutines.delay

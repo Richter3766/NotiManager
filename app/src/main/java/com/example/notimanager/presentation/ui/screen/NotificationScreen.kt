@@ -20,7 +20,6 @@ import androidx.navigation.NavController
 import com.example.notimanager.presentation.stateholder.state.NotificationState
 import com.example.notimanager.presentation.stateholder.viewmodel.NotificationViewModel
 import com.example.notimanager.presentation.ui.component.NotificationListView
-import com.example.notimanager.presentation.ui.component.NotificationTitleListView
 import com.example.notimanager.presentation.ui.component.NotificationTopAppBar
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch

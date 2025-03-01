@@ -1,6 +1,5 @@
 package com.example.notimanager.data.repository
 
-import com.example.notimanager.data.dto.NotificationDto
 import com.example.notimanager.data.source.local.dao.NotificationDao
 import com.example.notimanager.domain.model.Notification
 import com.example.notimanager.domain.repository.NotificationDomainRepositoryInterface
