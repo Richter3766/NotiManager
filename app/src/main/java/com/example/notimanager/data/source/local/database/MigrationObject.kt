@@ -28,4 +28,10 @@ object MigrationObject {
             db.execSQL("ALTER TABLE notification_meta ADD COLUMN isRead INTEGER NOT NULL DEFAULT '0';")
         }
     }
+
+    val MIGRATION_8_9 = object : Migration(8, 9) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            db.execSQL("CREATE INDEX index_notification_appName_subText_timestamp ON notification(appName, subText, timestamp);\n")
+        }
+    }
 }

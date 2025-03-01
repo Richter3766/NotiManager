@@ -16,9 +16,10 @@ import com.example.notimanager.data.source.local.dao.NotificationMetaDao
 import com.example.notimanager.data.source.local.database.MigrationObject.MIGRATION_3_4
 import com.example.notimanager.data.source.local.database.MigrationObject.MIGRATION_6_7
 import com.example.notimanager.data.source.local.database.MigrationObject.MIGRATION_7_8
+import com.example.notimanager.data.source.local.database.MigrationObject.MIGRATION_8_9
 
 @Database(
-    version = 8,
+    version = 9,
     entities =
     [
         NotificationModel::class,
@@ -50,7 +51,8 @@ abstract class NotiManagerDatabase : RoomDatabase() {
                     .addMigrations(
                         MIGRATION_3_4,
                         MIGRATION_6_7,
-                        MIGRATION_7_8
+                        MIGRATION_7_8,
+                        MIGRATION_8_9,
                         )
                     .fallbackToDestructiveMigration()
                     .build()

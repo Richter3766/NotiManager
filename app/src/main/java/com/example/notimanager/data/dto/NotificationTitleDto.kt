@@ -6,6 +6,7 @@ import com.example.notimanager.domain.model.NotificationTitle
 data class NotificationTitleDto(
     val id: Long,
     val title: String,
+    val subText: String,
     val content: String,
     val timestamp: Long,
     val iconBytes: ByteArray,
@@ -17,6 +18,7 @@ data class NotificationTitleDto(
             id = this.id,
             title = this.title,
             content = this.content,
+            subText = this.subText,
             timestamp = this.timestamp,
             notificationIcon = BitmapFactory.decodeByteArray(iconBytes, 0, iconBytes.size),
             priorityActive = this.priorityActive,
