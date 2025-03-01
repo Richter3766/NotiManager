@@ -1,21 +1,24 @@
-package com.example.notimanager.data.utils
+package com.example.notimanager.domain.utils
 
 import android.content.Context
+import android.content.pm.ApplicationInfo
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
+import android.graphics.drawable.Drawable
 import android.graphics.drawable.Icon
 import com.example.notimanager.common.objects.DateFormatter.toBitmap
 import java.io.ByteArrayOutputStream
 
 object AppIconGetter {
-    fun convertByteArrayWithColor(context: Context, icon: Icon?, color: Int): ByteArray{
-        if (icon == null) return ByteArray(0)
+    fun convertByteArrayWithColor(icon: Drawable?, color: Int): ByteArray?{
+        if (icon == null) return null
 
         // Icon을 Drawable로 변환 후 Bitmap으로 변환
-        val bitmap = icon.loadDrawable(context)?.toBitmap() ?: return ByteArray(0)
+        val bitmap = icon.toBitmap()
         val bitmapConfig = bitmap.config ?: Bitmap.Config.ARGB_8888
 
         // 색상 필터 적용
@@ -37,10 +40,21 @@ object AppIconGetter {
         return stream.toByteArray()
     }
 
-    fun convertByteArray(context: Context, icon: Icon?): ByteArray{
-        val bitmap = icon?.loadDrawable(context)?.toBitmap()
+    fun convertByteArray(icon: Drawable?): ByteArray{
+        val bitmap = icon?.toBitmap()
         val stream = ByteArrayOutputStream()
         bitmap?.compress(Bitmap.CompressFormat.PNG, 100, stream)
         return stream.toByteArray()
+    }
+
+    fun getAppIcon(context: Context, packageName: String): Drawable? {
+        return try {
+            val packageManager: PackageManager = context.packageManager
+            val applicationInfo: ApplicationInfo = packageManager.getApplicationInfo(packageName, 0)
+            packageManager.getApplicationIcon(applicationInfo)
+        } catch (e: PackageManager.NameNotFoundException) {
+            e.printStackTrace()
+            null
+        }
     }
 }
