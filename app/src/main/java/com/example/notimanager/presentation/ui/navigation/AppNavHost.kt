@@ -27,12 +27,8 @@ fun AppNavHost(navController: NavHostController) {
             val appName = backStackEntry.arguments?.getString("appName")
             val notiName = backStackEntry.arguments?.getString("notiName")
             val isSubText = backStackEntry.arguments?.getString("isSubText")
-            if (isSubText == ""){
-                NotificationScreen(navController, appName!!, getDecodeString(notiName!!))
-            }else{
-                NotificationSubScreen(navController, appName!!, getDecodeString(notiName!!))
-            }
-
+            if (isSubText == "False") NotificationScreen(navController, appName!!, getDecodeString(notiName!!))
+            else NotificationSubScreen(navController, appName!!, getDecodeString(notiName!!))
         }
     }
 }

@@ -71,9 +71,10 @@ fun NotificationTitleListView(
     ) {
         items(currentNotiPriority) { notification ->
             NotificationTitleItemView(notification = notification, onClick = {
-                navController.navigate(
-                    "notificationScreen/${viewModel.getAppName()}/${getEncodedString(notification.title)}/${notification.subText}"
-                )
+                if (notification.subText == "") navController.navigate("notificationScreen/${viewModel.getAppName()}/${getEncodedString(notification.title)}/False")
+                else navController.navigate("notificationScreen/${viewModel.getAppName()}/${getEncodedString(notification.subText)}/True")
+
+
             }, viewModel = viewModel, priorityViewModel = priorityViewModel)
         }
 
@@ -83,9 +84,8 @@ fun NotificationTitleListView(
 
         items(currentNoti) { notification ->
             NotificationTitleItemView(notification = notification, onClick = {
-                navController.navigate(
-                    "notificationScreen/${viewModel.getAppName()}/${getEncodedString(notification.title)}/${notification.subText}"
-                )
+                if (notification.subText == "") navController.navigate("notificationScreen/${viewModel.getAppName()}/${getEncodedString(notification.title)}/False")
+                else navController.navigate("notificationScreen/${viewModel.getAppName()}/${getEncodedString(notification.subText)}/True")
             }, viewModel = viewModel, priorityViewModel = priorityViewModel)
         }
     }
