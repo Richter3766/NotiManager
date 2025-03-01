@@ -20,8 +20,7 @@ fun AppNavHost(navController: NavHostController) {
         }
         composable("titleScreen/{appName}/{title}") { backStackEntry ->
             val appName = backStackEntry.arguments?.getString("appName")
-            val title = backStackEntry.arguments?.getString("title")
-            TitleScreen(navController, appName!!, getDecodeString(title!!))
+            TitleScreen(navController, appName!!)
         }
         composable("notificationScreen/{appName}/{title}") { backStackEntry ->
             val appName = backStackEntry.arguments?.getString("appName")

@@ -18,11 +18,9 @@ class NotificationTitleViewModel @Inject constructor(
     val notificationTitleState: LiveData<NotificationTitleState> get() = _notificationTitleState
 
     private var appName: String = ""
-    private var title: String = ""
 
-    fun setArgs(appName: String, title: String) {
+    fun setArgs(appName: String) {
         this.appName = appName
-        this.title = title
         loadNotificationTitles()
     }
 
@@ -35,7 +33,7 @@ class NotificationTitleViewModel @Inject constructor(
             _notificationTitleState.value = NotificationTitleState(isLoading = true)
 
             try {
-                val notificationTitles = notificationTitleUseCase.getNotificationTitleList(appName, title)
+                val notificationTitles = notificationTitleUseCase.getNotificationTitleList(appName)
                 _notificationTitleState.value = NotificationTitleState(notificationTitleList = notificationTitles)
             } catch (e: Exception) {
                 _notificationTitleState.value = NotificationTitleState(error = e.message)

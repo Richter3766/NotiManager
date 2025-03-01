@@ -28,16 +28,16 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TitleScreen(navController: NavController, appName: String = "", title:String = ""){
+fun TitleScreen(navController: NavController, appName: String = ""){
     val viewModel: NotificationTitleViewModel = hiltViewModel()
     val priorityViewModel: NotificationTitlePriorityViewModel = hiltViewModel()
 
     var isRefreshing by remember { mutableStateOf(false) }
     val coroutineScope = rememberCoroutineScope()
 
-    LaunchedEffect(appName, title) {
-        viewModel.setArgs(appName, title)
-        priorityViewModel.setArgs(appName, title)
+    LaunchedEffect(appName) {
+        viewModel.setArgs(appName)
+        priorityViewModel.setArgs(appName)
     }
 
     LifecycleEventEffect(Lifecycle.Event.ON_RESUME) {
@@ -47,7 +47,7 @@ fun TitleScreen(navController: NavController, appName: String = "", title:String
 
     Scaffold(
         topBar = {
-            TitleTopAppBar(title = title, onBackClick = { navController.popBackStack() })
+            TitleTopAppBar(title = appName, onBackClick = { navController.popBackStack() })
         }
     ) { innerPadding ->
         HorizontalDivider(

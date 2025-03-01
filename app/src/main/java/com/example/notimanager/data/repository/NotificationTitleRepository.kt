@@ -11,9 +11,8 @@ class NotificationTitleRepository(
 ) : NotificationTitleRepositoryInterface {
     override suspend fun getNotificationTitleList(
         appName: String,
-        title: String
     ): List<NotificationTitle>{
-        return notificationDao.getNotificationTitleList(appName, title)
+        return notificationDao.getNotificationTitleList(appName)
             .asSequence()
             .map { it.toDomain() }
             .toList()
@@ -21,9 +20,8 @@ class NotificationTitleRepository(
 
     override suspend fun getNotificationTitlePriorityList(
         appName: String,
-        title: String
     ): List<NotificationTitle> {
-        return notificationDao.getNotificationTitlePriorityList(appName, title)
+        return notificationDao.getNotificationTitlePriorityList(appName)
             .asSequence()
             .map { it.toDomain() }
             .toList()

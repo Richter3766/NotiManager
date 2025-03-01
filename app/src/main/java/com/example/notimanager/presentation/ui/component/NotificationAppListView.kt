@@ -75,7 +75,7 @@ fun NotificationAppListView(
                 onClick = {
                     navController
                         .navigate(
-                            "titleScreen/${notification.appName}/${getEncodedString(notification.title)}"
+                            "titleScreen/${notification.appName}}"
                         )
                 },
                 viewModel = viewModel,
@@ -93,7 +93,7 @@ fun NotificationAppListView(
                 onClick = {
                     navController
                         .navigate(
-                            "titleScreen/${notification.appName}/${getEncodedString(notification.title)}"
+                            "titleScreen/${notification.appName}}"
                         )
                 },
                 viewModel = viewModel,

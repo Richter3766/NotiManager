@@ -18,11 +18,9 @@ class NotificationTitlePriorityViewModel @Inject constructor(
     val notificationTitlePriorityState: LiveData<NotificationTitlePriorityState> get() = _notificationTitlePriorityState
 
     private var appName: String = ""
-    private var title: String = ""
 
-    fun setArgs(appName: String, title: String) {
+    fun setArgs(appName: String) {
         this.appName = appName
-        this.title = title
         loadNotificationTitles()
     }
 
@@ -38,7 +36,7 @@ class NotificationTitlePriorityViewModel @Inject constructor(
             _notificationTitlePriorityState.value = NotificationTitlePriorityState(isLoading = true)
 
             try {
-                val notificationTitles = notificationTitleUseCase.getNotificationTitlePriorityList(appName, title)
+                val notificationTitles = notificationTitleUseCase.getNotificationTitlePriorityList(appName)
                 _notificationTitlePriorityState.value = NotificationTitlePriorityState(notificationTitleList = notificationTitles)
             } catch (e: Exception) {
                 _notificationTitlePriorityState.value = NotificationTitlePriorityState(error = e.message)
