@@ -59,7 +59,7 @@ fun NotificationSubScreen(navController: NavController, appName: String = "", su
             modifier = Modifier.padding(innerPadding)
         ) {
             val notificationState by viewModel.notificationState.observeAsState(NotificationState())
-            NotificationListView(notificationState)
+            NotificationListView(notificationState, viewModel::deleteNotification)
         }
     }
 }

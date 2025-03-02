@@ -16,6 +16,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.notimanager.presentation.stateholder.state.NotificationState
 import com.example.notimanager.presentation.stateholder.viewmodel.NotificationViewModel
@@ -59,7 +60,7 @@ fun NotificationScreen(navController: NavController, appName: String = "", title
             modifier = Modifier.padding(innerPadding)
         ) {
             val notificationState by viewModel.notificationState.observeAsState(NotificationState())
-            NotificationListView(notificationState)
+            NotificationListView(notificationState, viewModel::deleteNotification)
         }
 
     }
