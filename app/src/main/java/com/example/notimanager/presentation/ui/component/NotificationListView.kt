@@ -8,8 +8,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.text.BasicText
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -18,7 +18,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.example.notimanager.common.objects.DateFormatter.formatTimestamp
 import com.example.notimanager.domain.model.Notification
@@ -50,18 +53,64 @@ fun NotificationListView(notificationState: NotificationState) {
 
 @Composable
 fun NotificationItemView(notification: Notification, onClick: () -> Unit) {
+    var showModal by remember { mutableStateOf(false) }
     Row(
         modifier = Modifier
             .padding(16.dp)
             .fillMaxWidth()
-            .clickable(onClick = onClick),
-        verticalAlignment = Alignment.CenterVertically
+            .clickable(onClick = {
+                showModal = true
+            }),
+        verticalAlignment = Alignment.Top
     ) {
         AppIconView(notification.notificationIcon)
-        Column {
-            BasicText(text = notification.title, style = MaterialTheme.typography.bodyLarge)
-            BasicText(text = notification.content, style = MaterialTheme.typography.bodyMedium)
-            BasicText(text = formatTimestamp(notification.timestamp), style = MaterialTheme.typography.bodyMedium)
+        Column (
+            modifier = Modifier.padding(start = 16.dp)
+        ){
+            Text(
+                text = notification.title,
+                style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold)
+            )
+            Text(
+                text = notification.content,
+                style = MaterialTheme.typography.bodySmall
+            )
+            Text(
+                text = formatTimestamp(notification.timestamp),
+                style = MaterialTheme.typography.labelSmall,
+                color = Color.LightGray
+            )
+        }
+
+        if (showModal) {
+            BottomSheet(showModal, onDismiss = { showModal = false }){
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                ) {
+                    Text(
+                        text = notification.title,
+                        style = MaterialTheme.typography.labelLarge,
+                        color = Color.Gray
+                    )
+                    Text(
+                        text = notification.content,
+                        style = MaterialTheme.typography.labelSmall,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        color = Color.Gray
+                    )
+                    ClickableTextView(text = "앱으로 이동", onClick = {
+                        onClick()
+                        showModal = false
+                    })
+
+                    ClickableTextView(text = "삭제", onClick = {
+                        showModal = false
+                    })
+                }
+            }
         }
     }
 }
