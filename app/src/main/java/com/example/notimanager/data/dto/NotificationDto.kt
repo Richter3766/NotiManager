@@ -5,6 +5,7 @@ import com.example.notimanager.domain.utils.IntentHelper.retrieveIntent
 import com.example.notimanager.domain.model.Notification
 
 data class NotificationDto(
+    val id: Long,
     val title: String,
     val subText: String,
     val content: String,
@@ -15,6 +16,7 @@ data class NotificationDto(
 ){
     fun toDomain(): Notification {
         return Notification(
+            id = this.id,
             title = this.title,
             subText = this.subText,
             content = this.content,

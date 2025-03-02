@@ -48,4 +48,11 @@ class NotificationAppPriorityViewModel @Inject constructor(
             onComplete()
         }
     }
+
+    fun deleteApp(appName: String) {
+        viewModelScope.launch {
+            notificationAppUseCase.deleteNotificationApp(appName)
+            loadNotificationAppPriority()
+        }
+    }
 }

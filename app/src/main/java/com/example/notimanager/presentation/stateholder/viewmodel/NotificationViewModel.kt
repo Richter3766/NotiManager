@@ -42,4 +42,11 @@ class NotificationViewModel @Inject constructor(
             }
         }
     }
+
+    fun deleteNotification(id: Long){
+        viewModelScope.launch {
+            notificationUseCase.deleteNotification(id)
+            loadNotification()
+        }
+    }
 }

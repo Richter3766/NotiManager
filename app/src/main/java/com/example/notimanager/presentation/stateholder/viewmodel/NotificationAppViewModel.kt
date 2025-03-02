@@ -41,4 +41,11 @@ class NotificationAppViewModel @Inject constructor(
             onComplete()
         }
     }
+
+    fun deleteNotificationApp(appName: String) {
+        viewModelScope.launch {
+            notificationAppUseCase.deleteNotificationApp(appName)
+            loadNotificationApps()
+        }
+    }
 }
