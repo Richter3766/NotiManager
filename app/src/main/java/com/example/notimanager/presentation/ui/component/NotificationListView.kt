@@ -29,7 +29,11 @@ import com.example.notimanager.presentation.stateholder.state.NotificationState
 
 
 @Composable
-fun NotificationListView(notificationState: NotificationState) {
+fun NotificationListView(
+    notificationState: NotificationState,
+    onDelete: (Long) -> Unit
+
+) {
     val context = LocalContext.current
     var currentNoti by remember { mutableStateOf(notificationState.notificationList) }
 
@@ -38,21 +42,26 @@ fun NotificationListView(notificationState: NotificationState) {
             currentNoti = notificationState.notificationList
         }
     }
+
     LazyColumn(
         modifier = Modifier.fillMaxSize()
     ) {
         items(currentNoti) { notification ->
             NotificationItemView (notification = notification, onClick = {
-                if (notification.intent?.action != null) {
-                    context.startActivity(notification.intent);
-                }
-            })
+                if (notification.intent?.action != null)
+                    context.startActivity(notification.intent) },
+                onDelete = onDelete
+            )
         }
     }
 }
 
 @Composable
-fun NotificationItemView(notification: Notification, onClick: () -> Unit) {
+fun NotificationItemView(
+    notification: Notification,
+    onClick: () -> Unit,
+    onDelete: (Long) -> Unit
+) {
     var showModal by remember { mutableStateOf(false) }
     Row(
         modifier = Modifier
@@ -107,6 +116,7 @@ fun NotificationItemView(notification: Notification, onClick: () -> Unit) {
                     })
 
                     ClickableTextView(text = "삭제", onClick = {
+                        onDelete(notification.id)
                         showModal = false
                     })
                 }

@@ -175,7 +175,10 @@ fun NotificationAppItemView(
                         showModal = false
                     })
                 }
-                ClickableTextView(text = "삭제", onClick = {})
+                ClickableTextView(text = "삭제", onClick = {
+                    viewModel.deleteNotificationApp(notification.appName)
+                    showModal = false
+                })
             }
         }
     }

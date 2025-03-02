@@ -26,4 +26,8 @@ class NotificationDomainRepository(
             .map { it.toDomain() }
             .toList()
     }
+
+    override suspend fun deleteNotification(id: Long): Int {
+        return notificationDao.deleteNotificationById(id)
+    }
 }

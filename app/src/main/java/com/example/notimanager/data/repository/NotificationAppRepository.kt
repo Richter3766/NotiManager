@@ -35,4 +35,9 @@ class NotificationAppRepository(
     ): Int {
         return appIconDao.removePriority(appName)
     }
+    override suspend fun deleteNotificationApp(
+        appName: String
+    ): Int{
+        return notificationDao.deleteNotificationByAppName(appName)
+    }
 }

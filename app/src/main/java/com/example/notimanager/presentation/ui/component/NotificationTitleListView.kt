@@ -161,7 +161,13 @@ fun NotificationTitleItemView(
                         showModal = false
                     })
                 }
-                ClickableTextView(text = "삭제", onClick = {})
+                ClickableTextView(text = "삭제", onClick = {
+                    if (notification.subText == "")
+                        viewModel.deleteByTitle(notification.title) { priorityViewModel.loadNotificationTitles() }
+                    else
+                        viewModel.deleteBySubText(notification.subText) { priorityViewModel.loadNotificationTitles() }
+                    showModal = false
+                })
             }
         }
     }

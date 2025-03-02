@@ -1,6 +1,7 @@
 package com.example.notimanager.data.source.local.dao
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -77,7 +78,7 @@ interface NotificationDao {
 
     @Query(
         """
-        SELECT n.title, n.subText, n.content, n.timestamp, nm.intentActive, nm.intentArray, ni.iconBytes
+        SELECT n.id, n.title, n.subText, n.content, n.timestamp, nm.intentActive, nm.intentArray, ni.iconBytes
         FROM notification AS n
         INNER JOIN notification_meta AS nm ON n.id = nm.notificationId
         INNER JOIN notification_icon AS ni ON n.id = ni.notificationId
@@ -89,7 +90,7 @@ interface NotificationDao {
 
     @Query(
         """
-        SELECT n.title, n.subText, n.content, n.timestamp, nm.intentActive, nm.intentArray, ni.iconBytes
+        SELECT n.id, n.title, n.subText, n.content, n.timestamp, nm.intentActive, nm.intentArray, ni.iconBytes
         FROM notification AS n
         INNER JOIN notification_meta AS nm ON n.id = nm.notificationId
         INNER JOIN notification_icon AS ni ON n.id = ni.notificationId
@@ -98,4 +99,16 @@ interface NotificationDao {
     """
     )
     suspend fun getNotificationSubTextList(appName: String, subText: String): List<NotificationDto>
+
+    @Query("DELETE FROM Notification WHERE appName = :appName")
+    suspend fun deleteNotificationByAppName(appName: String): Int
+
+    @Query("DELETE FROM Notification WHERE appName = :appName AND title = :title")
+    suspend fun deleteNotificationByTitle(appName: String, title: String): Int
+
+    @Query("DELETE FROM Notification WHERE appName = :appName AND subText = :subText")
+    suspend fun deleteNotificationBySubText(appName: String, subText: String): Int
+
+    @Query("DELETE FROM Notification WHERE id = :id")
+    suspend fun deleteNotificationById(id: Long): Int
 }

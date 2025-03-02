@@ -13,4 +13,8 @@ class NotificationUseCase(
     suspend fun getNotificationSubTextList(appName: String, subText: String): List<Notification>{
         return repository.getNotificationSubTextList(appName, subText)
     }
+
+    suspend fun deleteNotification(id: Long): Int{
+        return repository.deleteNotification(id)
+    }
 }

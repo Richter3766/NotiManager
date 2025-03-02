@@ -51,4 +51,22 @@ class NotificationTitlePriorityViewModel @Inject constructor(
             onComplete()
         }
     }
+
+    fun deleteByTitle(
+        title: String
+    ){
+        viewModelScope.launch {
+            notificationTitleUseCase.deleteByTitle(appName, title)
+            loadNotificationTitles()
+        }
+    }
+
+    fun deleteBySubText(
+        subText: String
+    ){
+        viewModelScope.launch {
+            notificationTitleUseCase.deleteBySubText(appName, subText)
+            loadNotificationTitles()
+        }
+    }
 }
