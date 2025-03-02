@@ -111,17 +111,10 @@ fun NotificationTitleItemView(
         Column (
             modifier = Modifier.weight(1f)
         ){
-            if (notification.subText == "") {
-                Text(
-                    text = notification.title,
-                    style = MaterialTheme.typography.bodySmall.copy(fontWeight = FontWeight.Bold)
-                )
-            }else{
-                Text(
-                    text = notification.subText,
-                    style = MaterialTheme.typography.bodySmall.copy(fontWeight = FontWeight.Bold)
-                )
-            }
+            Text(
+                text = if (notification.subText == "") notification.title else notification.subText ,
+                style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold)
+            )
             Text(
                 text = notification.content,
                 style = MaterialTheme.typography.bodySmall,
@@ -147,10 +140,11 @@ fun NotificationTitleItemView(
                     .padding(16.dp)
             ) {
                 Text(
-                    text = notification.title,
+                    text = if (notification.subText == "") notification.title else notification.subText,
                     style = MaterialTheme.typography.labelLarge,
                     color = Color.Gray
                 )
+
                 if (notification.priorityActive) {
                     ClickableTextView(text = "중요 알림 취소", onClick = {
                         priorityViewModel.removeTitlePriority(notificationId = notification.id){
