@@ -39,4 +39,12 @@ class NotificationTitleRepository(
         return notificationIconDao.removePriority(notificationId)
     }
 
+    override suspend fun deleteByTitle(appName: String, title: String): Int {
+        return notificationDao.deleteNotificationByTitle(appName, title)
+    }
+
+    override suspend fun deleteBySubText(appName: String, subText: String): Int {
+        return notificationDao.deleteNotificationBySubText(appName, subText)
+    }
+
 }

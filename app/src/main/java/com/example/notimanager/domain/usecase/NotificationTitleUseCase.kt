@@ -30,4 +30,18 @@ class NotificationTitleUseCase(
     ): Int {
         return repository.removeTitlePriority(notificationId)
     }
+
+    suspend fun deleteByTitle(
+        appName: String,
+        title: String
+    ): Int{
+        return repository.deleteByTitle(appName, title)
+    }
+
+    suspend fun deleteBySubText(
+        appName: String,
+        subText: String
+    ): Int{
+        return repository.deleteBySubText(appName, subText)
+    }
 }

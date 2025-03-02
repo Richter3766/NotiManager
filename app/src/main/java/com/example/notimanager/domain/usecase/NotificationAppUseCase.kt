@@ -26,4 +26,10 @@ class NotificationAppUseCase(
     ): Int {
         return repository.removeAppPriority(appName)
     }
+
+    suspend fun deleteNotificationApp(
+        appName: String,
+    ): Int{
+        return repository.deleteNotificationApp(appName)
+    }
 }

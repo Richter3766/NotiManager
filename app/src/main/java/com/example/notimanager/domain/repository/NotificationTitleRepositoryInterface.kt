@@ -7,4 +7,6 @@ interface NotificationTitleRepositoryInterface {
     suspend fun getNotificationTitlePriorityList(appName: String): List<NotificationTitle>
     suspend fun setTitlePriority(notificationId: Long, newPriority: Int): Int
     suspend fun removeTitlePriority(notificationId: Long): Int
+    suspend fun deleteByTitle(appName: String, title: String): Int
+    suspend fun deleteBySubText(appName: String, subText: String): Int
 }
