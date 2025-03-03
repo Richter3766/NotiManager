@@ -7,6 +7,7 @@ import com.example.notimanager.data.model.AppIconModel
 import com.example.notimanager.data.model.NotificationIconModel
 import com.example.notimanager.data.model.NotificationMetaModel
 import com.example.notimanager.data.model.NotificationModel
+import com.example.notimanager.domain.repository.FilteredNotificationRepositoryInterface
 import com.example.notimanager.domain.repository.NotificationRepositoryInterface
 import com.example.notimanager.domain.utils.AppIconGetter.convertByteArray
 import com.example.notimanager.domain.utils.AppIconGetter.convertByteArrayWithColor
@@ -23,33 +24,36 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class NotiListenerService: NotificationListenerService() {
-    @Inject
-    lateinit var notificationRepository: NotificationRepositoryInterface
+    @Inject lateinit var notificationRepository: NotificationRepositoryInterface
+    @Inject lateinit var filterRepository: FilteredNotificationRepositoryInterface
     private val mutex = Mutex()
 
     override fun onNotificationPosted(sbn: StatusBarNotification?) {
-        sbn?.let {
-            val notification = it.notification
-            val postTime = it.postTime
-            val appName = NameGetter.getAppName(this, it)
+        if (sbn == null) return
 
-            val title = notification.extras.getString("android.title")
-            val content = notification.extras.getString("android.text")
-            val subText = notification.extras.getString("android.subText") ?: ""
+        val notification = sbn.notification
 
-            if (title != null && content != null){
-                CoroutineScope(Dispatchers.IO).launch {
-                    mutex.withLock {
-                        val id = insertNotification(appName, title, content, postTime, subText)
-                        insertNotificationMeta(id, it.packageName)
-                        insertNotificationIcon(id, notification.getLargeIcon(), notification.smallIcon, notification.color)
-                        insertAppIcon(appName, it.packageName)
-                    }
-                }
+        val appName = NameGetter.getAppName(this, sbn)
+        val title = notification.extras.getString("android.title") ?: ""
+        val subText = notification.extras.getString("android.subText") ?: ""
+        val content = notification.extras.getString("android.text") ?: ""
+        val postTime = sbn.postTime
 
+        CoroutineScope(Dispatchers.IO).launch {
+            if (title == "" && content == "" && subText == "") return@launch
+
+            val filteredList = filterRepository.getSpecificFilteredList(appName, title, subText)
+            if (filteredList.isEmpty()) return@launch
+
+            mutex.withLock {
+                val id = insertNotification(appName, title, content, postTime, subText)
+                insertNotificationMeta(id, sbn.packageName)
+                insertNotificationIcon(id, notification.getLargeIcon(), notification.smallIcon, notification.color)
+                insertAppIcon(appName, sbn.packageName)
             }
         }
     }
+
     private suspend fun insertNotification(
         appName: String,
         title: String,

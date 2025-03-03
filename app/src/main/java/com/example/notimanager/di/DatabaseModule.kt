@@ -2,6 +2,7 @@ package com.example.notimanager.di
 
 import android.content.Context
 import com.example.notimanager.data.source.local.dao.AppIconDao
+import com.example.notimanager.data.source.local.dao.FilteredNotificationDao
 import com.example.notimanager.data.source.local.dao.NotificationDao
 import com.example.notimanager.data.source.local.dao.NotificationIconDao
 import com.example.notimanager.data.source.local.dao.NotificationMetaDao
@@ -40,5 +41,10 @@ class DatabaseModule {
     @Provides
     fun provideAppIconDao(database: NotiManagerDatabase): AppIconDao {
         return database.appIconDao()
+    }
+
+    @Provides
+    fun provideFilteredNotificationDao(database: NotiManagerDatabase): FilteredNotificationDao {
+        return database.filteredNotificationDao()
     }
 }
