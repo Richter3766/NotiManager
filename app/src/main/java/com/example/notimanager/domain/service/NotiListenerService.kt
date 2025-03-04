@@ -3,6 +3,7 @@ package com.example.notimanager.domain.service
 import android.graphics.drawable.Icon
 import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
+import android.util.Log
 import com.example.notimanager.data.model.AppIconModel
 import com.example.notimanager.data.model.NotificationIconModel
 import com.example.notimanager.data.model.NotificationMetaModel
@@ -43,7 +44,7 @@ class NotiListenerService: NotificationListenerService() {
             if (title == "" && content == "" && subText == "") return@launch
 
             val filteredList = filterRepository.getSpecificFilteredList(appName, title, subText)
-            if (filteredList.isEmpty()) return@launch
+            if (filteredList.isNotEmpty()) return@launch
 
             mutex.withLock {
                 val id = insertNotification(appName, title, content, postTime, subText)
