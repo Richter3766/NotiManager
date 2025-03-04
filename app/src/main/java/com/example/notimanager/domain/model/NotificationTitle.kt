@@ -11,5 +11,6 @@ data class NotificationTitle(
     val notificationIcon: Bitmap?,
     val priorityActive: Boolean,
     val priority: Int,
-    val filteredId: Long
+    val filteredId: Long,
+    val unreadCount: Int
 )

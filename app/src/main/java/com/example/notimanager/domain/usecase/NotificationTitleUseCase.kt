@@ -44,4 +44,11 @@ class NotificationTitleUseCase(
     ): Int{
         return repository.deleteBySubText(appName, subText)
     }
+
+    suspend fun setTitleAsRead(appName: String, title: String): Int{
+        return repository.setTitleAsRead(appName, title)
+    }
+    suspend fun setSubTextAsRead(appName: String, subText: String): Int{
+        return repository.setSubTextAsRead(appName, subText)
+    }
 }

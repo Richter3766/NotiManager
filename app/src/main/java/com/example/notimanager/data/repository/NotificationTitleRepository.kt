@@ -46,5 +46,11 @@ class NotificationTitleRepository(
     override suspend fun deleteBySubText(appName: String, subText: String): Int {
         return notificationDao.deleteNotificationBySubText(appName, subText)
     }
+    override suspend fun setTitleAsRead(appName: String, title: String): Int{
+        return notificationDao.updateTitleAsRead(appName, title)
+    }
 
+    override suspend fun setSubTextAsRead(appName: String, subText: String): Int{
+        return notificationDao.updateSubTextAsRead(appName, subText)
+    }
 }

@@ -12,7 +12,8 @@ data class NotificationTitleDto(
     val iconBytes: ByteArray,
     val priorityActive: Boolean,
     val priority: Int,
-    val filteredId: Long = 0L
+    val filteredId: Long = 0L,
+    val unreadCount: Int
 ) {
     fun toDomain(): NotificationTitle {
         return NotificationTitle(
@@ -24,7 +25,8 @@ data class NotificationTitleDto(
             notificationIcon = BitmapFactory.decodeByteArray(iconBytes, 0, iconBytes.size),
             priorityActive = this.priorityActive,
             priority = this.priority,
-            filteredId = this.filteredId
+            filteredId = this.filteredId,
+            unreadCount = unreadCount
         )
     }
 }

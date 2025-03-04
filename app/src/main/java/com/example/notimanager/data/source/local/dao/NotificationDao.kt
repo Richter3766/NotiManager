@@ -34,7 +34,13 @@ interface NotificationDao {
 
     @Query(
         """
-        SELECT n1.id, n1.title, n1.subText, n1.content, n1.timestamp, ni.iconBytes, ni.priorityActive, ni.priority, fn.id AS filteredId
+        SELECT n1.id, n1.title, n1.subText, n1.content, n1.timestamp, ni.iconBytes, ni.priorityActive, ni.priority, fn.id AS filteredId,
+            (SELECT COUNT(*)
+            FROM notification AS n2
+            WHERE n2.appName = :appName 
+            AND n2.title = n1.title 
+            AND n2.isRead = 0
+) AS unreadCount
         FROM notification AS n1
         INNER JOIN notification_icon AS ni ON n1.id = ni.notificationId
         LEFT OUTER JOIN filtered_notification AS fn ON n1.appName = fn.appName AND fn.title = n1.title
@@ -55,7 +61,13 @@ interface NotificationDao {
         
         UNION ALL
         
-        SELECT n1.id, n1.title, n1.subText, n1.content, n1.timestamp, ni.iconBytes, ni.priorityActive, ni.priority, fn.id AS filteredId
+        SELECT n1.id, n1.title, n1.subText, n1.content, n1.timestamp, ni.iconBytes, ni.priorityActive, ni.priority, fn.id AS filteredId,
+            (SELECT COUNT(*)
+            FROM notification AS n2
+            WHERE n2.appName = :appName 
+            AND n2.subText = n1.subText
+            AND n2.isRead = 0
+            ) AS unreadCount
         FROM notification AS n1
         INNER JOIN notification_icon AS ni ON n1.id = ni.notificationId
         LEFT OUTER JOIN filtered_notification AS fn ON n1.appName = fn.appName AND fn.title = n1.subText
@@ -114,4 +126,10 @@ interface NotificationDao {
 
     @Query("DELETE FROM Notification WHERE id = :id")
     suspend fun deleteNotificationById(id: Long): Int
+
+    @Query("UPDATE Notification SET isRead = 1 WHERE appName = :appName AND title = :title")
+    suspend fun updateTitleAsRead(appName: String, title: String): Int
+
+    @Query("UPDATE Notification SET isRead = 1 WHERE appName = :appName AND subText = :subText")
+    suspend fun updateSubTextAsRead(appName: String, subText: String): Int
 }
