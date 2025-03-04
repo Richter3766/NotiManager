@@ -34,15 +34,17 @@ class FilteredNotificationViewModel @Inject constructor(
         }
     }
 
-    fun insertFilteredNoti(appNane: String, title: String) {
+    fun insertFilteredNoti(appNane: String, title: String, onComplete: () -> Unit) {
         viewModelScope.launch {
             filteredNotificationUseCase.insertFiltered(appNane, title)
+            onComplete()
         }
     }
 
-    fun deleteFilteredNoti(id: Long) {
+    fun deleteFilteredNoti(id: Long, onComplete: () -> Unit) {
         viewModelScope.launch {
             filteredNotificationUseCase.deleteById(id)
+            onComplete()
         }
     }
 }

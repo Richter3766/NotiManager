@@ -54,7 +54,9 @@ fun MainScreen(
 
     Scaffold(
         topBar = {
-            MainTopAppBar()
+            MainTopAppBar{
+                navController.navigate("SettingScreen")
+            }
         }
     ) { innerPadding ->
         HorizontalDivider(
