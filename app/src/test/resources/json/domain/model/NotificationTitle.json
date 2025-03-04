@@ -13,7 +13,8 @@
     "subText": "",
     "timestamp": 1672531299000,
     "notificationIcon": null,
-    "filteredId": 0
+    "filteredId": 0,
+    "unreadCount": 0
   },
   {
     "title": "New Email",
@@ -21,7 +22,8 @@
     "subText": "",
     "timestamp": 1672531399000,
     "notificationIcon": null,
-    "filteredId": 0
+    "filteredId": 0,
+    "unreadCount": 0
   },
   {
     "title": "Event Reminder",
@@ -29,7 +31,8 @@
     "subText": "",
     "timestamp": 1672531499000,
     "notificationIcon": null,
-    "filteredId": 0
+    "filteredId": 0,
+    "unreadCount": 0
   },
   {
     "title": "Breaking News",
@@ -37,6 +40,7 @@
     "subText": "",
     "timestamp": 1672531599000,
     "notificationIcon": null,
-    "filteredId": 0
+    "filteredId": 0,
+    "unreadCount": 0
   }
 ]
