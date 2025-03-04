@@ -3,7 +3,6 @@ package com.example.notimanager.domain.service
 import android.graphics.drawable.Icon
 import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
-import android.util.Log
 import com.example.notimanager.data.model.AppIconModel
 import com.example.notimanager.data.model.NotificationIconModel
 import com.example.notimanager.data.model.NotificationMetaModel
@@ -13,8 +12,8 @@ import com.example.notimanager.domain.repository.NotificationRepositoryInterface
 import com.example.notimanager.domain.utils.AppIconGetter.convertByteArray
 import com.example.notimanager.domain.utils.AppIconGetter.convertByteArrayWithColor
 import com.example.notimanager.domain.utils.AppIconGetter.getAppIcon
-import com.example.notimanager.domain.utils.NameGetter
 import com.example.notimanager.domain.utils.IntentHelper
+import com.example.notimanager.domain.utils.NameGetter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -37,7 +36,7 @@ class NotiListenerService: NotificationListenerService() {
         val appName = NameGetter.getAppName(this, sbn)
         val title = notification.extras.getString("android.title") ?: ""
         val subText = notification.extras.getString("android.subText") ?: ""
-        val content = notification.extras.getString("android.text") ?: ""
+        val content = notification.extras.getCharSequence("android.text").toString() ?: ""
         val postTime = sbn.postTime
 
         CoroutineScope(Dispatchers.IO).launch {
