@@ -6,10 +6,12 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.notimanager.data.model.AppIconModel
+import com.example.notimanager.data.model.FilteredNotificationModel
 import com.example.notimanager.data.model.NotificationIconModel
 import com.example.notimanager.data.model.NotificationMetaModel
 import com.example.notimanager.data.model.NotificationModel
 import com.example.notimanager.data.source.local.dao.AppIconDao
+import com.example.notimanager.data.source.local.dao.FilteredNotificationDao
 import com.example.notimanager.data.source.local.dao.NotificationDao
 import com.example.notimanager.data.source.local.dao.NotificationIconDao
 import com.example.notimanager.data.source.local.dao.NotificationMetaDao
@@ -19,23 +21,25 @@ import com.example.notimanager.data.source.local.database.MigrationObject.MIGRAT
 import com.example.notimanager.data.source.local.database.MigrationObject.MIGRATION_8_9
 
 @Database(
-    version = 9,
+    version = 10,
     entities =
     [
         NotificationModel::class,
         NotificationMetaModel::class,
         NotificationIconModel::class,
-        AppIconModel::class
+        AppIconModel::class,
+        FilteredNotificationModel::class
     ],
-//    autoMigrations = [
-//        AutoMigration (from = 7, to = 8)
-//    ]
+    autoMigrations = [
+        AutoMigration (from = 9, to = 10)
+    ]
 )
 abstract class NotiManagerDatabase : RoomDatabase() {
     abstract fun notificationDao(): NotificationDao
     abstract fun notificationIntentDao(): NotificationMetaDao
     abstract fun notificationIconDao(): NotificationIconDao
     abstract fun appIconDao(): AppIconDao
+    abstract fun filteredNotificationDao(): FilteredNotificationDao
 
     companion object {
         @Volatile

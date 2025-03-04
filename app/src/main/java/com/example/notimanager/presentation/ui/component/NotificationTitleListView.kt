@@ -30,12 +30,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.notimanager.common.objects.DateFormatter.formatTimestamp
 import com.example.notimanager.common.objects.Encoder.getEncodedString
 import com.example.notimanager.domain.model.NotificationTitle
 import com.example.notimanager.presentation.stateholder.state.NotificationTitlePriorityState
 import com.example.notimanager.presentation.stateholder.state.NotificationTitleState
+import com.example.notimanager.presentation.stateholder.viewmodel.FilteredNotificationViewModel
 import com.example.notimanager.presentation.stateholder.viewmodel.NotificationTitlePriorityViewModel
 import com.example.notimanager.presentation.stateholder.viewmodel.NotificationTitleViewModel
 
@@ -96,7 +98,8 @@ fun NotificationTitleItemView(
     notification: NotificationTitle,
     onClick: () -> Unit,
     viewModel: NotificationTitleViewModel,
-    priorityViewModel: NotificationTitlePriorityViewModel
+    priorityViewModel: NotificationTitlePriorityViewModel,
+    filteredNotificationViewModel: FilteredNotificationViewModel = hiltViewModel()
 ) {
     var showModal by remember { mutableStateOf(false) }
     Row(
@@ -168,6 +171,46 @@ fun NotificationTitleItemView(
                         viewModel.deleteBySubText(notification.subText) { priorityViewModel.loadNotificationTitles() }
                     showModal = false
                 })
+
+                val onComplete: () -> Unit = {
+                    viewModel.loadNotificationTitles()
+                    priorityViewModel.loadNotificationTitles()
+                }
+
+                if(notification.filteredId == 0L) {
+                    ClickableTextView(
+                        text = "이 방 알림 무시하기",
+                        onClick = {
+                            if (notification.subText == "") {
+                                filteredNotificationViewModel.insertFilteredNoti(
+                                    viewModel.getAppName(),
+                                    notification.title,
+                                    onComplete
+                                )
+                            }
+                            else{
+                                filteredNotificationViewModel.insertFilteredNoti(
+                                    viewModel.getAppName(),
+                                    notification.subText,
+                                    onComplete
+                                )
+                            }
+                            showModal = false
+                        }
+                    )
+                }else{
+                    ClickableTextView(
+                        text = "이 방 알림 계속 받기",
+                        onClick = {
+                            if (notification.subText == "")
+                                filteredNotificationViewModel.deleteFilteredNoti(notification.filteredId, onComplete)
+
+                            else
+                                filteredNotificationViewModel.deleteFilteredNoti(notification.filteredId, onComplete)
+                            showModal = false
+                        }
+                    )
+                }
             }
         }
     }

@@ -6,7 +6,8 @@
     "timestamp": 1672531199000,
     "appIcon": null,
     "priorityActive": true,
-    "priority": 1
+    "priority": 1,
+    "filteredId": 0
   },
   {
     "appName": "Weather",
@@ -15,7 +16,8 @@
     "timestamp": 1672531299000,
     "appIcon": null,
     "priorityActive": true,
-    "priority": 1
+    "priority": 1,
+    "filteredId": 0
   },
   {
     "appName": "Email",
@@ -24,7 +26,8 @@
     "timestamp": 1672531399000,
     "appIcon": null,
     "priorityActive": true,
-    "priority": 1
+    "priority": 1,
+    "filteredId": 0
   },
   {
     "appName": "Calendar",
@@ -33,7 +36,8 @@
     "timestamp": 1672531499000,
     "appIcon": null,
     "priorityActive": true,
-    "priority": 1
+    "priority": 1,
+    "filteredId": 0
   },
   {
     "appName": "News",
@@ -42,6 +46,7 @@
     "timestamp": 1672531599000,
     "appIcon": null,
     "priorityActive": true,
-    "priority": 1
+    "priority": 1,
+    "filteredId": 0
   }
 ]

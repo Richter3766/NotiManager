@@ -9,5 +9,6 @@ data class NotificationApp(
     val timestamp: Long,
     val appIcon: Bitmap?,
     val priorityActive: Boolean,
-    val priority: Int
+    val priority: Int,
+    val filteredId: Long
 )
