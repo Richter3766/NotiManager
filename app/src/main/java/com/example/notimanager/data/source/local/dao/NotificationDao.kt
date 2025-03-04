@@ -17,9 +17,10 @@ interface NotificationDao {
 
     @Query(
         """
-        SELECT n1.appName, n1.title, n1.content, n1.timestamp, ai.iconBytes, ai.priorityActive, ai.priority
+        SELECT n1.appName, n1.title, n1.content, n1.timestamp, ai.iconBytes, ai.priorityActive, ai.priority, fn.id AS filteredId
         FROM notification AS n1
         INNER JOIN app_icon AS ai ON n1.appName = ai.notiAppName
+        LEFT OUTER JOIN filtered_notification AS fn ON n1.appName = fn.appName AND fn.title = ""
         WHERE ai.priorityActive = :priorityActive
         AND timestamp = (
             SELECT MAX(timestamp)
@@ -33,9 +34,10 @@ interface NotificationDao {
 
     @Query(
         """
-        SELECT n1.id, n1.title, n1.subText, n1.content, n1.timestamp, ni.iconBytes, ni.priorityActive, ni.priority
+        SELECT n1.id, n1.title, n1.subText, n1.content, n1.timestamp, ni.iconBytes, ni.priorityActive, ni.priority, fn.id AS filteredId
         FROM notification AS n1
         INNER JOIN notification_icon AS ni ON n1.id = ni.notificationId
+        LEFT OUTER JOIN filtered_notification AS fn ON n1.appName = fn.appName AND fn.title = n1.title
         WHERE ni.priorityActive = :priorityActive
         AND n1.appName = :appName 
         AND n1.subText = ""
@@ -53,9 +55,10 @@ interface NotificationDao {
         
         UNION ALL
         
-        SELECT n1.id, n1.title, n1.subText, n1.content, n1.timestamp, ni.iconBytes, ni.priorityActive, ni.priority
+        SELECT n1.id, n1.title, n1.subText, n1.content, n1.timestamp, ni.iconBytes, ni.priorityActive, ni.priority, fn.id AS filteredId
         FROM notification AS n1
         INNER JOIN notification_icon AS ni ON n1.id = ni.notificationId
+        LEFT OUTER JOIN filtered_notification AS fn ON n1.appName = fn.appName AND fn.title = n1.subText
         WHERE ni.priorityActive = :priorityActive
         AND n1.appName = :appName 
         AND n1.subText != ""

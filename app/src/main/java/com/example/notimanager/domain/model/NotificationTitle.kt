@@ -10,5 +10,6 @@ data class NotificationTitle(
     val timestamp: Long,
     val notificationIcon: Bitmap?,
     val priorityActive: Boolean,
-    val priority: Int
+    val priority: Int,
+    val filteredId: Long
 )

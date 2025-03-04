@@ -37,6 +37,7 @@ import com.example.notimanager.common.objects.DateFormatter.formatTimestamp
 import com.example.notimanager.domain.model.NotificationApp
 import com.example.notimanager.presentation.stateholder.state.NotificationAppPriorityState
 import com.example.notimanager.presentation.stateholder.state.NotificationAppState
+import com.example.notimanager.presentation.stateholder.viewmodel.FilteredNotificationViewModel
 import com.example.notimanager.presentation.stateholder.viewmodel.NotificationAppPriorityViewModel
 import com.example.notimanager.presentation.stateholder.viewmodel.NotificationAppViewModel
 
@@ -105,8 +106,8 @@ fun NotificationAppItemView(
     notification: NotificationApp,
     onClick: () -> Unit,
     viewModel: NotificationAppViewModel,
-    priorityViewModel: NotificationAppPriorityViewModel
-
+    priorityViewModel: NotificationAppPriorityViewModel,
+    filteredNotificationViewModel: FilteredNotificationViewModel = hiltViewModel()
 ) {
     var showModal by remember { mutableStateOf(false) }
 
@@ -179,6 +180,18 @@ fun NotificationAppItemView(
                     viewModel.deleteNotificationApp(notification.appName)
                     showModal = false
                 })
+
+                ClickableTextView(text = if (notification.filteredId == 0L) "알림 제외 리스트에 추가" else "알림 제외 리스트에서 제거", onClick = {
+                    if (notification.filteredId == 0L) filteredNotificationViewModel.insertFilteredNoti(notification.appName, ""){
+                        viewModel.loadNotificationApps()
+                        priorityViewModel.loadNotificationAppPriority()
+                    }
+                    else filteredNotificationViewModel.deleteFilteredNoti(notification.filteredId){
+                        viewModel.loadNotificationApps()
+                        priorityViewModel.loadNotificationAppPriority()
+                    }
+                    showModal = false
+                })
             }
         }
     }
@@ -196,7 +209,8 @@ fun PreviewNotificationAppItemView(){
                 timestamp = 1234567890,
                 appIcon = null,
                 priorityActive = false,
-                priority = 0
+                priority = 0,
+                filteredId = 0L
             ), onClick = {},
             viewModel = hiltViewModel(),
             priorityViewModel = hiltViewModel()
