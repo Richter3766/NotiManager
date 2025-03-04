@@ -15,13 +15,14 @@ import com.example.notimanager.data.source.local.dao.FilteredNotificationDao
 import com.example.notimanager.data.source.local.dao.NotificationDao
 import com.example.notimanager.data.source.local.dao.NotificationIconDao
 import com.example.notimanager.data.source.local.dao.NotificationMetaDao
+import com.example.notimanager.data.source.local.database.MigrationObject.MIGRATION_10_11
 import com.example.notimanager.data.source.local.database.MigrationObject.MIGRATION_3_4
 import com.example.notimanager.data.source.local.database.MigrationObject.MIGRATION_6_7
 import com.example.notimanager.data.source.local.database.MigrationObject.MIGRATION_7_8
 import com.example.notimanager.data.source.local.database.MigrationObject.MIGRATION_8_9
 
 @Database(
-    version = 10,
+    version = 11,
     entities =
     [
         NotificationModel::class,
@@ -57,6 +58,7 @@ abstract class NotiManagerDatabase : RoomDatabase() {
                         MIGRATION_6_7,
                         MIGRATION_7_8,
                         MIGRATION_8_9,
+                        MIGRATION_10_11,
                         )
                     .fallbackToDestructiveMigration()
                     .build()

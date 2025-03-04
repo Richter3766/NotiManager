@@ -19,4 +19,5 @@ data class NotificationModel(
     val content: String,
     val timestamp: Long,
     val subText: String,
+    val isRead: Boolean = false,
 )

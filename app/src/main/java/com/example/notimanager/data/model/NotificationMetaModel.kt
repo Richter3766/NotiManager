@@ -20,6 +20,5 @@ data class NotificationMetaModel(
     val notificationId: Long,
     val intentActive: Boolean = true,
     val intentArray: ByteArray,
-    val isRead: Boolean = false,
 )
 
