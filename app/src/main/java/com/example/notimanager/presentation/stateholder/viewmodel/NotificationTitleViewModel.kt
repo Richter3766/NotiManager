@@ -70,4 +70,16 @@ class NotificationTitleViewModel @Inject constructor(
             onComplete()
         }
     }
+
+    fun updateAsRead(title: String){
+        viewModelScope.launch {
+            notificationTitleUseCase.setTitleAsRead(appName, title)
+        }
+    }
+
+    fun updateAsSubText(subText: String){
+        viewModelScope.launch {
+            notificationTitleUseCase.setSubTextAsRead(appName, subText)
+        }
+    }
 }

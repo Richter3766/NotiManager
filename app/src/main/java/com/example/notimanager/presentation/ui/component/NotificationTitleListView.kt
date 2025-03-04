@@ -12,6 +12,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material3.Badge
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -29,6 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -86,9 +88,26 @@ fun NotificationTitleListView(
 
         items(currentNoti) { notification ->
             NotificationTitleItemView(notification = notification, onClick = {
-                if (notification.subText == "") navController.navigate("notificationScreen/${viewModel.getAppName()}/${getEncodedString(notification.title)}/False")
-                else navController.navigate("notificationScreen/${viewModel.getAppName()}/${getEncodedString(notification.subText)}/True")
-            }, viewModel = viewModel, priorityViewModel = priorityViewModel)
+                if (notification.subText == "") {
+                    viewModel.updateAsRead(notification.title)
+                    navController.navigate(
+                        "notificationScreen/${viewModel.getAppName()}/${
+                            getEncodedString(
+                                notification.title
+                            )
+                        }/False"
+                    )
+                }
+                else {
+                    viewModel.updateAsSubText(notification.subText)
+                    navController.navigate(
+                        "notificationScreen/${viewModel.getAppName()}/${
+                            getEncodedString(
+                                notification.subText
+                            )
+                        }/True"
+                    )
+                }}, viewModel = viewModel, priorityViewModel = priorityViewModel)
         }
     }
 }
@@ -130,8 +149,14 @@ fun NotificationTitleItemView(
                 color = Color.LightGray
             )
         }
+        if (notification.unreadCount != 0){
+            Badge {
+                Text(notification.unreadCount.toString())
+            }
+        }
+
         IconButton(onClick = { showModal = true }) {
-            Icon(Icons.Filled.MoreVert, contentDescription = "중요 표시 또는 삭제")
+            Icon(Icons.Filled.MoreVert, contentDescription = "더보기")
         }
     }
 
@@ -164,6 +189,7 @@ fun NotificationTitleItemView(
                         showModal = false
                     })
                 }
+
                 ClickableTextView(text = "삭제", onClick = {
                     if (notification.subText == "")
                         viewModel.deleteByTitle(notification.title) { priorityViewModel.loadNotificationTitles() }
@@ -215,3 +241,4 @@ fun NotificationTitleItemView(
         }
     }
 }
+
