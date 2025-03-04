@@ -48,12 +48,8 @@ fun TitleTopAppBar(title: String, onBackClick: () -> Unit){
             IconButton(onClick = onBackClick) {
                 Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "뒤로 가기")
             }
-        },
-        actions = {
-            IconButton(onClick = { /* TODO: 클릭 이벤트 처리 */ }) {
-                Icon(Icons.Filled.MoreVert, contentDescription = "더 보기")
-            }
-        })
+        }
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -72,11 +68,7 @@ fun NotificationTopAppBar(title: String, onBackClick: () -> Unit){
                 Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "뒤로 가기")
             }
         },
-        actions = {
-            IconButton(onClick = { /* TODO: 클릭 이벤트 처리 */ }) {
-                Icon(Icons.Filled.MoreVert, contentDescription = "더 보기")
-            }
-        })
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
