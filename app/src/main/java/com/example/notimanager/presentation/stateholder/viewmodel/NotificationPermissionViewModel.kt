@@ -1,5 +1,6 @@
 package com.example.notimanager.presentation.stateholder.viewmodel
 
+import android.app.Activity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,19 +13,18 @@ class NotificationPermissionViewModel @Inject constructor(
     private val notificationPermissionUseCase: NotificationPermissionUseCase
 ) : ViewModel() {
 
-    private val _isPermissionGranted = MutableLiveData<Boolean>()
-    val isPermissionGranted: LiveData<Boolean> get() = _isPermissionGranted
+    private val _isNotificationPermissionGranted = MutableLiveData<Boolean>()
+    val isNotificationPermissionGranted: LiveData<Boolean> get() = _isNotificationPermissionGranted
 
     init {
         checkNotificationPermission()
     }
 
     fun checkNotificationPermission() {
-        _isPermissionGranted.value = notificationPermissionUseCase.isNotificationServiceEnabled()
+        _isNotificationPermissionGranted.value = notificationPermissionUseCase.isNotificationPermissionGranted()
     }
 
-    fun requestPermission() {
-        notificationPermissionUseCase.requestPermission()
-        checkNotificationPermission()
+    fun requestPermission(activity: Activity) {
+        notificationPermissionUseCase.requestPermission(activity)
     }
 }

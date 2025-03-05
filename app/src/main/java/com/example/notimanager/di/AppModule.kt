@@ -1,7 +1,7 @@
 package com.example.notimanager.di
 
 import com.example.notimanager.domain.usecase.NotificationPermissionUseCase
-import com.example.notimanager.presentation.stateholder.viewmodel.NotificationPermissionViewModel
+import com.example.notimanager.presentation.stateholder.viewmodel.NotificationServicePermissionViewModel
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,7 +15,7 @@ class AppModule {
     @Singleton
     fun provideNotificationPermissionViewModel(
         notificationPermissionUseCase: NotificationPermissionUseCase
-    ): NotificationPermissionViewModel {
-        return NotificationPermissionViewModel(notificationPermissionUseCase)
+    ): NotificationServicePermissionViewModel {
+        return NotificationServicePermissionViewModel(notificationPermissionUseCase)
     }
 }

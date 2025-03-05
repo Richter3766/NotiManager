@@ -27,11 +27,11 @@ class NotificationPermissionUseCaseTest : BehaviorSpec({
 
         When("알림 서비스가 비활성화되어 있다면") {
             every { repository.isNotificationServiceEnabled() } returns false
-            every { repository.requestPermission() } returns Unit
+            every { repository.requestNotificationListenerPermission() } returns Unit
 
             Then("권한 요청을 해야 한다") {
                 useCase.requestPermission()
-                verify { repository.requestPermission() }
+                verify { repository.requestNotificationListenerPermission() }
             }
         }
     }
@@ -50,7 +50,7 @@ class NotificationPermissionUseCaseTest : BehaviorSpec({
 
             Then("권한 요청을 하지 않아야 한다") {
                 useCase.requestPermission()
-                verify(exactly = 0) { repository.requestPermission() }
+                verify(exactly = 0) { repository.requestNotificationListenerPermission() }
             }
         }
     }

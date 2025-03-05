@@ -6,13 +6,14 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.navigation.compose.rememberNavController
 import com.example.notimanager.presentation.stateholder.viewmodel.NotificationPermissionViewModel
+import com.example.notimanager.presentation.stateholder.viewmodel.NotificationServicePermissionViewModel
 import com.example.notimanager.presentation.ui.navigation.AppNavHost
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-
-    private val viewModel: NotificationPermissionViewModel by viewModels()
+    private val serviceViewModel: NotificationServicePermissionViewModel by viewModels()
+    private val notificationViewModel: NotificationPermissionViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,11 +21,16 @@ class MainActivity : ComponentActivity() {
         setContent {
             AppNavHost(navController = rememberNavController())
         }
+
+        notificationViewModel.isNotificationPermissionGranted.observe(this) { isGranted ->
+            if (!isGranted) {
+                notificationViewModel.requestPermission(this)
+            }
+        }
     }
 
     override fun onResume() {
         super.onResume()
-        viewModel.checkNotificationPermission()
+        serviceViewModel.checkNotificationServicePermission()
     }
-
 }
