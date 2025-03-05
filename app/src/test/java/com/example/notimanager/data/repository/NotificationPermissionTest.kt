@@ -71,7 +71,7 @@ class NotificationPermissionRepositoryTest : BehaviorSpec({
         val intentSlot = slot<Intent>()
 
         When("requestPermission 호출") {
-            repository.requestPermission()
+            repository.requestNotificationListenerPermission()
 
             Then("알림 설정 화면을 여는 Intent가 시작되어야 한다") {
                 verify { mockContext.startActivity(capture(intentSlot)) }
