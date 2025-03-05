@@ -36,11 +36,11 @@ class NotiListenerService: NotificationListenerService() {
         val appName = NameGetter.getAppName(this, sbn)
         val title = notification.extras.getString("android.title") ?: ""
         val subText = notification.extras.getString("android.subText") ?: ""
-        val content = notification.extras.getCharSequence("android.text").toString() ?: ""
+        val content = notification.extras.getCharSequence("android.text")?.toString() ?: ""
         val postTime = sbn.postTime
 
         CoroutineScope(Dispatchers.IO).launch {
-            if (title == "" && content == "null") return@launch
+            if (title == "" && content == "") return@launch
 
             val filteredList = filterRepository.getSpecificFilteredList(appName, title, subText)
             if (filteredList.isNotEmpty()) return@launch
