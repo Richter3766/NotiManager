@@ -31,4 +31,9 @@ class NotificationRepository(
     override suspend fun insertAppIcon(appIconModel: AppIconModel): Long {
         return appIconDao.insert(appIconModel)
     }
+
+    override suspend fun getPriorityNotificationCount(appName: String): Int{
+        return notificationDao.getPriorityNotificationCount(appName)
+
+    }
 }
