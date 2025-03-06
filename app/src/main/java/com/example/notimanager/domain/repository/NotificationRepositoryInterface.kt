@@ -10,4 +10,5 @@ interface NotificationRepositoryInterface {
     suspend fun insertNotificationMeta(metaModel: NotificationMetaModel): Long
     suspend fun insertNotificationIcon(notificationIconModel: NotificationIconModel): Long
     suspend fun insertAppIcon(appIconModel: AppIconModel): Long
+    suspend fun getPriorityNotificationCount(appName: String): Int
 }

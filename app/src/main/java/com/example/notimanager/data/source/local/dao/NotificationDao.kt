@@ -132,4 +132,12 @@ interface NotificationDao {
 
     @Query("UPDATE Notification SET isRead = 1 WHERE appName = :appName AND subText = :subText")
     suspend fun updateSubTextAsRead(appName: String, subText: String): Int
+
+    @Query("""
+        SELECT COUNT(*)
+        FROM Notification AS n
+        INNER JOIN app_icon AS ai ON n.appName = ai.notiAppName AND ai.priorityActive = 1
+        WHERE n.appName = :appName AND n.isRead = 0
+    """)
+    suspend fun getPriorityNotificationCount(appName: String): Int
 }

@@ -1,5 +1,6 @@
 package com.example.notimanager.domain.service
 
+import android.content.Intent
 import android.graphics.drawable.Icon
 import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
@@ -34,7 +35,7 @@ class NotiListenerService: NotificationListenerService() {
         val notification = sbn.notification
 
         val appName = NameGetter.getAppName(this, sbn)
-        val title = notification.extras.getString("android.title") ?: ""
+        val title = notification.extras.getCharSequence("android.title")?.toString() ?: ""
         val subText = notification.extras.getString("android.subText") ?: ""
         val content = notification.extras.getCharSequence("android.text")?.toString() ?: ""
         val postTime = sbn.postTime
@@ -50,6 +51,7 @@ class NotiListenerService: NotificationListenerService() {
                 insertNotificationMeta(id, sbn.packageName)
                 insertNotificationIcon(id, notification.getLargeIcon(), notification.smallIcon, notification.color)
                 insertAppIcon(appName, sbn.packageName)
+                putNotification(appName)
             }
         }
     }
@@ -75,6 +77,7 @@ class NotiListenerService: NotificationListenerService() {
         id: Long,
         notificationPackage: String?,
     ){
+        // TODO: 원래 pendingIntent의 extras 추출해서 넣어보기
         val intent = packageManager.getLaunchIntentForPackage(notificationPackage ?: "")
         val intentArray = intent?.let { IntentHelper.saveIntent(it) }
 
@@ -117,6 +120,17 @@ class NotiListenerService: NotificationListenerService() {
             iconBytes = byteArray
         )
         notificationRepository.insertAppIcon(appIconModel)
+    }
+
+    private suspend fun putNotification(appName: String){
+        val count = notificationRepository.getPriorityNotificationCount(appName)
+        if (count != 0){
+            val serviceIntent = Intent(this, ForegroundNotiService::class.java).apply {
+                putExtra("appName", appName)
+                putExtra("content", count.toString())
+            }
+            startService(serviceIntent)
+        }
     }
 }
 
