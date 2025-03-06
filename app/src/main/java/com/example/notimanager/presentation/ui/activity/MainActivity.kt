@@ -24,9 +24,11 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val appName = intent.extras?.getString("appName") ?: ""
         setContent {
             navController = rememberNavController()
             AppNavHost(navController = navController as NavHostController)
+            if (appName != "" && appName != "NotiManager") navController.navigate("titleScreen/$appName")
         }
 
         notificationViewModel.isNotificationPermissionGranted.observe(this) { isGranted ->
@@ -51,11 +53,7 @@ class MainActivity : ComponentActivity() {
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
         val appName = intent.extras?.getString("appName") ?: ""
-        Log.i("앱 이름", appName)
-        if (appName == ""){
-            navController.navigate("mainScreen")
-        }
+        if (appName != "" && appName != "NotiManager") navController.navigate("titleScreen/$appName")
 
-        navController.navigate("titleScreen/$appName")
     }
 }

@@ -51,8 +51,11 @@ class ForegroundNotiService: Service() {
         val notificationIntent = Intent(this, MainActivity::class.java).apply {
             putExtra("appName", appName)
         }
-        val pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent,
-            PendingIntent.FLAG_IMMUTABLE)
+        val pendingIntent = PendingIntent
+            .getActivity(this,
+                0,
+                notificationIntent,
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
 
         val notification = NotificationCompat.Builder(this, channelId)
             .setSmallIcon(R.mipmap.ic_launcher)
