@@ -92,7 +92,7 @@ fun NotificationItemView(
                 style = MaterialTheme.typography.bodySmall
             )
             Text(
-                text = formatTimestamp(notification.timestamp),
+                text = formatTimestamp(context, notification.timestamp),
                 style = MaterialTheme.typography.labelSmall,
                 color = Color.LightGray
             )

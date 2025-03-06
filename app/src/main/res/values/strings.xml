@@ -30,4 +30,14 @@
     <string name="status_basic_content">All notifications have been read.</string>
     <string name="status_app_content">%1$s unread notifications.</string>
 
+    <!-- 시간 UI -->
+    <string name="time_now">Just now</string>
+    <string name="time_second">%1$d seconds ago</string>
+    <string name="time_minute">%1$d minutes ago</string>
+    <string name="time_hour">%1$d hours ago</string>
+    <string name="time_day">%1$d days ago</string>
+    <string name="time_week">%1$d weeks ago</string>
+    <string name="time_month">%1$d months ago</string>
+    <string name="time_year">%1$d years ago</string>
+
 </resources>

@@ -155,7 +155,7 @@ fun NotificationTitleItemView(
                 overflow = TextOverflow.Ellipsis
             )
             Text(
-                text = formatTimestamp(notification.timestamp),
+                text = formatTimestamp(context, notification.timestamp),
                 style = MaterialTheme.typography.labelSmall,
                 color = Color.LightGray
             )
