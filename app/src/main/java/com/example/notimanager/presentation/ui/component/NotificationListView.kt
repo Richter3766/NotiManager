@@ -23,6 +23,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.example.notimanager.R
 import com.example.notimanager.common.objects.DateFormatter.formatTimestamp
 import com.example.notimanager.domain.model.Notification
 import com.example.notimanager.presentation.stateholder.state.NotificationState
@@ -62,6 +63,12 @@ fun NotificationItemView(
     onClick: () -> Unit,
     onDelete: (Long) -> Unit
 ) {
+    // 언어 변경에 따라 문자열 리소스를 가져오기
+    val context = LocalContext.current
+    val moveToApp = context.getString(R.string.modal_move_to_app)
+    val delete = context.getString(R.string.modal_delete)
+    // 위의 문자열 리소스는 모달에서 사용할 텍스트
+
     var showModal by remember { mutableStateOf(false) }
     Row(
         modifier = Modifier
@@ -110,12 +117,12 @@ fun NotificationItemView(
                         overflow = TextOverflow.Ellipsis,
                         color = Color.Gray
                     )
-                    ClickableTextView(text = "앱으로 이동", onClick = {
+                    ClickableTextView(text = moveToApp, onClick = {
                         onClick()
                         showModal = false
                     })
 
-                    ClickableTextView(text = "삭제", onClick = {
+                    ClickableTextView(text = delete, onClick = {
                         onDelete(notification.id)
                         showModal = false
                     })

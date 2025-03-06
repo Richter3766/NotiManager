@@ -27,12 +27,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.notimanager.R
 import com.example.notimanager.common.objects.DateFormatter.formatTimestamp
 import com.example.notimanager.domain.model.NotificationApp
 import com.example.notimanager.presentation.stateholder.state.NotificationAppPriorityState
@@ -109,6 +111,15 @@ fun NotificationAppItemView(
     priorityViewModel: NotificationAppPriorityViewModel,
     filteredNotificationViewModel: FilteredNotificationViewModel = hiltViewModel()
 ) {
+    // 언어 변경에 따라 문자열 리소스를 가져오기
+    val context = LocalContext.current
+    val addFiltered = context.getString(R.string.modal_add_filtered)
+    val addPriority = context.getString(R.string.modal_add_priority)
+    val removeFiltered = context.getString(R.string.modal_remove_filtered)
+    val removePriority = context.getString(R.string.modal_remove_priority)
+    val delete = context.getString(R.string.modal_delete)
+    // 위의 문자열 리소스는 모달에서 사용할 텍스트
+    
     var showModal by remember { mutableStateOf(false) }
 
     Row(
@@ -143,11 +154,13 @@ fun NotificationAppItemView(
                 color = Color.LightGray
             )
         }
-
+        
+        // 더보기
         IconButton(onClick = { showModal = true }) {
             Icon(Icons.Filled.MoreVert, contentDescription = "중요 표시 또는 삭제")
         }
     }
+    // 더보기 클릭 시 나오는 모달창
     if (showModal) {
         BottomSheet(showModal, onDismiss = { showModal = false }){
             Column(
@@ -155,13 +168,16 @@ fun NotificationAppItemView(
                     .fillMaxWidth()
                     .padding(16.dp)
             ) {
+                // 알림 제목
                 Text(
                     text = notification.appName,
                     style = MaterialTheme.typography.labelLarge,
                     color = Color.Gray
                 )
+                
+                // 상단 고정 여부 버튼
                 if (notification.priorityActive) {
-                    ClickableTextView(text = "중요 알림 취소", onClick = {
+                    ClickableTextView(text = removePriority, onClick = {
                         priorityViewModel.removeAppPriority(notification.appName){
                             viewModel.loadNotificationApps()
                         }
@@ -169,19 +185,22 @@ fun NotificationAppItemView(
                     })
                 }
                 else{
-                    ClickableTextView(text = "중요 알림 설정", onClick = {
+                    ClickableTextView(text = addPriority, onClick = {
                         viewModel.setAppPriority(notification.appName, priorityViewModel.getLength()){
                             priorityViewModel.loadNotificationAppPriority()
                         }
                         showModal = false
                     })
                 }
-                ClickableTextView(text = "삭제", onClick = {
+                
+                // 삭제 버튼
+                ClickableTextView(text = delete, onClick = {
                     viewModel.deleteNotificationApp(notification.appName)
                     showModal = false
                 })
 
-                ClickableTextView(text = if (notification.filteredId == 0L) "알림 제외 리스트에 추가" else "알림 제외 리스트에서 제거", onClick = {
+                // 수집 여부 버튼
+                ClickableTextView(text = if (notification.filteredId == 0L) addFiltered else removeFiltered, onClick = {
                     if (notification.filteredId == 0L) filteredNotificationViewModel.insertFilteredNoti(notification.appName, ""){
                         viewModel.loadNotificationApps()
                         priorityViewModel.loadNotificationAppPriority()

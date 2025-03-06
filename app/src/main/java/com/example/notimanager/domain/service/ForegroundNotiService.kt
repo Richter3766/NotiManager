@@ -48,6 +48,8 @@ class ForegroundNotiService: Service() {
         appName: String,
         content: String,
         isGroupSummary: Boolean) {
+        val appContent = if (isGroupSummary) content else getString(R.string.status_app_content, content)
+
         val notificationIntent = Intent(this, MainActivity::class.java).apply {
             putExtra("appName", appName)
         }
@@ -60,7 +62,7 @@ class ForegroundNotiService: Service() {
         val notification = NotificationCompat.Builder(this, channelId)
             .setSmallIcon(R.mipmap.ic_launcher)
             .setContentTitle(appName)
-            .setContentText(content)
+            .setContentText(appContent)
             .setContentIntent(pendingIntent)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setGroup(groupId)
