@@ -1,3 +1,33 @@
 <resources>
     <string name="app_name">NotiManager</string>
+
+    <!--  더보기 모달 창 UI  -->
+    <string name="modal_delete">Delete</string>
+    <string name="modal_move_to_app">Move to App</string>
+
+    <string name="modal_add_filtered">Stop Receiving Notifications</string>
+    <string name="modal_add_priority">Pin to Top</string>
+
+    <string name="modal_set_read">Mark as Read</string>
+    <string name="modal_set_unread">Mark as Unread</string>
+
+    <string name="modal_remove_filtered">Start Receiving Notifications Again</string>
+    <string name="modal_remove_priority">Unpin</string>
+
+    <!--  설정 페이지 UI  -->
+    <string name="setting_name">Settings</string>
+    <string name="setting_filtered_list">List of Notifications Not Received</string>
+    <string name="setting_locale">Change Language</string>
+
+    <!--  허용창 UI  -->
+    <string name="permission_ok">OK</string>
+    <string name="permission_no">Deny</string>
+    <string name="permission_title">Notification Permission Required</string>
+    <string name="permission_message">Notification permission is required to receive notifications.</string>
+
+    <!--  상태창 UI  -->
+    <string name="status_basic_title">NotiManager</string>
+    <string name="status_basic_content">All notifications have been read.</string>
+    <string name="status_app_content">%1$s unread notifications.</string>
+
 </resources>
