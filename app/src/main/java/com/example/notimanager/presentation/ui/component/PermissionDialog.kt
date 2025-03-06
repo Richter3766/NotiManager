@@ -9,18 +9,23 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.notimanager.presentation.stateholder.viewmodel.NotificationPermissionViewModel
+import com.example.notimanager.R
 import com.example.notimanager.presentation.stateholder.viewmodel.NotificationServicePermissionViewModel
 
 @Composable
 fun PermissionCheck(viewModel: NotificationServicePermissionViewModel = hiltViewModel()){
+    val context = LocalContext.current
+    val title = context.getString(R.string.permission_title)
+    val message = context.getString(R.string.permission_message)
+
     val isPermissionGranted by viewModel.isNotificationServiceEnabled.observeAsState()
 
     if (isPermissionGranted == false) {
         SimplePermissionDialog(
-            title = "알림 권한 필요",
-            message = "알림을 받기 위해 알림 권한이 필요합니다.",
+            title = title,
+            message = message,
             onAllow = { viewModel.requestServicePermission() },
         )
     }
@@ -32,6 +37,9 @@ fun SimplePermissionDialog(
     message: String,
     onAllow: () -> Unit
 ) {
+    val context = LocalContext.current
+    val ok = context.getString(R.string.permission_ok)
+
     val openDialog = remember { mutableStateOf(true) }
 
     if (openDialog.value) {
@@ -48,7 +56,7 @@ fun SimplePermissionDialog(
                     onAllow()
 
                 }) {
-                    Text("허용")
+                    Text(ok)
                 }
             }
         )

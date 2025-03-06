@@ -28,12 +28,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.notimanager.R
 import com.example.notimanager.common.objects.DateFormatter.formatTimestamp
 import com.example.notimanager.common.objects.Encoder.getEncodedString
 import com.example.notimanager.domain.model.NotificationTitle
@@ -120,6 +122,15 @@ fun NotificationTitleItemView(
     priorityViewModel: NotificationTitlePriorityViewModel,
     filteredNotificationViewModel: FilteredNotificationViewModel = hiltViewModel()
 ) {
+    // 언어 변경에 따라 문자열 리소스를 가져오기
+    val context = LocalContext.current
+    val addFiltered = context.getString(R.string.modal_add_filtered)
+    val addPriority = context.getString(R.string.modal_add_priority)
+    val removeFiltered = context.getString(R.string.modal_remove_filtered)
+    val removePriority = context.getString(R.string.modal_remove_priority)
+    val delete = context.getString(R.string.modal_delete)
+    // 위의 문자열 리소스는 모달에서 사용할 텍스트
+
     var showModal by remember { mutableStateOf(false) }
     Row(
         modifier = Modifier
@@ -144,7 +155,7 @@ fun NotificationTitleItemView(
                 overflow = TextOverflow.Ellipsis
             )
             Text(
-                text = formatTimestamp(notification.timestamp),
+                text = formatTimestamp(context, notification.timestamp),
                 style = MaterialTheme.typography.labelSmall,
                 color = Color.LightGray
             )
@@ -174,7 +185,7 @@ fun NotificationTitleItemView(
                 )
 
                 if (notification.priorityActive) {
-                    ClickableTextView(text = "중요 알림 취소", onClick = {
+                    ClickableTextView(text = removePriority, onClick = {
                         priorityViewModel.removeTitlePriority(notificationId = notification.id){
                             viewModel.loadNotificationTitles()
                         }
@@ -182,7 +193,7 @@ fun NotificationTitleItemView(
                     })
                 }
                 else{
-                    ClickableTextView(text = "중요 알림 설정", onClick = {
+                    ClickableTextView(text = addPriority, onClick = {
                         viewModel.setTitlePriority(notification.id, priorityViewModel.getLength()){
                             priorityViewModel.loadNotificationTitles()
                         }
@@ -190,7 +201,7 @@ fun NotificationTitleItemView(
                     })
                 }
 
-                ClickableTextView(text = "삭제", onClick = {
+                ClickableTextView(text = delete, onClick = {
                     if (notification.subText == "")
                         viewModel.deleteByTitle(notification.title) { priorityViewModel.loadNotificationTitles() }
                     else
@@ -205,7 +216,7 @@ fun NotificationTitleItemView(
 
                 if(notification.filteredId == 0L) {
                     ClickableTextView(
-                        text = "이 방 알림 무시하기",
+                        text = addFiltered,
                         onClick = {
                             if (notification.subText == "") {
                                 filteredNotificationViewModel.insertFilteredNoti(
@@ -226,7 +237,7 @@ fun NotificationTitleItemView(
                     )
                 }else{
                     ClickableTextView(
-                        text = "이 방 알림 계속 받기",
+                        text = removeFiltered,
                         onClick = {
                             if (notification.subText == "")
                                 filteredNotificationViewModel.deleteFilteredNoti(notification.filteredId, onComplete)

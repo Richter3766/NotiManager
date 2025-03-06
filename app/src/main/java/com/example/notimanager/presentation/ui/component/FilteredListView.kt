@@ -22,8 +22,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.example.notimanager.R
 import com.example.notimanager.domain.model.FilteredNotification
 import com.example.notimanager.presentation.stateholder.state.FilteredNotificationState
 import com.example.notimanager.presentation.stateholder.viewmodel.FilteredNotificationViewModel
@@ -57,6 +59,11 @@ fun FilteredItemView(
     filteredItem: FilteredNotification,
     viewModel: FilteredNotificationViewModel,
 ) {
+    // 언어 변경에 따라 문자열 리소스를 가져오기
+    val context = LocalContext.current
+    val removeFiltered = context.getString(R.string.modal_remove_filtered)
+    // 위의 문자열 리소스는 모달에서 사용할 텍스트
+
     var showModal by remember { mutableStateOf(false) }
 
     Row(
@@ -95,7 +102,7 @@ fun FilteredItemView(
                     color = Color.Gray
                 )
 
-                ClickableTextView(text = "제외 리스트에서 삭제", onClick = {
+                ClickableTextView(text = removeFiltered, onClick = {
                     viewModel.deleteFilteredNoti(filteredItem.id){
                         viewModel.loadFilteredNoti()
                     }
