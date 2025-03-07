@@ -20,7 +20,7 @@
     <string name="setting_locale">Change Language Settings</string>
     <string name="setting_access_permission">Change Notification Access Permission</string>
     <string name="setting_send_permission">Change Notification Send Permission</string>
-
+    <string name="setting_date_format">Change Date Format</string>"
 
     <!-- 허용창 UI -->
     <string name="permission_ok">OK</string>
@@ -42,5 +42,12 @@
     <string name="time_week">%1$d weeks ago</string>
     <string name="time_month">%1$d months ago</string>
     <string name="time_year">%1$d years ago</string>
+
+    <string name="format_relative_time">Relative Time</string>
+    <string name="format_relative_example">5 minutes ago</string>
+    <string name="format_absolute_time">Absolute Time</string>
+    <string name="format_absolute_example">March 21, 2025, 3:31 PM</string>
+    <string name="format_example_explanation">It will be displayed like this.</string>
+    <string name="format_apply">Apply</string>
 
 </resources>

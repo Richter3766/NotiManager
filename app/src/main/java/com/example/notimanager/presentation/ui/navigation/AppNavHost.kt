@@ -5,6 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.notimanager.common.objects.Encoder.getDecodeString
+import com.example.notimanager.presentation.ui.screen.DateFormatterScreen
 import com.example.notimanager.presentation.ui.screen.FilteredListScreen
 import com.example.notimanager.presentation.ui.screen.MainScreen
 import com.example.notimanager.presentation.ui.screen.NotificationScreen
@@ -37,6 +38,9 @@ fun AppNavHost(navController: NavHostController) {
         }
         composable("FilteredListScreen") {
             FilteredListScreen(navController)
+        }
+        composable("DateFormatterScreen") {
+            DateFormatterScreen(navController)
         }
     }
 }
