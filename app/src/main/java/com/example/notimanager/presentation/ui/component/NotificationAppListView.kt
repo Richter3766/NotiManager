@@ -228,7 +228,9 @@ fun NotificationAppItemView(
                 
                 // 삭제 버튼
                 ClickableTextView(text = delete, onClick = {
-                    viewModel.deleteNotificationApp(notification.appName)
+                    viewModel.deleteNotificationApp(notification.appName){
+                        priorityViewModel.loadNotificationAppPriority()
+                    }
                     showModal = false
                 })
 

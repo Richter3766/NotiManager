@@ -151,6 +151,7 @@ fun NotificationTitleItemView(
         Column (
             modifier = Modifier.weight(1f)
         ){
+            // 알림 제목, 옆에 중요 알림, 필터링 알림일 경우에 대한 아이콘 표시
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -177,29 +178,36 @@ fun NotificationTitleItemView(
                 }
             }
 
+            // 알림 내용
             Text(
                 text = notification.content,
                 style = MaterialTheme.typography.bodySmall,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
+            
+            // 알림 받은 시간
             Text(
                 text = formatTimestamp(context, notification.timestamp),
                 style = MaterialTheme.typography.labelSmall,
                 color = Color.LightGray
             )
         }
+        
+        // 읽지 않은 알림 수 표시 뱃지
         if (notification.unreadCount != 0){
             Badge {
                 Text(notification.unreadCount.toString())
             }
         }
-
+        
+        // 더보기 버튼, 클릭 시 모달창 켜짐
         IconButton(onClick = { showModal = true }) {
             Icon(Icons.Filled.MoreVert, contentDescription = "더보기")
         }
     }
 
+    // 모달창
     if (showModal) {
         BottomSheet(showModal, onDismiss = { showModal = false }){
             Column(
@@ -207,12 +215,14 @@ fun NotificationTitleItemView(
                     .fillMaxWidth()
                     .padding(16.dp)
             ) {
+                // 알림 제목
                 Text(
                     text = if (notification.subText == "") notification.title else notification.subText,
                     style = MaterialTheme.typography.labelLarge,
                     color = Color.Gray
                 )
 
+                // 중요 알림 설정 버튼
                 if (notification.priorityActive) {
                     ClickableTextView(text = removePriority, onClick = {
                         priorityViewModel.removeTitlePriority(notificationId = notification.id){
@@ -230,6 +240,7 @@ fun NotificationTitleItemView(
                     })
                 }
 
+                // 삭제 버튼
                 ClickableTextView(text = delete, onClick = {
                     if (notification.subText == "")
                         viewModel.deleteByTitle(notification.title) { priorityViewModel.loadNotificationTitles() }
@@ -237,12 +248,14 @@ fun NotificationTitleItemView(
                         viewModel.deleteBySubText(notification.subText) { priorityViewModel.loadNotificationTitles() }
                     showModal = false
                 })
-
+                
+                // 특정 동작 완료 후 동작
                 val onComplete: () -> Unit = {
                     viewModel.loadNotificationTitles()
                     priorityViewModel.loadNotificationTitles()
                 }
 
+                // 알림 관리하지 않기 버튼
                 if(notification.filteredId == 0L) {
                     ClickableTextView(
                         text = addFiltered,
@@ -264,7 +277,7 @@ fun NotificationTitleItemView(
                             showModal = false
                         }
                     )
-                }else{
+                } else{
                     ClickableTextView(
                         text = removeFiltered,
                         onClick = {
