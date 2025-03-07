@@ -122,7 +122,7 @@ fun NotificationTitleItemView(
     priorityViewModel: NotificationTitlePriorityViewModel,
     filteredNotificationViewModel: FilteredNotificationViewModel = hiltViewModel()
 ) {
-    // 언어 변경에 따라 문자열 리소스를 가져오기
+    // 언어 설정에 따라 문자열 리소스를 가져오기
     val context = LocalContext.current
     val addFiltered = context.getString(R.string.modal_add_filtered)
     val addPriority = context.getString(R.string.modal_add_priority)

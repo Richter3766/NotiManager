@@ -59,10 +59,9 @@ fun FilteredItemView(
     filteredItem: FilteredNotification,
     viewModel: FilteredNotificationViewModel,
 ) {
-    // 언어 변경에 따라 문자열 리소스를 가져오기
+    // 언어 설정에 따라 문자열 리소스를 가져오기
     val context = LocalContext.current
     val removeFiltered = context.getString(R.string.modal_remove_filtered)
-    // 위의 문자열 리소스는 모달에서 사용할 텍스트
 
     var showModal by remember { mutableStateOf(false) }
 
