@@ -41,6 +41,7 @@ class NotiListenerService: NotificationListenerService() {
         val postTime = sbn.postTime
 
         CoroutineScope(Dispatchers.IO).launch {
+            if (appName == "NotiManager") return@launch
             if (title == "" && content == "") return@launch
 
             val filteredList = filterRepository.getSpecificFilteredList(appName, title, subText)

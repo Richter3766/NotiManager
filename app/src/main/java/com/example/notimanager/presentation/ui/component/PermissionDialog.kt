@@ -16,6 +16,7 @@ import com.example.notimanager.presentation.stateholder.viewmodel.NotificationSe
 
 @Composable
 fun PermissionCheck(viewModel: NotificationServicePermissionViewModel = hiltViewModel()){
+    // 언어 설정에 따라 문자열 리소스를 가져오기
     val context = LocalContext.current
     val title = context.getString(R.string.permission_title)
     val message = context.getString(R.string.permission_message)

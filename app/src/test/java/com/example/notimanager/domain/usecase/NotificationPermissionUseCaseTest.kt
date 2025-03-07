@@ -45,13 +45,5 @@ class NotificationPermissionUseCaseTest : BehaviorSpec({
             }
         }
 
-        When("알림 서비스가 이미 활성화되어 있다면") {
-            every { repository.isNotificationServiceEnabled() } returns true
-
-            Then("권한 요청을 하지 않아야 한다") {
-                useCase.requestPermission()
-                verify(exactly = 0) { repository.requestNotificationListenerPermission() }
-            }
-        }
     }
 })

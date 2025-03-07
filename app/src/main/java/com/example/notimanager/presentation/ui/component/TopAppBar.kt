@@ -18,8 +18,10 @@ import com.example.notimanager.R
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainTopAppBar(settingOnClick: () -> Unit){
+    // 언어 설정에 따라 문자열 리소스를 가져오기
     val context = LocalContext.current
     val appName = context.getString(R.string.app_name)
+
     TopAppBar(
         title = {
             Text(text = appName)
@@ -73,8 +75,10 @@ fun NotificationTopAppBar(title: String, onBackClick: () -> Unit){
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingTopAppBar(onBackClick: () -> Unit){
+    // 언어 설정에 따라 문자열 리소스를 가져오기
     val context = LocalContext.current
     val name = context.getString(R.string.setting_name)
+
     TopAppBar(
         title = {
             Text(text = name)
@@ -90,8 +94,10 @@ fun SettingTopAppBar(onBackClick: () -> Unit){
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FilteredTopAppBar(onBackClick: () -> Unit){
+    // 언어 설정에 따라 문자열 리소스를 가져오기
     val context = LocalContext.current
     val name = context.getString(R.string.setting_filtered_list)
+
     TopAppBar(
         title = {
             Text(text = name)

@@ -31,9 +31,9 @@ import com.example.notimanager.data.source.local.database.MigrationObject.MIGRAT
         AppIconModel::class,
         FilteredNotificationModel::class
     ],
-    autoMigrations = [
-        AutoMigration (from = 9, to = 10)
-    ]
+//    autoMigrations = [
+//        AutoMigration (from = 9, to = 10)
+//    ]
 )
 abstract class NotiManagerDatabase : RoomDatabase() {
     abstract fun notificationDao(): NotificationDao
