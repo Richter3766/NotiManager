@@ -37,7 +37,9 @@ class MainActivity : ComponentActivity() {
         }
 
         // 알림 허용 권한 요청
-        notificationViewModel.requestPermission(this)
+        if (!notificationViewModel.checkNotificationPermission()){
+            notificationViewModel.requestPermission(this)
+        }
 
         // 포그라운드 서비스 실행
         val serviceIntent = Intent(this, ForegroundNotiService::class.java).apply {

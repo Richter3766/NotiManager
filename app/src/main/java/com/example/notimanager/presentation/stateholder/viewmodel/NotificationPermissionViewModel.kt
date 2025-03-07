@@ -28,7 +28,7 @@ class NotificationPermissionViewModel @Inject constructor(
         else openAppSettings(activity)
     }
 
-    private fun checkNotificationPermission(): Boolean {
+    fun checkNotificationPermission(): Boolean {
         return sharedPreferences.getBoolean(prefs, false)
     }
 
