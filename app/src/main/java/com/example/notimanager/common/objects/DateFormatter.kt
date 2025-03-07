@@ -3,14 +3,18 @@ package com.example.notimanager.common.objects
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
-import android.icu.text.SimpleDateFormat
 import com.example.notimanager.R
-import java.util.Date
+import java.time.Instant
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 import java.util.Locale
 import java.util.concurrent.TimeUnit
 
 object DateFormatter {
-    fun formatTimestamp(context: Context, timestamp: Long, format: String = "relative"): String {
+    fun formatTimestamp(context: Context, timestamp: Long): String {
+        val sharedPreferences = context.getSharedPreferences("date_format", Context.MODE_PRIVATE)
+        val format = sharedPreferences.getString("date_format", "relative") ?: "relative"
+
         return if (format == "relative") {
             val currentTime = System.currentTimeMillis()
             val timeDifference = currentTime - timestamp
@@ -26,8 +30,25 @@ object DateFormatter {
                 else -> context.getString(R.string.time_year, timeDifference / TimeUnit.DAYS.toMillis(365))
             }
         } else {
-            SimpleDateFormat("HH:mm dd.MM.yyyy", Locale.getDefault()).format(Date(timestamp))
+            formatDate(timestamp)
         }
+    }
+
+    private fun formatDate(timestamp: Long): String {
+        val currentLocale = Locale.getDefault()
+
+        // 로케일에 따라 포맷터 설정
+        val formatter: DateTimeFormatter = if (currentLocale.language == "ko") {
+            DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 HH시 mm분", currentLocale)
+        } else {
+            DateTimeFormatter.ofPattern("MMMM dd, yyyy, hh:mm a", currentLocale)
+        }
+
+        // 타임스탬프를 Instant로 변환
+        val instant = Instant.ofEpochMilli(timestamp)
+
+        // 포맷터를 사용하여 날짜 포맷팅
+        return formatter.withZone(ZoneId.systemDefault()).format(instant)
     }
 
     fun Drawable.toBitmap(): Bitmap {
