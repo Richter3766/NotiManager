@@ -13,9 +13,7 @@ class NotificationPermissionUseCase(
     }
 
     fun requestPermission() {
-        if (!repository.isNotificationServiceEnabled()) {
-            repository.requestNotificationListenerPermission()
-        }
+        repository.requestNotificationListenerPermission()
     }
 
     fun isNotificationPermissionGranted(): Boolean{

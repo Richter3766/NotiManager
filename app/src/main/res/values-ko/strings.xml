@@ -5,25 +5,27 @@
     <string name="modal_delete">삭제</string>
     <string name="modal_move_to_app">앱으로 이동하기</string>
 
-    <string name="modal_add_filtered">더 이상 알림 받지 않기</string>
-    <string name="modal_add_priority">상단에 고정하기</string>
+    <string name="modal_add_filtered">앱에서 이 알림 관리하지 않기</string>
+    <string name="modal_add_priority">중요 알림으로 설정하기</string>
 
     <string name="modal_set_read">읽음으로 표시하기</string>
     <string name="modal_set_unread">읽지 않음으로 표시하기</string>
 
-    <string name="modal_remove_filtered">다시 알림 받기</string>">
-    <string name="modal_remove_priority">고정 취소하기</string>
+    <string name="modal_remove_filtered">앱에서 이 알림 관리하기</string>">
+    <string name="modal_remove_priority">중요 알림 설정 취소하기</string>
 
     <!--  설정 페이지 UI  -->
     <string name="setting_name">설정</string>
-    <string name="setting_filtered_list">받지 않는 알림 목록</string>
+    <string name="setting_filtered_list">관리하지 않는 알림 목록</string>
     <string name="setting_locale">언어 설정하기</string>
+    <string name="setting_access_permission">알림 접근 권한 변경하기</string>
+    <string name="setting_send_permission">알림 발송 권한 변경하기</string>
 
     <!--  허용창 UI  -->
     <string name="permission_ok">확인</string>
     <string name="permission_no">거부</string>
-    <string name="permission_title">알림 권한이 필요해요</string>
-    <string name="permission_message">알림을 받기 위해 알림 권한이 필요해요</string>
+    <string name="permission_title">알림 접근 권한이 필요해요</string>
+    <string name="permission_message">앱에서 알림을 관리하기 위해 권한을 허용해주세요.</string>
 
     <!--  상태창 UI  -->
     <string name="status_basic_title">NotiManager</string>
