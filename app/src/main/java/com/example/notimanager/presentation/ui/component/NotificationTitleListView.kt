@@ -36,7 +36,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -69,11 +68,17 @@ fun NotificationTitleListView(
         if (!priorityState.isLoading) {
             currentNotiPriority = priorityState.notificationTitleList
         }
+        if (priorityState.notificationTitleList.isEmpty()){
+            currentNotiPriority = emptyList()
+        }
     }
 
     LaunchedEffect(notificationTitleState.notificationTitleList) {
         if (!notificationTitleState.isLoading) {
             currentNoti = notificationTitleState.notificationTitleList
+        }
+        if (notificationTitleState.notificationTitleList.isEmpty()){
+            currentNoti = emptyList()
         }
     }
 

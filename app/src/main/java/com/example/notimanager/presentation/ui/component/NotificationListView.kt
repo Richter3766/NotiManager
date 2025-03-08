@@ -42,6 +42,9 @@ fun NotificationListView(
         if (!notificationState.isLoading) {
             currentNoti = notificationState.notificationList
         }
+        if (notificationState.notificationList.isEmpty()){
+            currentNoti = emptyList()
+        }
     }
 
     LazyColumn(
