@@ -1,4 +1,4 @@
-package com.example.notimanager.presentation.ui.component
+package com.example.notimanager.presentation.ui.component.common
 
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button

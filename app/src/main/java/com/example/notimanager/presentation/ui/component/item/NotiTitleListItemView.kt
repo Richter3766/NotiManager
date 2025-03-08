@@ -1,30 +1,24 @@
-package com.example.notimanager.presentation.ui.component
+package com.example.notimanager.presentation.ui.component.item
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Badge
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -38,93 +32,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
 import com.example.notimanager.R
 import com.example.notimanager.common.objects.DateFormatter.formatTimestamp
-import com.example.notimanager.common.objects.Encoder.getEncodedString
 import com.example.notimanager.domain.model.NotificationTitle
-import com.example.notimanager.presentation.stateholder.state.NotificationTitlePriorityState
-import com.example.notimanager.presentation.stateholder.state.NotificationTitleState
 import com.example.notimanager.presentation.stateholder.viewmodel.FilteredNotificationViewModel
 import com.example.notimanager.presentation.stateholder.viewmodel.NotificationTitlePriorityViewModel
 import com.example.notimanager.presentation.stateholder.viewmodel.NotificationTitleViewModel
-
-@Composable
-fun NotificationTitleListView(
-    navController: NavController,
-    viewModel: NotificationTitleViewModel,
-    priorityViewModel: NotificationTitlePriorityViewModel
-) {
-    val notificationTitleState by viewModel.notificationTitleState.observeAsState(
-        NotificationTitleState()
-    )
-    val priorityState by priorityViewModel.notificationTitlePriorityState.observeAsState(
-        NotificationTitlePriorityState()
-    )
-    var currentNotiPriority by remember { mutableStateOf(priorityState.notificationTitleList) }
-    var currentNoti by remember { mutableStateOf(notificationTitleState.notificationTitleList) }
-
-    LaunchedEffect(priorityState.notificationTitleList) {
-        if (!priorityState.isLoading) {
-            currentNotiPriority = priorityState.notificationTitleList
-        }
-        if (priorityState.notificationTitleList.isEmpty()){
-            currentNotiPriority = emptyList()
-        }
-    }
-
-    LaunchedEffect(notificationTitleState.notificationTitleList) {
-        if (!notificationTitleState.isLoading) {
-            currentNoti = notificationTitleState.notificationTitleList
-        }
-        if (notificationTitleState.notificationTitleList.isEmpty()){
-            currentNoti = emptyList()
-        }
-    }
-
-    LazyColumn(
-        modifier = Modifier.fillMaxSize()
-    ) {
-        items(currentNotiPriority) { notification ->
-            NotificationTitleItemView(notification = notification, onClick = {
-                if (notification.subText == "") navController.navigate("notificationScreen/${viewModel.getAppName()}/${getEncodedString(notification.title)}/False")
-                else navController.navigate("notificationScreen/${viewModel.getAppName()}/${getEncodedString(notification.subText)}/True")
-
-
-            }, viewModel = viewModel, priorityViewModel = priorityViewModel)
-        }
-
-        if (currentNotiPriority.isNotEmpty()){
-            item {
-                HorizontalDivider()
-            }
-        }
-
-        items(currentNoti) { notification ->
-            NotificationTitleItemView(notification = notification, onClick = {
-                if (notification.subText == "") {
-                    viewModel.updateAsRead(notification.title)
-                    navController.navigate(
-                        "notificationScreen/${viewModel.getAppName()}/${
-                            getEncodedString(
-                                notification.title
-                            )
-                        }/False"
-                    )
-                }
-                else {
-                    viewModel.updateAsSubText(notification.subText)
-                    navController.navigate(
-                        "notificationScreen/${viewModel.getAppName()}/${
-                            getEncodedString(
-                                notification.subText
-                            )
-                        }/True"
-                    )
-                }}, viewModel = viewModel, priorityViewModel = priorityViewModel)
-        }
-    }
-}
+import com.example.notimanager.presentation.ui.component.common.AppIconView
+import com.example.notimanager.presentation.ui.component.common.BottomSheet
+import com.example.notimanager.presentation.ui.component.common.ClickableTextView
 
 @Composable
 fun NotificationTitleItemView(
@@ -227,24 +143,6 @@ fun NotificationTitleItemView(
                     color = Color.Gray
                 )
 
-                // 중요 알림 설정 버튼
-                if (notification.priorityActive) {
-                    ClickableTextView(text = removePriority, onClick = {
-                        priorityViewModel.removeTitlePriority(notificationId = notification.id){
-                            viewModel.loadNotificationTitles()
-                        }
-                        showModal = false
-                    })
-                }
-                else{
-                    ClickableTextView(text = addPriority, onClick = {
-                        viewModel.setTitlePriority(notification.id, priorityViewModel.getLength()){
-                            priorityViewModel.loadNotificationTitles()
-                        }
-                        showModal = false
-                    })
-                }
-
                 // 삭제 버튼
                 ClickableTextView(text = delete, onClick = {
                     if (notification.subText == "")
@@ -253,7 +151,7 @@ fun NotificationTitleItemView(
                         viewModel.deleteBySubText(notification.subText) { priorityViewModel.loadNotificationTitles() }
                     showModal = false
                 })
-                
+
                 // 특정 동작 완료 후 동작
                 val onComplete: () -> Unit = {
                     viewModel.loadNotificationTitles()
@@ -261,18 +159,18 @@ fun NotificationTitleItemView(
                 }
 
                 // 알림 관리하지 않기 버튼
-                if(notification.filteredId == 0L) {
+                if(notification.filteredId == 0L) { // 관리 중 -> 관리 중 X
                     ClickableTextView(
                         text = addFiltered,
                         onClick = {
-                            if (notification.subText == "") {
+                            if (notification.subText == "") { // subText가 제목인 경우
                                 filteredNotificationViewModel.insertFilteredNoti(
                                     viewModel.getAppName(),
                                     notification.title,
                                     onComplete
                                 )
                             }
-                            else{
+                            else{ // title이 제목인 경우
                                 filteredNotificationViewModel.insertFilteredNoti(
                                     viewModel.getAppName(),
                                     notification.subText,
@@ -282,7 +180,7 @@ fun NotificationTitleItemView(
                             showModal = false
                         }
                     )
-                } else{
+                } else{ // 관리 중 X -> 관리 중
                     ClickableTextView(
                         text = removeFiltered,
                         onClick = {
@@ -294,6 +192,24 @@ fun NotificationTitleItemView(
                             showModal = false
                         }
                     )
+                }
+
+                // 중요 알림 설정 버튼
+                if (notification.priorityActive) { // 중요 알림일 때
+                    ClickableTextView(text = removePriority, onClick = {
+                        priorityViewModel.removeTitlePriority(notificationId = notification.id){
+                            viewModel.loadNotificationTitles()
+                        }
+                        showModal = false
+                    })
+                }
+                else{ // 중요 알림이 아닐 때
+                    ClickableTextView(text = addPriority, onClick = {
+                        viewModel.setTitlePriority(notification.id, priorityViewModel.getLength()){
+                            priorityViewModel.loadNotificationTitles()
+                        }
+                        showModal = false
+                    })
                 }
             }
         }

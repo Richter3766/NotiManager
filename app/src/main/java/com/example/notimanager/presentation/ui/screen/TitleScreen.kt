@@ -20,8 +20,8 @@ import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.navigation.NavController
 import com.example.notimanager.presentation.stateholder.viewmodel.NotificationTitlePriorityViewModel
 import com.example.notimanager.presentation.stateholder.viewmodel.NotificationTitleViewModel
-import com.example.notimanager.presentation.ui.component.NotificationTitleListView
-import com.example.notimanager.presentation.ui.component.TitleTopAppBar
+import com.example.notimanager.presentation.ui.component.list.NotificationTitleListView
+import com.example.notimanager.presentation.ui.component.common.CommonTopAppBar
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -46,7 +46,7 @@ fun TitleScreen(navController: NavController, appName: String = ""){
 
     Scaffold(
         topBar = {
-            TitleTopAppBar(title = appName, onBackClick = { navController.popBackStack() })
+            CommonTopAppBar(title = appName, onBackClick = { navController.popBackStack() })
         }
     ) { innerPadding ->
         HorizontalDivider(

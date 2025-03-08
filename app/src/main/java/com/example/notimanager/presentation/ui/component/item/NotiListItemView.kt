@@ -1,17 +1,13 @@
-package com.example.notimanager.presentation.ui.component
+package com.example.notimanager.presentation.ui.component.item
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -26,39 +22,9 @@ import androidx.compose.ui.unit.dp
 import com.example.notimanager.R
 import com.example.notimanager.common.objects.DateFormatter.formatTimestamp
 import com.example.notimanager.domain.model.Notification
-import com.example.notimanager.presentation.stateholder.state.NotificationState
-
-
-@Composable
-fun NotificationListView(
-    notificationState: NotificationState,
-    onDelete: (Long) -> Unit
-
-) {
-    val context = LocalContext.current
-    var currentNoti by remember { mutableStateOf(notificationState.notificationList) }
-
-    LaunchedEffect(notificationState.notificationList) {
-        if (!notificationState.isLoading) {
-            currentNoti = notificationState.notificationList
-        }
-        if (notificationState.notificationList.isEmpty()){
-            currentNoti = emptyList()
-        }
-    }
-
-    LazyColumn(
-        modifier = Modifier.fillMaxSize()
-    ) {
-        items(currentNoti) { notification ->
-            NotificationItemView (notification = notification, onClick = {
-                if (notification.intent?.action != null)
-                    context.startActivity(notification.intent) },
-                onDelete = onDelete
-            )
-        }
-    }
-}
+import com.example.notimanager.presentation.ui.component.common.AppIconView
+import com.example.notimanager.presentation.ui.component.common.BottomSheet
+import com.example.notimanager.presentation.ui.component.common.ClickableTextView
 
 @Composable
 fun NotificationItemView(
@@ -101,6 +67,7 @@ fun NotificationItemView(
             )
         }
 
+        // 모달창
         if (showModal) {
             BottomSheet(showModal, onDismiss = { showModal = false }){
                 Column(
@@ -120,13 +87,15 @@ fun NotificationItemView(
                         overflow = TextOverflow.Ellipsis,
                         color = Color.Gray
                     )
-                    ClickableTextView(text = moveToApp, onClick = {
-                        onClick()
+                    // 삭제
+                    ClickableTextView(text = delete, onClick = {
+                        onDelete(notification.id)
                         showModal = false
                     })
 
-                    ClickableTextView(text = delete, onClick = {
-                        onDelete(notification.id)
+                    // 앱으로 이동하기
+                    ClickableTextView(text = moveToApp, onClick = {
+                        onClick()
                         showModal = false
                     })
                 }

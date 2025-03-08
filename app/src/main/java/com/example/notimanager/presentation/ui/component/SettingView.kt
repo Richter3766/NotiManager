@@ -12,6 +12,7 @@ import androidx.navigation.NavController
 import com.example.notimanager.R
 import com.example.notimanager.presentation.stateholder.viewmodel.NotificationPermissionViewModel
 import com.example.notimanager.presentation.stateholder.viewmodel.NotificationServicePermissionViewModel
+import com.example.notimanager.presentation.ui.component.common.ClickableTextView
 
 @Composable
 fun SettingView(
