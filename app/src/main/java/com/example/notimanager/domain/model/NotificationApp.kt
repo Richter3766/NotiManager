@@ -10,5 +10,6 @@ data class NotificationApp(
     val appIcon: Bitmap?,
     val priorityActive: Boolean,
     val priority: Int,
-    val filteredId: Long
+    val filteredId: Long,
+    val isRead: Boolean
 )

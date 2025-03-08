@@ -17,7 +17,7 @@ interface NotificationDao {
 
     @Query(
         """
-        SELECT n1.appName, n1.title, n1.content, n1.timestamp, ai.iconBytes, ai.priorityActive, ai.priority, fn.id AS filteredId
+        SELECT n1.appName, n1.title, n1.content, n1.timestamp, ai.iconBytes, ai.priorityActive, ai.priority, fn.id AS filteredId, n1.isRead
         FROM notification AS n1
         INNER JOIN app_icon AS ai ON n1.appName = ai.notiAppName
         LEFT OUTER JOIN filtered_notification AS fn ON n1.appName = fn.appName AND fn.title = ""
