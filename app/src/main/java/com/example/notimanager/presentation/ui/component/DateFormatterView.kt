@@ -42,6 +42,7 @@ fun DateFormatterView(
         var selectedOption by remember { mutableStateOf(viewModel.getDateFormat()) }
 
         Column {
+            // 상대 시간 설정
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -54,10 +55,12 @@ fun DateFormatterView(
                 )
                 Column{
                     Text(relativeTime)
-                    Text(relativeExample)
                     Text(exampleExplanation)
+                    Text(relativeExample)
                 }
             }
+
+            // 절대 시간 설정
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -70,8 +73,8 @@ fun DateFormatterView(
                 )
                 Column{
                     Text(absoluteTime)
-                    Text(absoluteExample)
                     Text(exampleExplanation)
+                    Text(absoluteExample)
                 }
             }
             Button(

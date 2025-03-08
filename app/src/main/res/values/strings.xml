@@ -12,7 +12,7 @@
     <string name="modal_set_unread">Mark as Unread</string>
 
     <string name="modal_remove_filtered">Manage this notification in the app</string>
-    <string name="modal_remove_priority">Cancel Important Notification Setting</string>
+    <string name="modal_remove_priority">Remove Important Notification Setting</string>
 
     <!-- 설정 페이지 UI -->
     <string name="setting_name">Settings</string>
@@ -20,7 +20,7 @@
     <string name="setting_locale">Change Language Settings</string>
     <string name="setting_access_permission">Change Notification Access Permission</string>
     <string name="setting_send_permission">Change Notification Send Permission</string>
-    <string name="setting_date_format">Change Date Format</string>"
+    <string name="setting_date_format">Change Time Format</string>"
 
     <!-- 허용창 UI -->
     <string name="permission_ok">OK</string>
@@ -30,8 +30,8 @@
 
     <!--  상태창 UI  -->
     <string name="status_basic_title">NotiManager</string>
-    <string name="status_basic_content">All notifications have been read.</string>
-    <string name="status_app_content">%1$s unread notifications.</string>
+    <string name="status_basic_content">You have checked all important notifications.</string>
+    <string name="status_app_content">You have %1$s unread notifications.</string>
 
     <!-- 시간 UI -->
     <string name="time_now">Just now</string>
@@ -47,7 +47,7 @@
     <string name="format_relative_example">5 minutes ago</string>
     <string name="format_absolute_time">Absolute Time</string>
     <string name="format_absolute_example">March 21, 2025, 3:31 PM</string>
-    <string name="format_example_explanation">It will be displayed like this.</string>
+    <string name="format_example_explanation">It will appear as shown below.</string>
     <string name="format_apply">Apply</string>
 
 </resources>

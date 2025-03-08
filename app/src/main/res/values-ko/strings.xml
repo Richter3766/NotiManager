@@ -30,7 +30,7 @@
 
     <!--  상태창 UI  -->
     <string name="status_basic_title">NotiManager</string>
-    <string name="status_basic_content">모든 알림을 읽었어요.</string>
+    <string name="status_basic_content">모든 중요 알림을 확인했어요.</string>
     <string name="status_app_content">%1$s개의 읽지 않은 알림이 있어요.</string>
 
     <!--  시간 UI  -->

@@ -34,23 +34,35 @@ fun SettingView(
             .padding(innerPadding)
     ) {
         // 받지 않는 알림 목록
-        ClickableTextView(filteredList, onClick = {navController.navigate("FilteredListScreen")}) {
-
-        }
-
-        // 알림 접근 권한
-        ClickableTextView(accessPermission, onClick = {servicePermissionViewModel.requestServicePermission()}) {
-
-        }
-
-        // 알림 발송 권한
-        ClickableTextView(sendPermission, onClick = {notificationPermissionViewModel.requestPermission(context as Activity)}) {
-
-        }
+        ClickableTextView(
+            filteredList,
+            onClick = {
+                navController.navigate("FilteredListScreen")
+            }
+        )
 
         // 시간 형식 변경
-        ClickableTextView(dateFormatter, onClick = {navController.navigate("DateFormatterScreen")}) {
+        ClickableTextView(
+            dateFormatter,
+            onClick = {
+                navController.navigate("DateFormatterScreen")
+            }
+        )
 
-        }
+        // 알림 접근 권한
+        ClickableTextView(
+            accessPermission,
+            onClick = {
+                servicePermissionViewModel.requestServicePermission()
+            }
+        )
+
+        // 알림 발송 권한
+        ClickableTextView(
+            sendPermission,
+            onClick = {
+                notificationPermissionViewModel.requestPermission(context as Activity)
+            }
+        )
     }
 }
