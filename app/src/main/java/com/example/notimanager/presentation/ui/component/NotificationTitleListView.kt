@@ -89,8 +89,10 @@ fun NotificationTitleListView(
             }, viewModel = viewModel, priorityViewModel = priorityViewModel)
         }
 
-        item {
-            HorizontalDivider()
+        if (currentNotiPriority.isNotEmpty()){
+            item {
+                HorizontalDivider()
+            }
         }
 
         items(currentNoti) { notification ->
