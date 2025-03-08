@@ -82,7 +82,7 @@ fun NotificationTitleItemView(
                         imageVector = Icons.Filled.Star,
                         contentDescription = "중요 표시",
                         modifier = Modifier.size(12.dp),
-                        tint = Color.Gray
+                        tint = Color(0XFF673AB7)
                     )
                 }
                 if(notification.filteredId != 0L) {
@@ -90,7 +90,7 @@ fun NotificationTitleItemView(
                         painter = painterResource(id = R.drawable.notifications_off),
                         contentDescription = "notification off icon",
                         modifier = Modifier.size(12.dp),
-                        colorFilter = ColorFilter.tint(Color.Gray)
+                        colorFilter = ColorFilter.tint(Color(0XFF673AB7))
                     )
                 }
             }
