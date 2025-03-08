@@ -38,9 +38,13 @@ import com.example.notimanager.domain.model.NotificationTitle
 import com.example.notimanager.presentation.stateholder.viewmodel.FilteredNotificationViewModel
 import com.example.notimanager.presentation.stateholder.viewmodel.NotificationTitlePriorityViewModel
 import com.example.notimanager.presentation.stateholder.viewmodel.NotificationTitleViewModel
+import com.example.notimanager.presentation.ui.component.box.AddFilteredBox
+import com.example.notimanager.presentation.ui.component.box.AddPriorityBox
 import com.example.notimanager.presentation.ui.component.common.AppIconView
 import com.example.notimanager.presentation.ui.component.common.BottomSheet
-import com.example.notimanager.presentation.ui.component.common.ClickableTextView
+import com.example.notimanager.presentation.ui.component.box.DeleteBox
+import com.example.notimanager.presentation.ui.component.box.RemoveFilteredBox
+import com.example.notimanager.presentation.ui.component.box.RemovePriorityBox
 
 @Composable
 fun NotificationTitleItemView(
@@ -50,15 +54,7 @@ fun NotificationTitleItemView(
     priorityViewModel: NotificationTitlePriorityViewModel,
     filteredNotificationViewModel: FilteredNotificationViewModel = hiltViewModel()
 ) {
-    // 언어 설정에 따라 문자열 리소스를 가져오기
     val context = LocalContext.current
-    val addFiltered = context.getString(R.string.modal_add_filtered)
-    val addPriority = context.getString(R.string.modal_add_priority)
-    val removeFiltered = context.getString(R.string.modal_remove_filtered)
-    val removePriority = context.getString(R.string.modal_remove_priority)
-    val delete = context.getString(R.string.modal_delete)
-    // 위의 문자열 리소스는 모달에서 사용할 텍스트
-
     var showModal by remember { mutableStateOf(false) }
     Row(
         modifier = Modifier
@@ -144,13 +140,13 @@ fun NotificationTitleItemView(
                 )
 
                 // 삭제 버튼
-                ClickableTextView(text = delete, onClick = {
+                DeleteBox {
                     if (notification.subText == "")
                         viewModel.deleteByTitle(notification.title) { priorityViewModel.loadNotificationTitles() }
                     else
                         viewModel.deleteBySubText(notification.subText) { priorityViewModel.loadNotificationTitles() }
                     showModal = false
-                })
+                }
 
                 // 특정 동작 완료 후 동작
                 val onComplete: () -> Unit = {
@@ -160,56 +156,49 @@ fun NotificationTitleItemView(
 
                 // 알림 관리하지 않기 버튼
                 if(notification.filteredId == 0L) { // 관리 중 -> 관리 중 X
-                    ClickableTextView(
-                        text = addFiltered,
-                        onClick = {
-                            if (notification.subText == "") { // subText가 제목인 경우
-                                filteredNotificationViewModel.insertFilteredNoti(
-                                    viewModel.getAppName(),
-                                    notification.title,
-                                    onComplete
-                                )
-                            }
-                            else{ // title이 제목인 경우
-                                filteredNotificationViewModel.insertFilteredNoti(
-                                    viewModel.getAppName(),
-                                    notification.subText,
-                                    onComplete
-                                )
-                            }
-                            showModal = false
+                    AddFilteredBox {
+                        if (notification.subText == "") { // subText가 제목인 경우
+                            filteredNotificationViewModel.insertFilteredNoti(
+                                viewModel.getAppName(),
+                                notification.title,
+                                onComplete
+                            )
                         }
-                    )
+                        else{ // title이 제목인 경우
+                            filteredNotificationViewModel.insertFilteredNoti(
+                                viewModel.getAppName(),
+                                notification.subText,
+                                onComplete
+                            )
+                        }
+                        showModal = false
+                    }
                 } else{ // 관리 중 X -> 관리 중
-                    ClickableTextView(
-                        text = removeFiltered,
-                        onClick = {
-                            if (notification.subText == "")
-                                filteredNotificationViewModel.deleteFilteredNoti(notification.filteredId, onComplete)
-
-                            else
-                                filteredNotificationViewModel.deleteFilteredNoti(notification.filteredId, onComplete)
-                            showModal = false
-                        }
-                    )
+                    RemoveFilteredBox {
+                        if (notification.subText == "")
+                            filteredNotificationViewModel.deleteFilteredNoti(notification.filteredId, onComplete)
+                        else
+                            filteredNotificationViewModel.deleteFilteredNoti(notification.filteredId, onComplete)
+                        showModal = false
+                    }
                 }
 
                 // 중요 알림 설정 버튼
                 if (notification.priorityActive) { // 중요 알림일 때
-                    ClickableTextView(text = removePriority, onClick = {
+                    RemovePriorityBox {
                         priorityViewModel.removeTitlePriority(notificationId = notification.id){
-                            viewModel.loadNotificationTitles()
-                        }
+                        viewModel.loadNotificationTitles()
+                    }
                         showModal = false
-                    })
+                    }
                 }
                 else{ // 중요 알림이 아닐 때
-                    ClickableTextView(text = addPriority, onClick = {
+                    AddPriorityBox {
                         viewModel.setTitlePriority(notification.id, priorityViewModel.getLength()){
                             priorityViewModel.loadNotificationTitles()
                         }
                         showModal = false
-                    })
+                    }
                 }
             }
         }

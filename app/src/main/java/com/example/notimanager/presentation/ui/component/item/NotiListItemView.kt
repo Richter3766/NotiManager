@@ -19,12 +19,12 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.example.notimanager.R
 import com.example.notimanager.common.objects.DateFormatter.formatTimestamp
 import com.example.notimanager.domain.model.Notification
+import com.example.notimanager.presentation.ui.component.box.DeleteBox
+import com.example.notimanager.presentation.ui.component.box.MoveToAppBox
 import com.example.notimanager.presentation.ui.component.common.AppIconView
 import com.example.notimanager.presentation.ui.component.common.BottomSheet
-import com.example.notimanager.presentation.ui.component.common.ClickableTextView
 
 @Composable
 fun NotificationItemView(
@@ -32,11 +32,7 @@ fun NotificationItemView(
     onClick: () -> Unit,
     onDelete: (Long) -> Unit
 ) {
-    // 언어 설정에 따라 문자열 리소스를 가져오기
     val context = LocalContext.current
-    val moveToApp = context.getString(R.string.modal_move_to_app)
-    val delete = context.getString(R.string.modal_delete)
-    // 위의 문자열 리소스는 모달에서 사용할 텍스트
 
     var showModal by remember { mutableStateOf(false) }
     Row(
@@ -87,17 +83,18 @@ fun NotificationItemView(
                         overflow = TextOverflow.Ellipsis,
                         color = Color.Gray
                     )
+
                     // 삭제
-                    ClickableTextView(text = delete, onClick = {
+                    DeleteBox {
                         onDelete(notification.id)
                         showModal = false
-                    })
+                     }
 
                     // 앱으로 이동하기
-                    ClickableTextView(text = moveToApp, onClick = {
+                    MoveToAppBox {
                         onClick()
                         showModal = false
-                    })
+                    }
                 }
             }
         }

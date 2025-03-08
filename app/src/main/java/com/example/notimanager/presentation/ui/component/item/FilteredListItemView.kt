@@ -24,17 +24,14 @@ import com.example.notimanager.R
 import com.example.notimanager.domain.model.FilteredNotification
 import com.example.notimanager.presentation.stateholder.viewmodel.FilteredNotificationViewModel
 import com.example.notimanager.presentation.ui.component.common.BottomSheet
-import com.example.notimanager.presentation.ui.component.common.ClickableTextView
+import com.example.notimanager.presentation.ui.component.box.ClickableTextView
+import com.example.notimanager.presentation.ui.component.box.RemoveFilteredBox
 
 @Composable
 fun FilteredItemView(
     filteredItem: FilteredNotification,
     viewModel: FilteredNotificationViewModel,
 ) {
-    // 언어 설정에 따라 문자열 리소스를 가져오기
-    val context = LocalContext.current
-    val removeFiltered = context.getString(R.string.modal_remove_filtered)
-
     var showModal by remember { mutableStateOf(false) }
 
     Row(
@@ -73,12 +70,12 @@ fun FilteredItemView(
                     color = Color.Gray
                 )
 
-                ClickableTextView(text = removeFiltered, onClick = {
+                RemoveFilteredBox {
                     viewModel.deleteFilteredNoti(filteredItem.id){
                         viewModel.loadFilteredNoti()
                     }
                     showModal = false
-                })
+                }
             }
         }
     }

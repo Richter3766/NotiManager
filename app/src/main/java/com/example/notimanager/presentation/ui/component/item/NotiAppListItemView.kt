@@ -29,7 +29,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.notimanager.R
@@ -38,9 +37,13 @@ import com.example.notimanager.domain.model.NotificationApp
 import com.example.notimanager.presentation.stateholder.viewmodel.FilteredNotificationViewModel
 import com.example.notimanager.presentation.stateholder.viewmodel.NotificationAppPriorityViewModel
 import com.example.notimanager.presentation.stateholder.viewmodel.NotificationAppViewModel
+import com.example.notimanager.presentation.ui.component.box.AddFilteredBox
+import com.example.notimanager.presentation.ui.component.box.AddPriorityBox
+import com.example.notimanager.presentation.ui.component.box.DeleteBox
+import com.example.notimanager.presentation.ui.component.box.RemoveFilteredBox
+import com.example.notimanager.presentation.ui.component.box.RemovePriorityBox
 import com.example.notimanager.presentation.ui.component.common.AppIconView
 import com.example.notimanager.presentation.ui.component.common.BottomSheet
-import com.example.notimanager.presentation.ui.component.common.ClickableTextView
 
 @Composable
 fun NotificationAppItemView(
@@ -50,15 +53,7 @@ fun NotificationAppItemView(
     priorityViewModel: NotificationAppPriorityViewModel,
     filteredNotificationViewModel: FilteredNotificationViewModel = hiltViewModel()
 ) {
-    // 언어 설정에 따라 문자열 리소스를 가져오기
     val context = LocalContext.current
-    val addFiltered = context.getString(R.string.modal_add_filtered)
-    val addPriority = context.getString(R.string.modal_add_priority)
-    val removeFiltered = context.getString(R.string.modal_remove_filtered)
-    val removePriority = context.getString(R.string.modal_remove_priority)
-    val delete = context.getString(R.string.modal_delete)
-    // 위의 문자열 리소스는 모달에서 사용할 텍스트
-    
     var showModal by remember { mutableStateOf(false) }
 
     Row(
@@ -138,65 +133,50 @@ fun NotificationAppItemView(
                 )
                 
                 // 삭제 버튼
-                ClickableTextView(text = delete, onClick = {
+                DeleteBox {
                     viewModel.deleteNotificationApp(notification.appName){
                         priorityViewModel.loadNotificationAppPriority()
                     }
                     showModal = false
-                })
+                }
 
                 // 관리 여부 버튼
-                ClickableTextView(text = if (notification.filteredId == 0L) addFiltered else removeFiltered, onClick = {
-                    if (notification.filteredId == 0L) filteredNotificationViewModel.insertFilteredNoti(notification.appName, ""){
-                        viewModel.loadNotificationApps()
-                        priorityViewModel.loadNotificationAppPriority()
+                if (notification.filteredId == 0L){
+                    AddFilteredBox {
+                        filteredNotificationViewModel.insertFilteredNoti(notification.appName, ""){
+                            viewModel.loadNotificationApps()
+                            priorityViewModel.loadNotificationAppPriority()
+                        }
+                        showModal = false
                     }
-                    else filteredNotificationViewModel.deleteFilteredNoti(notification.filteredId){
-                        viewModel.loadNotificationApps()
-                        priorityViewModel.loadNotificationAppPriority()
+                }
+                else {
+                    RemoveFilteredBox {
+                        filteredNotificationViewModel.deleteFilteredNoti(notification.filteredId) {
+                            viewModel.loadNotificationApps()
+                            priorityViewModel.loadNotificationAppPriority()
+                        }
+                        showModal = false
                     }
-                    showModal = false
-                })
-
+                }
                 // 중요 알림 설정
                 if (notification.priorityActive) {
-                    ClickableTextView(text = removePriority, onClick = {
+                    RemovePriorityBox {
                         priorityViewModel.removeAppPriority(notification.appName){
                             viewModel.loadNotificationApps()
                         }
                         showModal = false
-                    })
+                    }
                 }
                 else{
-                    ClickableTextView(text = addPriority, onClick = {
+                    AddPriorityBox {
                         viewModel.setAppPriority(notification.appName, priorityViewModel.getLength()){
                             priorityViewModel.loadNotificationAppPriority()
                         }
                         showModal = false
-                    })
+                    }
                 }
             }
         }
-    }
-}
-
-@Composable
-@Preview
-fun PreviewNotificationAppItemView(){
-    MaterialTheme{
-        NotificationAppItemView(
-            notification = NotificationApp(
-                appName = "appName",
-                title = "title",
-                content = "content",
-                timestamp = 1234567890,
-                appIcon = null,
-                priorityActive = false,
-                priority = 0,
-                filteredId = 0L
-            ), onClick = {},
-            viewModel = hiltViewModel(),
-            priorityViewModel = hiltViewModel()
-        )
     }
 }
