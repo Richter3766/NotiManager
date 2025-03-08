@@ -37,6 +37,8 @@ fun MainScreen(
     var isRefreshing by remember { mutableStateOf(false) }
     val coroutineScope = rememberCoroutineScope()
 
+    var isClicked by remember { mutableStateOf(false) }
+
     val onRefresh: () -> Unit = {
         isRefreshing = true
         viewModel.loadNotificationApps()
@@ -55,7 +57,11 @@ fun MainScreen(
     Scaffold(
         topBar = {
             MainTopAppBar{
-                navController.navigate("SettingScreen")
+                if (!isClicked){
+                    isClicked = true
+                    navController.navigate("SettingScreen")
+                    isClicked = false
+                }
             }
         }
     ) { innerPadding ->
