@@ -19,8 +19,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.notimanager.presentation.stateholder.state.NotificationState
 import com.example.notimanager.presentation.stateholder.viewmodel.NotificationSubTextViewModel
-import com.example.notimanager.presentation.ui.component.NotificationListView
-import com.example.notimanager.presentation.ui.component.NotificationTopAppBar
+import com.example.notimanager.presentation.ui.component.common.CommonTopAppBar
+import com.example.notimanager.presentation.ui.component.list.NotificationListView
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -46,7 +46,7 @@ fun NotificationSubScreen(navController: NavController, appName: String = "", su
     }
     Scaffold(
         topBar = {
-            NotificationTopAppBar(title = subText, onBackClick = { navController.popBackStack() })
+            CommonTopAppBar(title = subText, onBackClick = { navController.popBackStack() })
         }
     ) { innerPadding ->
         HorizontalDivider(

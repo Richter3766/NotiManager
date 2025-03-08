@@ -1,4 +1,4 @@
-package com.example.notimanager.presentation.ui.component
+package com.example.notimanager.presentation.ui.component.common
 
 import android.graphics.Bitmap
 import androidx.compose.foundation.Image

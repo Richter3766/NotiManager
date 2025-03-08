@@ -16,12 +16,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.notimanager.presentation.stateholder.state.NotificationState
 import com.example.notimanager.presentation.stateholder.viewmodel.NotificationViewModel
-import com.example.notimanager.presentation.ui.component.NotificationListView
-import com.example.notimanager.presentation.ui.component.NotificationTopAppBar
+import com.example.notimanager.presentation.ui.component.common.CommonTopAppBar
+import com.example.notimanager.presentation.ui.component.list.NotificationListView
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -47,7 +46,7 @@ fun NotificationScreen(navController: NavController, appName: String = "", title
     }
     Scaffold(
         topBar = {
-            NotificationTopAppBar(title = title, onBackClick = { navController.popBackStack() })
+            CommonTopAppBar(title = title, onBackClick = { navController.popBackStack() })
         }
     ) { innerPadding ->
         HorizontalDivider(

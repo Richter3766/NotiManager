@@ -12,6 +12,7 @@ import androidx.navigation.NavController
 import com.example.notimanager.R
 import com.example.notimanager.presentation.stateholder.viewmodel.NotificationPermissionViewModel
 import com.example.notimanager.presentation.stateholder.viewmodel.NotificationServicePermissionViewModel
+import com.example.notimanager.presentation.ui.component.box.ClickableTextView
 
 @Composable
 fun SettingView(
@@ -33,23 +34,23 @@ fun SettingView(
             .padding(innerPadding)
     ) {
         // 받지 않는 알림 목록
-        ClickableTextView(filteredList) {
-            navController.navigate("FilteredListScreen")
+        ClickableTextView(filteredList, onClick = {navController.navigate("FilteredListScreen")}) {
+
         }
 
         // 알림 접근 권한
-        ClickableTextView(accessPermission) {
-            servicePermissionViewModel.requestServicePermission()
+        ClickableTextView(accessPermission, onClick = {servicePermissionViewModel.requestServicePermission()}) {
+
         }
 
         // 알림 발송 권한
-        ClickableTextView(sendPermission) {
-            notificationPermissionViewModel.requestPermission(context as Activity)
+        ClickableTextView(sendPermission, onClick = {notificationPermissionViewModel.requestPermission(context as Activity)}) {
+
         }
 
         // 시간 형식 변경
-        ClickableTextView(dateFormatter) {
-            navController.navigate("DateFormatterScreen")
+        ClickableTextView(dateFormatter, onClick = {navController.navigate("DateFormatterScreen")}) {
+
         }
     }
 }

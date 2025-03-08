@@ -20,9 +20,9 @@ import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.navigation.NavController
 import com.example.notimanager.presentation.stateholder.viewmodel.NotificationAppPriorityViewModel
 import com.example.notimanager.presentation.stateholder.viewmodel.NotificationAppViewModel
-import com.example.notimanager.presentation.ui.component.MainTopAppBar
-import com.example.notimanager.presentation.ui.component.NotificationAppListView
-import com.example.notimanager.presentation.ui.component.PermissionCheck
+import com.example.notimanager.presentation.ui.component.common.MainTopAppBar
+import com.example.notimanager.presentation.ui.component.list.NotificationAppListView
+import com.example.notimanager.presentation.ui.component.common.PermissionCheck
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 

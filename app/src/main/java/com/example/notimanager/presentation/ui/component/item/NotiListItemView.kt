@@ -1,17 +1,13 @@
-package com.example.notimanager.presentation.ui.component
+package com.example.notimanager.presentation.ui.component.item
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -23,39 +19,12 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.example.notimanager.R
 import com.example.notimanager.common.objects.DateFormatter.formatTimestamp
 import com.example.notimanager.domain.model.Notification
-import com.example.notimanager.presentation.stateholder.state.NotificationState
-
-
-@Composable
-fun NotificationListView(
-    notificationState: NotificationState,
-    onDelete: (Long) -> Unit
-
-) {
-    val context = LocalContext.current
-    var currentNoti by remember { mutableStateOf(notificationState.notificationList) }
-
-    LaunchedEffect(notificationState.notificationList) {
-        if (!notificationState.isLoading) {
-            currentNoti = notificationState.notificationList
-        }
-    }
-
-    LazyColumn(
-        modifier = Modifier.fillMaxSize()
-    ) {
-        items(currentNoti) { notification ->
-            NotificationItemView (notification = notification, onClick = {
-                if (notification.intent?.action != null)
-                    context.startActivity(notification.intent) },
-                onDelete = onDelete
-            )
-        }
-    }
-}
+import com.example.notimanager.presentation.ui.component.box.DeleteBox
+import com.example.notimanager.presentation.ui.component.box.MoveToAppBox
+import com.example.notimanager.presentation.ui.component.common.AppIconView
+import com.example.notimanager.presentation.ui.component.common.BottomSheet
 
 @Composable
 fun NotificationItemView(
@@ -63,11 +32,7 @@ fun NotificationItemView(
     onClick: () -> Unit,
     onDelete: (Long) -> Unit
 ) {
-    // 언어 설정에 따라 문자열 리소스를 가져오기
     val context = LocalContext.current
-    val moveToApp = context.getString(R.string.modal_move_to_app)
-    val delete = context.getString(R.string.modal_delete)
-    // 위의 문자열 리소스는 모달에서 사용할 텍스트
 
     var showModal by remember { mutableStateOf(false) }
     Row(
@@ -98,6 +63,7 @@ fun NotificationItemView(
             )
         }
 
+        // 모달창
         if (showModal) {
             BottomSheet(showModal, onDismiss = { showModal = false }){
                 Column(
@@ -117,15 +83,18 @@ fun NotificationItemView(
                         overflow = TextOverflow.Ellipsis,
                         color = Color.Gray
                     )
-                    ClickableTextView(text = moveToApp, onClick = {
-                        onClick()
-                        showModal = false
-                    })
 
-                    ClickableTextView(text = delete, onClick = {
+                    // 삭제
+                    DeleteBox {
                         onDelete(notification.id)
                         showModal = false
-                    })
+                     }
+
+                    // 앱으로 이동하기
+                    MoveToAppBox {
+                        onClick()
+                        showModal = false
+                    }
                 }
             }
         }
