@@ -13,6 +13,7 @@ import com.example.notimanager.domain.service.ForegroundNotiService
 import com.example.notimanager.presentation.stateholder.viewmodel.NotificationPermissionViewModel
 import com.example.notimanager.presentation.stateholder.viewmodel.NotificationServicePermissionViewModel
 import com.example.notimanager.presentation.ui.navigation.AppNavHost
+import com.example.notimanager.presentation.ui.navigation.HandleBackPress
 import com.example.notimanager.presentation.ui.theme.AppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -35,6 +36,9 @@ class MainActivity : ComponentActivity() {
             AppTheme {
                 navController = rememberNavController()
                 AppNavHost(navController = navController as NavHostController)
+
+                HandleBackPress(navController as NavHostController, startRoute = "mainScreen")
+
                 if (appName != "" && appName != "NotiManager") navController.navigate("titleScreen/$appName")
             }
 
