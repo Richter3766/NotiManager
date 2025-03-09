@@ -13,6 +13,7 @@ import com.example.notimanager.domain.service.ForegroundNotiService
 import com.example.notimanager.presentation.stateholder.viewmodel.NotificationPermissionViewModel
 import com.example.notimanager.presentation.stateholder.viewmodel.NotificationServicePermissionViewModel
 import com.example.notimanager.presentation.ui.navigation.AppNavHost
+import com.example.notimanager.presentation.ui.theme.AppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -31,9 +32,12 @@ class MainActivity : ComponentActivity() {
         // 화면 설정
         val appName = intent.extras?.getString("appName") ?: ""
         setContent {
-            navController = rememberNavController()
-            AppNavHost(navController = navController as NavHostController)
-            if (appName != "" && appName != "NotiManager") navController.navigate("titleScreen/$appName")
+            AppTheme {
+                navController = rememberNavController()
+                AppNavHost(navController = navController as NavHostController)
+                if (appName != "" && appName != "NotiManager") navController.navigate("titleScreen/$appName")
+            }
+
         }
 
         // 알림 허용 권한 요청
