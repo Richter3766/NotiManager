@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -18,6 +19,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.notimanager.R
@@ -56,9 +58,19 @@ fun DateFormatterView(
                     onClick = { selectedOption = viewModel.relativeTime }
                 )
                 Column{
-                    Text(relativeTime)
-                    Text(exampleExplanation)
-                    Text(relativeExample)
+                    Text(
+                        text = relativeTime,
+                        style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold)
+                    )
+                    Text(
+                        text = exampleExplanation,
+                        style = MaterialTheme.typography.bodySmall
+                    )
+                    Text(
+                        text = relativeExample,
+                        style = MaterialTheme.typography.labelSmall,
+                        color = Color.Gray
+                    )
                 }
             }
 
@@ -74,9 +86,19 @@ fun DateFormatterView(
                     onClick = { selectedOption = viewModel.absoluteTime }
                 )
                 Column{
-                    Text(absoluteTime)
-                    Text(exampleExplanation)
-                    Text(absoluteExample)
+                    Text(
+                        text = absoluteTime,
+                        style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold)
+                    )
+                    Text(
+                        text = exampleExplanation,
+                        style = MaterialTheme.typography.bodySmall
+                        )
+                    Text(
+                        text = absoluteExample,
+                        style = MaterialTheme.typography.labelSmall,
+                        color = Color.Gray
+                    )
                 }
             }
             Button(
