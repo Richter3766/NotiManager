@@ -7,7 +7,8 @@
     "iconBytes": [6, 7, 8, 9, 10],
     "priorityActive": true,
     "priority": 1,
-    "filteredId": 0
+    "filteredId": 0,
+    "isRead": true
   },
   {
     "appName": "Weather",
@@ -17,7 +18,8 @@
     "iconBytes":  [6, 7, 8, 9, 10],
     "priorityActive": true,
     "priority": 1,
-    "filteredId": 0
+    "filteredId": 0,
+    "isRead": true
   },
   {
     "appName": "Email",
@@ -27,7 +29,8 @@
     "iconBytes": [6, 7, 8, 9, 10],
     "priorityActive": true,
     "priority": 1,
-    "filteredId": 0
+    "filteredId": 0,
+    "isRead": true
   },
   {
     "appName": "Calendar",
@@ -37,7 +40,8 @@
     "iconBytes": [6, 7, 8, 9, 10],
     "priorityActive": true,
     "priority": 1,
-    "filteredId": 0
+    "filteredId": 0,
+    "isRead": true
   },
   {
     "appName": "News",
@@ -47,6 +51,7 @@
     "iconBytes": [6, 7, 8, 9, 10],
     "priorityActive": true,
     "priority": 1,
-    "filteredId": 0
+    "filteredId": 0,
+    "isRead": true
   }
 ]
