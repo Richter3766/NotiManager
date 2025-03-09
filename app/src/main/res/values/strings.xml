@@ -16,11 +16,19 @@
 
     <!-- 설정 페이지 UI -->
     <string name="setting_name">Settings</string>
-    <string name="setting_filtered_list">List of Unmanaged Notifications</string>
+    <string name="setting_filtered_list">Ignored Notifications</string>
+    <string name="setting_filtered_list_explanation">You can view and manage the list of notifications that the app does not handle.</string>
+
     <string name="setting_locale">Change Language Settings</string>
+
     <string name="setting_access_permission">Change Notification Access Permission</string>
-    <string name="setting_send_permission">Change Notification Send Permission</string>
-    <string name="setting_date_format">Change Time Format</string>"
+    <string name="setting_access_permission_explanation">You can allow or change the permission for the app to collect and manage notifications.</string>
+
+    <string name="setting_send_permission">Change Notification Sending Permission</string>
+    <string name="setting_send_permission_explanation">You can allow or change the permission for the app to send notifications.</string>
+
+    <string name="setting_date_format">Change Time Format</string>
+    <string name="setting_date_format_explanation">You can choose between relative time and absolute time formats for notifications.</string>
 
     <!-- 허용창 UI -->
     <string name="permission_ok">OK</string>

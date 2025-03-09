@@ -16,11 +16,19 @@
 
     <!--  설정 페이지 UI  -->
     <string name="setting_name">설정</string>
-    <string name="setting_filtered_list">관리하지 않는 알림 목록</string>
+    <string name="setting_filtered_list">관리하지 않는 알림</string>
+    <string name="setting_filtered_list_explanation">앱에서 관리하지 않는 알림 목록을 확인하고 처리할 수 있어요.</string>
+
     <string name="setting_locale">언어 설정하기</string>
-    <string name="setting_access_permission">알림 접근 권한 변경하기</string>
-    <string name="setting_send_permission">알림 발송 권한 변경하기</string>
-    <string name="setting_date_format">시간 형식 변경하기</string>"
+
+    <string name="setting_access_permission">알림 접근 권한 변경</string>
+    <string name="setting_access_permission_explanation">앱이 알림을 수집하고 관리할 수 있는 권한을 허용하거나 변경할 수 있어요.</string>
+
+    <string name="setting_send_permission">알림 발송 권한 변경</string>
+    <string name="setting_send_permission_explanation">앱이 알림을 보낼 수 있는 권한을 허용하거나 변경할 수 있어요.</string>
+
+    <string name="setting_date_format">시간 형식 변경</string>"
+    <string name="setting_date_format_explanation">알림의 시간 형식을 상대 시간 또는 절대 시간으로 선택할 수 있어요.</string>"
 
     <!--  허용창 UI  -->
     <string name="permission_ok">확인</string>
