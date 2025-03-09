@@ -63,12 +63,11 @@ fun NotificationTitleItemView(
             .clickable(onClick = onClick),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        AppIconView(notification.notificationIcon)
-        Spacer(modifier = Modifier.width(8.dp))
+        AppIconView(notification.notificationIcon, 25.dp)
+        Spacer(modifier = Modifier.width(16.dp))
         Column (
             modifier = Modifier.weight(1f)
         ){
-            // 알림 제목, 옆에 중요 알림, 필터링 알림일 경우에 대한 아이콘 표시
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -139,15 +138,6 @@ fun NotificationTitleItemView(
                     color = Color.Gray
                 )
 
-                // 삭제 버튼
-                DeleteBox {
-                    if (notification.subText == "")
-                        viewModel.deleteByTitle(notification.title) { priorityViewModel.loadNotificationTitles() }
-                    else
-                        viewModel.deleteBySubText(notification.subText) { priorityViewModel.loadNotificationTitles() }
-                    showModal = false
-                }
-
                 // 특정 동작 완료 후 동작
                 val onComplete: () -> Unit = {
                     viewModel.loadNotificationTitles()
@@ -200,6 +190,16 @@ fun NotificationTitleItemView(
                         showModal = false
                     }
                 }
+
+                // 삭제 버튼
+                DeleteBox {
+                    if (notification.subText == "")
+                        viewModel.deleteByTitle(notification.title) { priorityViewModel.loadNotificationTitles() }
+                    else
+                        viewModel.deleteBySubText(notification.subText) { priorityViewModel.loadNotificationTitles() }
+                    showModal = false
+                }
+
             }
         }
     }

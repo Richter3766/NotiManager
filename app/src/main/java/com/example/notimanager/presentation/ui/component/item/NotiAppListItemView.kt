@@ -139,14 +139,6 @@ fun NotificationAppItemView(
                     style = MaterialTheme.typography.labelLarge,
                     color = Color.Gray
                 )
-                
-                // 삭제 버튼
-                DeleteBox {
-                    viewModel.deleteNotificationApp(notification.appName){
-                        priorityViewModel.loadNotificationAppPriority()
-                    }
-                    showModal = false
-                }
 
                 // 관리 여부 버튼
                 if (notification.filteredId == 0L){
@@ -183,6 +175,14 @@ fun NotificationAppItemView(
                         }
                         showModal = false
                     }
+                }
+
+                // 삭제 버튼
+                DeleteBox {
+                    viewModel.deleteNotificationApp(notification.appName){
+                        priorityViewModel.loadNotificationAppPriority()
+                    }
+                    showModal = false
                 }
             }
         }
