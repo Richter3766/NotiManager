@@ -26,6 +26,7 @@ import com.example.notimanager.presentation.stateholder.viewmodel.FilteredNotifi
 import com.example.notimanager.presentation.ui.component.common.BottomSheet
 import com.example.notimanager.presentation.ui.component.box.ClickableTextView
 import com.example.notimanager.presentation.ui.component.box.RemoveFilteredBox
+import com.example.notimanager.presentation.ui.component.common.AppIconView
 
 @Composable
 fun FilteredItemView(
@@ -42,7 +43,7 @@ fun FilteredItemView(
         ,
         verticalAlignment = Alignment.CenterVertically
     ) {
-//        AppIconView(filteredItem.appIcon)
+        AppIconView(filteredItem.appIcon)
         Spacer(modifier = Modifier.width(8.dp))
         Column(
             modifier = Modifier

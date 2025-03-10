@@ -4,6 +4,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
@@ -22,10 +26,18 @@ fun FilteredListScreen(
     // 언어 설정에 따라 문자열 리소스를 가져오기
     val context = LocalContext.current
     val title = context.getString(R.string.setting_filtered_list)
+    var isClicked by remember { mutableStateOf(false) }
 
     Scaffold(
         topBar = {
-            CommonTopAppBar(title = title, onBackClick = { navController.popBackStack() })
+            CommonTopAppBar(title = title, onBackClick = {
+                if (!isClicked){
+                    isClicked = true
+
+                    navController.popBackStack()
+                }
+
+            })
         }
     ) { innerPadding ->
         HorizontalDivider(

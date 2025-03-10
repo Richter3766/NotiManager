@@ -39,17 +39,11 @@ fun NotificationTitleListView(
         if (!priorityState.isLoading) {
             currentNotiPriority = priorityState.notificationTitleList
         }
-        if (priorityState.notificationTitleList.isEmpty()){
-            currentNotiPriority = emptyList()
-        }
     }
 
     LaunchedEffect(notificationTitleState.notificationTitleList) {
         if (!notificationTitleState.isLoading) {
             currentNoti = notificationTitleState.notificationTitleList
-        }
-        if (notificationTitleState.notificationTitleList.isEmpty()){
-            currentNoti = emptyList()
         }
     }
 

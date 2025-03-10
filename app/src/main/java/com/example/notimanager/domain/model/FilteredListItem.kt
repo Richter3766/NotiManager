@@ -1,12 +1,9 @@
 package com.example.notimanager.domain.model
 
-import android.graphics.Bitmap
-
-data class FilteredNotification(
+data class FilteredListItem(
     val id: Long,
     val appName: String,
     val title: String,
-    val appIcon: Bitmap?,
 )
 
 

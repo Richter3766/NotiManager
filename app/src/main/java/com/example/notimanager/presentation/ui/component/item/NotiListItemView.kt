@@ -84,15 +84,15 @@ fun NotificationItemView(
                         color = Color.Gray
                     )
 
-                    // 삭제
-                    DeleteBox {
-                        onDelete(notification.id)
-                        showModal = false
-                     }
-
                     // 앱으로 이동하기
                     MoveToAppBox {
                         onClick()
+                        showModal = false
+                    }
+
+                    // 삭제
+                    DeleteBox {
+                        onDelete(notification.id)
                         showModal = false
                     }
                 }

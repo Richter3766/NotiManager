@@ -7,7 +7,8 @@
     "appIcon": null,
     "priorityActive": true,
     "priority": 1,
-    "filteredId": 0
+    "filteredId": 0,
+    "isRead": true
   },
   {
     "appName": "Weather",
@@ -17,7 +18,8 @@
     "appIcon": null,
     "priorityActive": true,
     "priority": 1,
-    "filteredId": 0
+    "filteredId": 0,
+    "isRead": true
   },
   {
     "appName": "Email",
@@ -27,7 +29,8 @@
     "appIcon": null,
     "priorityActive": true,
     "priority": 1,
-    "filteredId": 0
+    "filteredId": 0,
+    "isRead": true
   },
   {
     "appName": "Calendar",
@@ -37,7 +40,8 @@
     "appIcon": null,
     "priorityActive": true,
     "priority": 1,
-    "filteredId": 0
+    "filteredId": 0,
+    "isRead": true
   },
   {
     "appName": "News",
@@ -47,6 +51,7 @@
     "appIcon": null,
     "priorityActive": true,
     "priority": 1,
-    "filteredId": 0
+    "filteredId": 0,
+    "isRead": true
   }
 ]

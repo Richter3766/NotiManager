@@ -2,6 +2,7 @@ package com.example.notimanager.data.repository
 
 import com.example.notimanager.data.model.FilteredNotificationModel
 import com.example.notimanager.data.source.local.dao.FilteredNotificationDao
+import com.example.notimanager.domain.model.FilteredListItem
 import com.example.notimanager.domain.model.FilteredNotification
 import com.example.notimanager.domain.repository.FilteredNotificationRepositoryInterface
 
@@ -21,7 +22,7 @@ class FilteredNotificationRepository(
         appName: String,
         title: String,
         subText: String
-    ): List<FilteredNotification> {
+    ): List<FilteredListItem> {
         return dao.getSpecificFilteredList(appName, title, subText)
             .asSequence()
             .map { it.toDomain() }

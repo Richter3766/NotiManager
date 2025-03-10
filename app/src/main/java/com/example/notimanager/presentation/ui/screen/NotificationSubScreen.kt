@@ -31,6 +31,7 @@ fun NotificationSubScreen(navController: NavController, appName: String = "", su
 
     var isRefreshing by remember { mutableStateOf(false) }
     val coroutineScope = rememberCoroutineScope()
+    var isClicked by remember { mutableStateOf(false) }
 
     val onRefresh: () -> Unit = {
         isRefreshing = true
@@ -46,7 +47,13 @@ fun NotificationSubScreen(navController: NavController, appName: String = "", su
     }
     Scaffold(
         topBar = {
-            CommonTopAppBar(title = subText, onBackClick = { navController.popBackStack() })
+            CommonTopAppBar(title = subText, onBackClick = {
+                if(!isClicked){
+                    isClicked = true
+                    navController.popBackStack()
+                }
+
+            })
         }
     ) { innerPadding ->
         HorizontalDivider(

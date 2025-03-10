@@ -34,6 +34,8 @@ fun TitleScreen(navController: NavController, appName: String = ""){
     var isRefreshing by remember { mutableStateOf(false) }
     val coroutineScope = rememberCoroutineScope()
 
+    var isClicked by remember { mutableStateOf(false) }
+
     LaunchedEffect(appName) {
         viewModel.setArgs(appName)
         priorityViewModel.setArgs(appName)
@@ -46,7 +48,14 @@ fun TitleScreen(navController: NavController, appName: String = ""){
 
     Scaffold(
         topBar = {
-            CommonTopAppBar(title = appName, onBackClick = { navController.popBackStack() })
+            CommonTopAppBar(title = appName, onBackClick = {
+                if (!isClicked) {
+                    isClicked = true
+
+                    navController.popBackStack()
+
+                }
+            })
         }
     ) { innerPadding ->
         HorizontalDivider(

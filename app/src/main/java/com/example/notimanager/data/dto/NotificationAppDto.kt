@@ -11,7 +11,8 @@ data class NotificationAppDto(
     val iconBytes: ByteArray,
     val priorityActive: Boolean,
     val priority: Int,
-    val filteredId: Long = 0L
+    val filteredId: Long = 0L,
+    val isRead: Boolean
 ){
     fun toDomain(): NotificationApp {
         return NotificationApp(
@@ -22,7 +23,8 @@ data class NotificationAppDto(
             appIcon = BitmapFactory.decodeByteArray(iconBytes, 0, iconBytes.size),
             priorityActive = this.priorityActive,
             priority = this.priority,
-            filteredId = this.filteredId
+            filteredId = this.filteredId,
+            isRead = this.isRead
         )
     }
 }
