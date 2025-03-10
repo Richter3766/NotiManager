@@ -1,6 +1,8 @@
 package com.example.notimanager.presentation.ui.activity
 
+import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -15,14 +17,18 @@ import com.example.notimanager.presentation.stateholder.viewmodel.NotificationSe
 import com.example.notimanager.presentation.ui.navigation.AppNavHost
 import com.example.notimanager.presentation.ui.navigation.HandleBackPress
 import com.example.notimanager.presentation.ui.theme.AppTheme
+import com.google.android.gms.ads.MobileAds
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     private val serviceViewModel: NotificationServicePermissionViewModel by viewModels()
     private val notificationViewModel: NotificationPermissionViewModel by viewModels()
     private lateinit var navController: NavController
-
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -56,6 +62,12 @@ class MainActivity : ComponentActivity() {
             putExtra("isGroupSummary", true)
         }
         startService(serviceIntent)
+
+        // 광고를 위한 백그라운드 스레드
+        CoroutineScope(Dispatchers.IO).launch {
+            // Google Mobile Ads SDK 초기화
+            MobileAds.initialize(this@MainActivity) { }
+        }
     }
 
     override fun onResume() {

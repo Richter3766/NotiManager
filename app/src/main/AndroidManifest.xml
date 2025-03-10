@@ -17,6 +17,10 @@
         android:theme="@style/Theme.NotiManager"
         android:enableOnBackInvokedCallback="true"
         tools:targetApi="35">
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="@string/admob_app_id"/>
+
         <activity
             android:name=".presentation.ui.activity.MainActivity"
             android:exported="true"
