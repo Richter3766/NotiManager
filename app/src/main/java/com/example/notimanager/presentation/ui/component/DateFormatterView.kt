@@ -113,6 +113,5 @@ fun DateFormatterView(
                 Text(apply)
             }
         }
-
     }
 }
