@@ -18,8 +18,8 @@ android {
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        resValue("string", "admob_app_id", System.getenv("ADMOB_APP_ID") ?: "")
     }
 
     buildTypes {
