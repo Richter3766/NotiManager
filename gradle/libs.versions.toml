@@ -1,5 +1,5 @@
 [versions]
-agp = "8.8.2"
+agp = "8.9.0"
 byteBuddy = "1.17.1"
 byteBuddyAgent = "1.17.1"
 coilCompose = "3.1.0"
