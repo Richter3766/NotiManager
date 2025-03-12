@@ -18,8 +18,9 @@ android {
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        resValue("string", "admob_app_id", System.getenv("ADMOB_APP_ID") ?: "")
+        resValue("string", "admob_banner_id", System.getenv("ADMOB_BANNER_ID") ?: "")
     }
 
     buildTypes {
@@ -160,4 +161,7 @@ dependencies {
     kspTest(libs.hilt.android.compiler)
     androidTestImplementation(libs.hilt.android.testing)
     kspAndroidTest(libs.hilt.android.compiler)
+
+    // 구글 광고
+    implementation(libs.play.services.ads)
 }
