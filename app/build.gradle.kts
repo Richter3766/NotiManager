@@ -20,6 +20,7 @@ android {
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         resValue("string", "admob_app_id", System.getenv("ADMOB_APP_ID") ?: "")
+        resValue("string", "admob_banner_id", System.getenv("ADMOB_BANNER_ID") ?: "")
     }
 
     buildTypes {
