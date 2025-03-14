@@ -35,6 +35,15 @@ fun TitleScreen(navController: NavController, appName: String = ""){
     val coroutineScope = rememberCoroutineScope()
 
     var isClicked by remember { mutableStateOf(false) }
+    val onRefresh: () -> Unit = {
+        isRefreshing = true
+        viewModel.loadNotificationTitles()
+        priorityViewModel.loadNotificationTitles()
+        coroutineScope.launch {
+            delay(500)
+            isRefreshing = false
+        }
+    }
 
     LaunchedEffect(appName) {
         viewModel.setArgs(appName)
@@ -65,15 +74,7 @@ fun TitleScreen(navController: NavController, appName: String = ""){
 
         PullToRefreshBox(
             isRefreshing = isRefreshing,
-            onRefresh = {
-                isRefreshing = true
-                viewModel.loadNotificationTitles()
-                priorityViewModel.loadNotificationTitles()
-                coroutineScope.launch {
-                    delay(500)
-                    isRefreshing = false
-                }
-            },
+            onRefresh = onRefresh,
             modifier = Modifier.padding(innerPadding)
         ) {
             NotificationTitleListView(navController, viewModel, priorityViewModel)
