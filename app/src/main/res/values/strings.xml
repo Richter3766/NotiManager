@@ -40,6 +40,7 @@
     <string name="status_basic_title">NotiManager</string>
     <string name="status_basic_content">You have checked all important notifications.</string>
     <string name="status_app_content">You have %1$s unread notifications.</string>
+    <string name="status_noti_content">You have a new notification.</string>
 
     <!-- 시간 UI -->
     <string name="time_now">Just now</string>

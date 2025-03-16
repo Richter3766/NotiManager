@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.drawable.Icon
 import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
+import com.example.notimanager.R
 import com.example.notimanager.data.model.AppIconModel
 import com.example.notimanager.data.model.NotificationIconModel
 import com.example.notimanager.data.model.NotificationMetaModel
@@ -128,7 +129,17 @@ class NotiListenerService: NotificationListenerService() {
         if (count != 0){
             val serviceIntent = Intent(this, ForegroundNotiService::class.java).apply {
                 putExtra("appName", appName)
-                putExtra("content", count.toString())
+                putExtra("content", getString(R.string.status_app_content, count.toString()))
+            }
+            startService(serviceIntent)
+        }
+        else{
+            val basicTitle = getString(R.string.status_basic_title)
+            val notiContent = getString(R.string.status_noti_content)
+            val serviceIntent = Intent(this, ForegroundNotiService::class.java).apply {
+                putExtra("appName", basicTitle)
+                putExtra("content", notiContent)
+                putExtra("isGroupSummary", true)
             }
             startService(serviceIntent)
         }
