@@ -1,5 +1,6 @@
 package com.example.notimanager.presentation.ui.screen
 
+import android.util.Log
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
@@ -60,9 +61,9 @@ fun TitleScreen(navController: NavController, appName: String = ""){
             CommonTopAppBar(title = appName, onBackClick = {
                 if (!isClicked) {
                     isClicked = true
-
-                    navController.popBackStack()
-
+                    if (navController.previousBackStackEntry != null) {
+                        navController.popBackStack()
+                    }
                 }
             })
         }

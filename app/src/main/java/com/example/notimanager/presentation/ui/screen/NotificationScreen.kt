@@ -51,7 +51,9 @@ fun NotificationScreen(navController: NavController, appName: String = "", title
             CommonTopAppBar(title = title, onBackClick = {
                 if(!isClicked){
                     isClicked = true
-                    navController.popBackStack()
+                    if (navController.previousBackStackEntry != null) {
+                        navController.popBackStack()
+                    }
                 } }
             )
         }

@@ -33,8 +33,9 @@ fun FilteredListScreen(
             CommonTopAppBar(title = title, onBackClick = {
                 if (!isClicked){
                     isClicked = true
-
-                    navController.popBackStack()
+                    if (navController.previousBackStackEntry != null) {
+                        navController.popBackStack()
+                    }
                 }
 
             })
