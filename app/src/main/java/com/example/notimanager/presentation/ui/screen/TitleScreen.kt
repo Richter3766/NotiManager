@@ -1,5 +1,6 @@
 package com.example.notimanager.presentation.ui.screen
 
+import android.util.Log
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
@@ -35,6 +36,15 @@ fun TitleScreen(navController: NavController, appName: String = ""){
     val coroutineScope = rememberCoroutineScope()
 
     var isClicked by remember { mutableStateOf(false) }
+    val onRefresh: () -> Unit = {
+        isRefreshing = true
+        viewModel.loadNotificationTitles()
+        priorityViewModel.loadNotificationTitles()
+        coroutineScope.launch {
+            delay(500)
+            isRefreshing = false
+        }
+    }
 
     LaunchedEffect(appName) {
         viewModel.setArgs(appName)
@@ -51,9 +61,9 @@ fun TitleScreen(navController: NavController, appName: String = ""){
             CommonTopAppBar(title = appName, onBackClick = {
                 if (!isClicked) {
                     isClicked = true
-
-                    navController.popBackStack()
-
+                    if (navController.previousBackStackEntry != null) {
+                        navController.popBackStack()
+                    }
                 }
             })
         }
@@ -65,15 +75,7 @@ fun TitleScreen(navController: NavController, appName: String = ""){
 
         PullToRefreshBox(
             isRefreshing = isRefreshing,
-            onRefresh = {
-                isRefreshing = true
-                viewModel.loadNotificationTitles()
-                priorityViewModel.loadNotificationTitles()
-                coroutineScope.launch {
-                    delay(500)
-                    isRefreshing = false
-                }
-            },
+            onRefresh = onRefresh,
             modifier = Modifier.padding(innerPadding)
         ) {
             NotificationTitleListView(navController, viewModel, priorityViewModel)

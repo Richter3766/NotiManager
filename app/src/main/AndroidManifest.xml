@@ -19,7 +19,7 @@
         tools:targetApi="35">
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="@string/admob_app_id"/>
+            android:value="ca-app-pub-4472438519886520~1562656818"/>
 
         <activity
             android:name=".presentation.ui.activity.MainActivity"

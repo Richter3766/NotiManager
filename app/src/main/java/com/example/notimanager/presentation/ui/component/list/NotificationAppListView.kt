@@ -1,7 +1,6 @@
 package com.example.notimanager.presentation.ui.component.list
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -15,7 +14,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -34,7 +32,7 @@ import com.example.notimanager.presentation.ui.component.item.NotificationAppIte
 fun NotificationAppListView(
     navController: NavController,
     viewModel: NotificationAppViewModel,
-    priorityViewModel: NotificationAppPriorityViewModel
+    priorityViewModel: NotificationAppPriorityViewModel,
 ) {
     val notificationAppState by viewModel.notificationAppState.observeAsState(NotificationAppState())
     val priorityState by priorityViewModel.notificationAppPriorityState.observeAsState((NotificationAppPriorityState()))
@@ -63,31 +61,32 @@ fun NotificationAppListView(
                 .fillMaxSize()
                 .padding(bottom = 56.dp) // AndroidView의 높이만큼 패딩 추가
         ) {
-            items(currentNotiPriority) { notification ->
-                NotificationAppItemView(
-                    notification = notification,
-                    onClick = {
-                        navController.navigate("titleScreen/${notification.appName}")
-                    },
-                    viewModel = viewModel,
-                    priorityViewModel = priorityViewModel
-                )
-            }
-            if (currentNotiPriority.isNotEmpty()) {
+            if(currentNotiPriority.isNotEmpty()){
+                items(currentNotiPriority) { notification ->
+                    NotificationAppItemView(
+                        notification = notification,
+                        onClick = {
+                            navController.navigate("titleScreen/${notification.appName}")
+                        },
+                        viewModel = viewModel,
+                        priorityViewModel = priorityViewModel
+                    )
+                }
                 item {
                     HorizontalDivider()
                 }
             }
-
-            items(currentNoti) { notification ->
-                NotificationAppItemView(
-                    notification = notification,
-                    onClick = {
-                        navController.navigate("titleScreen/${notification.appName}")
-                    },
-                    viewModel = viewModel,
-                    priorityViewModel = priorityViewModel
-                )
+            if (currentNoti.isNotEmpty()){
+                items(currentNoti) { notification ->
+                    NotificationAppItemView(
+                        notification = notification,
+                        onClick = {
+                            navController.navigate("titleScreen/${notification.appName}")
+                        },
+                        viewModel = viewModel,
+                        priorityViewModel = priorityViewModel
+                    )
+                }
             }
         }
 

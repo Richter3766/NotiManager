@@ -33,7 +33,7 @@ import com.example.notimanager.presentation.ui.component.item.NotificationTitleI
 fun NotificationTitleListView(
     navController: NavController,
     viewModel: NotificationTitleViewModel,
-    priorityViewModel: NotificationTitlePriorityViewModel
+    priorityViewModel: NotificationTitlePriorityViewModel,
 ) {
     val notificationTitleState by viewModel.notificationTitleState.observeAsState(
         NotificationTitleState()
@@ -63,42 +63,44 @@ fun NotificationTitleListView(
         LazyColumn(
             modifier = Modifier.fillMaxSize().padding(bottom = 56.dp)
         ) {
-            items(currentNotiPriority) { notification ->
-                NotificationTitleItemView(notification = notification, onClick = {
-                    if (notification.subText == "") navController.navigate("notificationScreen/${viewModel.getAppName()}/${getEncodedString(notification.title)}/False")
-                    else navController.navigate("notificationScreen/${viewModel.getAppName()}/${getEncodedString(notification.subText)}/True")
-                }, viewModel = viewModel, priorityViewModel = priorityViewModel)
-            }
+            if(currentNotiPriority.isNotEmpty()){
+                items(currentNotiPriority) { notification ->
+                    NotificationTitleItemView(notification = notification, onClick = {
+                        if (notification.subText == "") navController.navigate("notificationScreen/${viewModel.getAppName()}/${getEncodedString(notification.title)}/False")
+                        else navController.navigate("notificationScreen/${viewModel.getAppName()}/${getEncodedString(notification.subText)}/True")
+                    }, viewModel = viewModel, priorityViewModel = priorityViewModel)
+                }
 
-            if (currentNotiPriority.isNotEmpty()){
                 item {
                     HorizontalDivider()
                 }
             }
-
-            items(currentNoti) { notification ->
-                NotificationTitleItemView(notification = notification, onClick = {
-                    if (notification.subText == "") {
-                        viewModel.updateAsRead(notification.title)
-                        navController.navigate(
-                            "notificationScreen/${viewModel.getAppName()}/${
-                                getEncodedString(
-                                    notification.title
-                                )
-                            }/False"
-                        )
-                    }
-                    else {
-                        viewModel.updateAsSubText(notification.subText)
-                        navController.navigate(
-                            "notificationScreen/${viewModel.getAppName()}/${
-                                getEncodedString(
-                                    notification.subText
-                                )
-                            }/True"
-                        )
-                    }}, viewModel = viewModel, priorityViewModel = priorityViewModel)
+            if(currentNoti.isNotEmpty()){
+                items(currentNoti) { notification ->
+                    NotificationTitleItemView(notification = notification, onClick = {
+                        if (notification.subText == "") {
+                            viewModel.updateAsRead(notification.title)
+                            navController.navigate(
+                                "notificationScreen/${viewModel.getAppName()}/${
+                                    getEncodedString(
+                                        notification.title
+                                    )
+                                }/False"
+                            )
+                        }
+                        else {
+                            viewModel.updateAsSubText(notification.subText)
+                            navController.navigate(
+                                "notificationScreen/${viewModel.getAppName()}/${
+                                    getEncodedString(
+                                        notification.subText
+                                    )
+                                }/True"
+                            )
+                        }}, viewModel = viewModel, priorityViewModel = priorityViewModel)
+                }
             }
+
         }
 
         AndroidView(

@@ -50,9 +50,10 @@ fun NotificationSubScreen(navController: NavController, appName: String = "", su
             CommonTopAppBar(title = subText, onBackClick = {
                 if(!isClicked){
                     isClicked = true
-                    navController.popBackStack()
+                    if (navController.previousBackStackEntry != null) {
+                        navController.popBackStack()
+                    }
                 }
-
             })
         }
     ) { innerPadding ->

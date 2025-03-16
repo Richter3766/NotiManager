@@ -30,7 +30,9 @@ fun SettingScreen(
             CommonTopAppBar(title){
                 if (!isClicked){
                     isClicked = true
-                    navController.popBackStack()
+                    if (navController.previousBackStackEntry != null) {
+                        navController.popBackStack()
+                    }
                 }
             }
         }

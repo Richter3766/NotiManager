@@ -29,7 +29,7 @@ class ForegroundNotiService: Service() {
 
         val appName = intent?.extras?.getString("appName") ?: ""
         val content = intent?.extras?.getString("content") ?: ""
-        val isGroupSummary = intent?.extras?.getBoolean("isGroupSummary") ?: false
+        val isGroupSummary = intent?.extras?.getBoolean("isGroupSummary") == true
         putNotification(appName, content, isGroupSummary)
 
         return START_STICKY
@@ -48,7 +48,7 @@ class ForegroundNotiService: Service() {
         appName: String,
         content: String,
         isGroupSummary: Boolean) {
-        val appContent = if (isGroupSummary) content else getString(R.string.status_app_content, content)
+        val appContent = content
 
         val notificationIntent = Intent(this, MainActivity::class.java).apply {
             putExtra("appName", appName)
