@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.notimanager"
+    package="com.notimanager.notimanager"
     xmlns:tools="http://schemas.android.com/tools">
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC"/>
 
     <application
-        android:name=".NotiManager"
+        android:name="com.notimanager.notimanager.NotiManager"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -22,7 +22,7 @@
             android:value="ca-app-pub-4472438519886520~1562656818"/>
 
         <activity
-            android:name=".presentation.ui.activity.MainActivity"
+            android:name="com.notimanager.notimanager.presentation.ui.activity.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.NotiManager">
             <intent-filter>
@@ -33,7 +33,7 @@
         </activity>
 
         <service
-            android:name=".domain.service.NotiListenerService"
+            android:name="com.notimanager.notimanager.domain.service.NotiListenerService"
             android:exported="true"
             android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
             <intent-filter>
@@ -42,9 +42,9 @@
         </service>
 
         <service
-            android:name=".domain.service.ForegroundNotiService"
+            android:name="com.notimanager.notimanager.domain.service.ForegroundNotiService"
             android:foregroundServiceType="dataSync" />
 
     </application>
-
+    <uses-permission android:name="com.google.android.gms.permission.AD_ID"/>
 </manifest>
