@@ -41,7 +41,7 @@ fun NotificationAppListView(
 
     // 광고
     val context = LocalContext.current
-    val adView = getAdView(context)
+//    val adView = getAdView(context)
 
     LaunchedEffect(priorityState.notificationAppList) {
         if (!priorityState.isLoading) {
@@ -90,14 +90,14 @@ fun NotificationAppListView(
             }
         }
 
-        AndroidView(
-            factory = { adView },
-            update = {},
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .fillMaxWidth()
-                .height(56.dp)
-        )
+//        AndroidView(
+//            factory = { adView },
+//            update = {},
+//            modifier = Modifier
+//                .align(Alignment.BottomCenter)
+//                .fillMaxWidth()
+//                .height(56.dp)
+//        )
     }
 
 }

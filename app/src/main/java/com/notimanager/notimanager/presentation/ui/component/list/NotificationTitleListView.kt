@@ -45,7 +45,7 @@ fun NotificationTitleListView(
     var currentNoti by remember { mutableStateOf(notificationTitleState.notificationTitleList) }
 
     val context = LocalContext.current
-    val adView = getAdView(context)
+//    val adView = getAdView(context)
 
     LaunchedEffect(priorityState.notificationTitleList) {
         if (!priorityState.isLoading) {
@@ -103,14 +103,14 @@ fun NotificationTitleListView(
 
         }
 
-        AndroidView(
-            factory = { adView },
-            update = {},
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .fillMaxWidth()
-                .height(56.dp)
-        )
+//        AndroidView(
+//            factory = { adView },
+//            update = {},
+//            modifier = Modifier
+//                .align(Alignment.BottomCenter)
+//                .fillMaxWidth()
+//                .height(56.dp)
+//        )
     }
 
 }

@@ -24,10 +24,10 @@ object AdsUtil{
         return AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(context, adWidth)
     }
 
+
     fun getAdView(context: Context): AdView{
 //        val unitId = context.getString(R.string.admob_banner_id)
-//        val unitId = "ca-app-pub-3940256099942544/9214589741" // 테스트 광고
-        val unitId = "ca-app-pub-4472438519886520/5281544003"
+        val unitId = "ca-app-pub-3940256099942544/9214589741" // 테스트 광고
         val adView = AdView(context)
         adView.adUnitId = unitId
         adView.setAdSize(getAdSize(context))

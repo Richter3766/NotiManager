@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:name="com.notimanager.notimanager.NotiManager"
@@ -17,9 +18,6 @@
         android:theme="@style/Theme.NotiManager"
         android:enableOnBackInvokedCallback="true"
         tools:targetApi="35">
-        <meta-data
-            android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-4472438519886520~1562656818"/>
 
         <activity
             android:name="com.notimanager.notimanager.presentation.ui.activity.MainActivity"
@@ -46,5 +44,5 @@
             android:foregroundServiceType="dataSync" />
 
     </application>
-    <uses-permission android:name="com.google.android.gms.permission.AD_ID"/>
+<!--    <uses-permission android:name="com.google.android.gms.permission.AD_ID"/>-->
 </manifest>

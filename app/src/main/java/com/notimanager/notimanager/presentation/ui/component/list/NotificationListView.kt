@@ -32,7 +32,7 @@ fun NotificationListView(
     val context = LocalContext.current
     var currentNoti by remember { mutableStateOf(notificationState.notificationList) }
 
-    val adView = getAdView(context)
+//    val adView = getAdView(context)
 
     LaunchedEffect(notificationState.notificationList) {
         if (!notificationState.isLoading) {
@@ -57,13 +57,13 @@ fun NotificationListView(
 
         }
 
-        AndroidView(
-            factory = { adView },
-            update = {},
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .fillMaxWidth()
-                .height(56.dp)
-        )
+//        AndroidView(
+//            factory = { adView },
+//            update = {},
+//            modifier = Modifier
+//                .align(Alignment.BottomCenter)
+//                .fillMaxWidth()
+//                .height(56.dp)
+//        )
     }
 }
