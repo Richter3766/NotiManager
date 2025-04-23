@@ -1,25 +1,25 @@
 <resources>
     <string name="app_name">NotiManager</string>
 
-    <!-- 더보기 모달 창 UI -->
+    <!-- More Options Modal UI -->
     <string name="modal_delete">Delete</string>
     <string name="modal_move_to_app">Move to App</string>
 
-    <string name="modal_add_filtered">Do not manage this notification in the app</string>
+    <string name="modal_add_filtered">Do not manage notifications from this app</string>
     <string name="modal_add_priority">Set as Important Notification</string>
 
     <string name="modal_set_read">Mark as Read</string>
     <string name="modal_set_unread">Mark as Unread</string>
 
-    <string name="modal_remove_filtered">Manage this notification in the app</string>
-    <string name="modal_remove_priority">Remove Important Notification Setting</string>
+    <string name="modal_remove_filtered">Manage notifications from this app</string>
+    <string name="modal_remove_priority">Cancel Important Notification Setting</string>
 
-    <!-- 설정 페이지 UI -->
+    <!-- Settings Page UI -->
     <string name="setting_name">Settings</string>
-    <string name="setting_filtered_list">Ignored Notifications</string>
-    <string name="setting_filtered_list_explanation">You can view and manage the list of notifications that the app does not handle.</string>
+    <string name="setting_filtered_list">Unmanaged Notifications</string>
+    <string name="setting_filtered_list_explanation">You can view and manage the list of notifications that are not handled by the app.</string>
 
-    <string name="setting_locale">Change Language Settings</string>
+    <string name="setting_locale">Set Language</string>
 
     <string name="setting_access_permission">Change Notification Access Permission</string>
     <string name="setting_access_permission_explanation">You can allow or change the permission for the app to collect and manage notifications.</string>
@@ -28,21 +28,21 @@
     <string name="setting_send_permission_explanation">You can allow or change the permission for the app to send notifications.</string>
 
     <string name="setting_date_format">Change Time Format</string>
-    <string name="setting_date_format_explanation">You can choose between relative time and absolute time formats for notifications.</string>
+    <string name="setting_date_format_explanation">You can choose to display notification times in relative or absolute format.</string>
 
-    <!-- 허용창 UI -->
+    <!-- Permission Dialog UI -->
     <string name="permission_ok">OK</string>
     <string name="permission_no">Deny</string>
     <string name="permission_title">Notification Access Permission Required</string>
-    <string name="permission_message">Please allow permission to manage notifications in the app.</string>
+    <string name="permission_message">Please allow permission for the app to manage notifications.</string>
 
-    <!--  상태창 UI  -->
+    <!-- Status Bar UI -->
     <string name="status_basic_title">NotiManager</string>
-    <string name="status_basic_content">You have checked all important notifications.</string>
+    <string name="status_basic_content">All important notifications have been checked.</string>
     <string name="status_app_content">You have %1$s unread notifications.</string>
-    <string name="status_noti_content">You have a new notification.</string>
+    <string name="status_noti_content">There is a new notification.</string>
 
-    <!-- 시간 UI -->
+    <!-- Time UI -->
     <string name="time_now">Just now</string>
     <string name="time_second">%1$d seconds ago</string>
     <string name="time_minute">%1$d minutes ago</string>
@@ -52,6 +52,7 @@
     <string name="time_month">%1$d months ago</string>
     <string name="time_year">%1$d years ago</string>
 
+    <!-- Time Settings Dialog UI -->
     <string name="format_relative_time">Relative Time</string>
     <string name="format_relative_example">5 minutes ago</string>
     <string name="format_absolute_time">Absolute Time</string>
