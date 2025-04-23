@@ -92,6 +92,8 @@ class NotiListenerServiceTest {
             title = "Test Title",
             content = "Test Content",
             timestamp = mockSbn.postTime,
+            subText = "",
+            isRead = false,
         )
         coEvery { notificationRepository.insertNotification(expectedNotificationModel) } returns 1L
 
